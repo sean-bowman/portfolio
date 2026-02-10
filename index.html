@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio website showcasing software development projects and professional work">
+    <meta name="keywords" content="portfolio, software development, web development, projects">
+    <meta name="author" content="Sean Bowman">
+    <title>Home | Sean Bowman</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/navigation.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./index.html" class="nav-logo">
+                Sean Bowman
+            </a>
+
+            <button class="nav-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="./index.html" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./projects.html" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./contact.html" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">
+                        Hi, I'm Sean Bowman
+                    </h1>
+                    <p class="hero-subtitle">
+                        Propulsion Design Engineer & Computational Engineering Lead
+                    </p>
+                    <p class="hero-description">
+                        I design and analyze propulsion systems while developing computational tools that push the boundaries of engineering simulation.
+                        From fluid dynamics to structural analysis, I bridge the gap between physics and code.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="./projects.html" class="btn btn-primary">View My Work</a>
+                        <a href="./contact.html" class="btn btn-secondary">Get In Touch</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="./assets/images/El_Salvador_K59.JPG" alt="Profile picture of Sean Bowman" class="profile-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about">
+            <div class="container">
+                <h2 class="section-title">About Me</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>
+                            I'm a Propulsion Design Engineer and Computational Engineering Lead with a
+                            passion for solving complex engineering challenges. I specialize in propulsion
+                            system design, computational fluid dynamics, and building simulation tools
+                            that accelerate the engineering workflow.
+                        </p>
+                        <p>
+                            My work sits at the intersection of aerospace engineering and software development,
+                            where I leverage programming to automate analyses, develop custom solvers, and
+                            create tools that turn raw data into actionable design insights.
+                        </p>
+                        <p>
+                            When I'm not engineering, you can find me chasing waves and surfing.
+                        </p>
+                    </div>
+
+                    <div class="about-skills">
+                        <h3>Skills & Technologies</h3>
+                        <div class="skills-grid">
+                            <!-- REPLACE: Add your actual skills -->
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">React</span>
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">SQL</span>
+                            <span class="skill-tag">REST APIs</span>
+                            <!-- Add more skills as needed -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Projects Section -->
+        <section class="featured-projects">
+            <div class="container">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-description">Here are some highlights from my recent work</p>
+
+                <div class="projects-grid">
+                    <!-- Dynamically populated from GitHub API -->
+                </div>
+
+                <div class="view-all">
+                    <a href="./projects.html" class="btn btn-primary">View All Projects</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Sean Bowman. All rights reserved.</p>
+            <div class="footer-links">
+                <!-- REPLACE: Add your social media links -->
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a href="#" aria-label="Email">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./js/navigation.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/github.js"></script>
+</body>
+</html>

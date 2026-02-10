@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch - contact me for collaboration, opportunities, or inquiries">
+    <meta name="keywords" content="contact, email, collaboration, hire, inquiries">
+    <meta name="author" content="Sean Bowman">
+    <title>Contact | Sean Bowman</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/navigation.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./index.html" class="nav-logo">
+                <!-- REPLACE: Your Name or Logo -->
+                Sean Bowman
+            </a>
+
+            <button class="nav-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="./index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./projects.html" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./contact.html" class="nav-link active">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Contact Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">Get In Touch</h1>
+                <p class="page-description">
+                    I'm always open to new opportunities, collaborations, and interesting conversations.
+                    Feel free to reach out!
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Content -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="contact-grid">
+                    <!-- Contact Form -->
+                    <div class="contact-form-container">
+                        <h2>Send Me a Message</h2>
+                        <p class="form-note">
+                            <!-- NOTE: This form requires a backend service to function -->
+                            <!-- Options: Formspree (https://formspree.io), FormSubmit (https://formsubmit.co), -->
+                            <!-- Netlify Forms, or your own backend -->
+                            <!-- REPLACE: Add action URL from your chosen form service -->
+                        </p>
+
+                        <form class="contact-form" id="contactForm" action="#" method="POST">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    required
+                                    placeholder="Your name"
+                                    minlength="2"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    placeholder="your.email@example.com"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="subject">Subject *</label>
+                                <input
+                                    type="text"
+                                    id="subject"
+                                    name="subject"
+                                    required
+                                    placeholder="What's this about?"
+                                    minlength="3"
+                                >
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message *</label>
+                                <textarea
+                                    id="message"
+                                    name="message"
+                                    required
+                                    rows="6"
+                                    placeholder="Your message here..."
+                                    minlength="10"
+                                ></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary btn-submit">
+                                Send Message
+                            </button>
+
+                            <p class="form-status" id="formStatus"></p>
+                        </form>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="contact-info">
+                        <h2>Other Ways to Connect</h2>
+
+                        <div class="contact-methods">
+                            <div class="contact-method">
+                                <h3>Email</h3>
+                                <p>
+                                    <!-- REPLACE: Your email address -->
+                                    <a href="mailto:seanbowman9@gmail.com">seanbowman9@gmail.com</a>
+                                </p>
+                            </div>
+
+                            <div class="contact-method">
+                                <h3>Social Media</h3>
+                                <div class="social-links">
+                                    <!-- REPLACE: Your social media URLs -->
+                                    <a href="https://github.com/yourusername" class="social-link" target="_blank" rel="noopener noreferrer">
+                                        <span class="social-icon">📦</span>
+                                        <span>GitHub</span>
+                                    </a>
+                                    <a href="https://linkedin.com/in/yourusername" class="social-link" target="_blank" rel="noopener noreferrer">
+                                        <span class="social-icon">💼</span>
+                                        <span>LinkedIn</span>
+                                    </a>
+                                    <a href="https://twitter.com/yourusername" class="social-link" target="_blank" rel="noopener noreferrer">
+                                        <span class="social-icon">🐦</span>
+                                        <span>Twitter</span>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="contact-method">
+                                <h3>Location</h3>
+                                <p>
+                                    <!-- REPLACE: Your location (city, country) -->
+                                    [Your City, Country]
+                                </p>
+                            </div>
+
+                            <div class="contact-method">
+                                <h3>Availability</h3>
+                                <p>
+                                    <!-- REPLACE: Your availability status -->
+                                    Currently open to new opportunities and collaborations.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Optional: Resume/CV Download -->
+                        <div class="resume-download">
+                            <h3>Resume</h3>
+                            <p>Interested in working together?</p>
+                            <!-- REPLACE: Add link to your resume/CV -->
+                            <a href="#" class="btn btn-outline" download>Download Resume (PDF)</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section (Optional) -->
+        <section class="faq-section">
+            <div class="container">
+                <h2 class="section-title">Frequently Asked Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <h3>What's the best way to reach you?</h3>
+                        <p>
+                            Email is usually the fastest way to get in touch. I typically respond within 24-48 hours.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>Are you available for freelance work?</h3>
+                        <p>
+                            <!-- REPLACE: Your availability for freelance -->
+                            It depends on the project and timeline. Feel free to reach out with details,
+                            and we can discuss if it's a good fit.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>Do you collaborate on open-source projects?</h3>
+                        <p>
+                            <!-- REPLACE: Your open-source stance -->
+                            Absolutely! I'm always interested in contributing to meaningful open-source projects.
+                            Send me the details and I'll let you know if I can help.
+                        </p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>Can you help with my project/idea?</h3>
+                        <p>
+                            <!-- REPLACE: Your consulting stance -->
+                            Maybe! I'm happy to discuss your project and see if my skills align with your needs.
+                            Reach out and tell me more about it.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Sean Bowman. All rights reserved.</p>
+            <div class="footer-links">
+                <!-- REPLACE: Add your social media links -->
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a href="#" aria-label="Email">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./js/navigation.js"></script>
+    <script src="./js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# Editor Files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Claude Code local settings
+.claude/
+
+# Temporary Files
+*.tmp
+*.tmp.*
+*.temp
+*.cache
+tmpclaude-*
+nul
+
+# Node modules (if you add Node.js later)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs (if you add a build process later)
+dist/
+build/
+
+# Backup files
+*.bak
+*.backup
+
+# Mac specific
+*.dmg
+
+# Windows specific
+*.lnk
+
+# Archives
+*.zip
+*.tar
+*.gz
+
+# Large media files (optional - uncomment if needed)
+# *.mp4
+# *.mov
+# *.avi
+
+# Keep this file
+!.gitignore

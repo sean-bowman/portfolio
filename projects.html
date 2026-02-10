@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore my portfolio of software development and technical projects">
+    <meta name="keywords" content="projects, portfolio, software, web development, coding">
+    <meta name="author" content="Sean Bowman">
+    <title>Projects | Sean Bowman</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/navigation.css">
+    <link rel="stylesheet" href="./css/components.css">
+    <link rel="stylesheet" href="./css/responsive.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="./index.html" class="nav-logo">
+                <!-- REPLACE: Your Name or Logo -->
+                Sean Bowman
+            </a>
+
+            <button class="nav-toggle" aria-label="Toggle navigation menu">
+                <span class="hamburger"></span>
+            </button>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="./index.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./projects.html" class="nav-link active">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="./contact.html" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Projects Header -->
+        <section class="page-header">
+            <div class="container">
+                <h1 class="page-title">My Projects</h1>
+                <p class="page-description">
+                    A collection of my software development work, experiments, and technical projects.
+                    Click on any project to learn more about it.
+                </p>
+            </div>
+        </section>
+
+        <!-- Projects Grid -->
+        <section class="projects-section">
+            <div class="container">
+                <div class="projects-grid">
+                    <!-- Dynamically populated from GitHub API -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Sean Bowman. All rights reserved.</p>
+            <div class="footer-links">
+                <!-- REPLACE: Add your social media links -->
+                <a href="#" aria-label="GitHub">GitHub</a>
+                <a href="#" aria-label="LinkedIn">LinkedIn</a>
+                <a href="#" aria-label="Email">Email</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="./js/navigation.js"></script>
+    <script src="./js/main.js"></script>
+    <script src="./js/github.js"></script>
+    <script src="./js/projects.js"></script>
+</body>
+</html>

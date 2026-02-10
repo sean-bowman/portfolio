@@ -1,0 +1,32 @@
+<svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="projGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="400" fill="url(#projGrad1)"/>
+
+  <!-- Code/Monitor Icon -->
+  <rect x="150" y="100" width="300" height="180" rx="8" fill="rgba(255,255,255,0.2)" stroke="rgba(255,255,255,0.4)" stroke-width="3"/>
+  <rect x="160" y="110" width="280" height="140" fill="rgba(0,0,0,0.2)"/>
+
+  <!-- Code Lines -->
+  <line x1="180" y1="130" x2="280" y2="130" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="180" y1="150" x2="380" y2="150" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="180" y1="170" x2="320" y2="170" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="180" y1="190" x2="340" y2="190" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="180" y1="210" x2="260" y2="210" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+  <line x1="180" y1="230" x2="400" y2="230" stroke="rgba(255,255,255,0.6)" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Monitor Stand -->
+  <rect x="280" y="280" width="40" height="40" fill="rgba(255,255,255,0.3)"/>
+  <rect x="240" y="320" width="120" height="10" rx="5" fill="rgba(255,255,255,0.3)"/>
+
+  <!-- Text -->
+  <text x="300" y="370" font-family="Arial, sans-serif" font-size="18" fill="white" text-anchor="middle" font-weight="bold">
+    Project Screenshot (600x400)
+  </text>
+</svg>
