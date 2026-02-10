@@ -346,112 +346,72 @@ ul, ol {
 }
 
 
-/* Contact Section */
-.contact-section {
+/* Connect Section */
+.connect-section {
     padding: var(--spacing-lg) 0;
 }
 
-.contact-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-lg);
-    margin-top: var(--spacing-md);
-}
-
-.contact-form-container h2,
-.contact-info h2 {
-    margin-bottom: var(--spacing-sm);
-}
-
-.form-note {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    margin-bottom: var(--spacing-md);
-    padding: var(--spacing-sm);
-    background-color: var(--background-alt);
-    border-left: 4px solid var(--primary-color);
-    border-radius: var(--border-radius-sm);
-}
-
-.contact-methods {
+.connect-content {
+    max-width: 700px;
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
 }
 
-.contact-method h3 {
+.connect-method h3 {
     font-size: var(--font-size-lg);
     margin-bottom: var(--spacing-xs);
 }
 
-.contact-method p {
+.connect-method p {
     font-size: var(--font-size-base);
 }
 
-.social-links {
+.social-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.social-card {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
-}
-
-.social-link {
-    display: flex;
     align-items: center;
     gap: var(--spacing-xs);
-    padding: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background-color: var(--background-alt);
+    border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     transition: var(--transition-fast);
+    text-align: center;
 }
 
-.social-link:hover {
-    background-color: var(--background-alt);
+.social-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-md);
 }
 
-.social-icon {
-    font-size: var(--font-size-xl);
+.social-card .social-icon {
+    font-size: var(--font-size-3xl);
 }
 
-.resume-download {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-md);
-    background-color: var(--background-alt);
-    border-radius: var(--border-radius);
-}
-
-.resume-download h3 {
-    margin-bottom: var(--spacing-xs);
-}
-
-
-/* FAQ Section */
-.faq-section {
-    padding: var(--spacing-lg) 0;
-    background-color: var(--background-alt);
-}
-
-.faq-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-md);
-}
-
-.faq-item {
-    padding: var(--spacing-md);
-    background-color: var(--background);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow-sm);
-}
-
-.faq-item h3 {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-xs);
+.social-card .social-label {
+    font-weight: 600;
     color: var(--text-primary);
 }
 
-.faq-item p {
-    color: var(--text-secondary);
-    margin-bottom: 0;
+.connect-resume {
+    padding: var(--spacing-md);
+    background-color: var(--background-alt);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.connect-resume h3 {
+    margin-bottom: var(--spacing-xs);
 }
 
 

@@ -7,6 +7,7 @@
 const githubUsername = 'sean-bowman';
 const cacheKey = 'github_repos';
 const cacheTtl = 5 * 60 * 1000; // 5 minutes
+const portfolioRepoName = 'portfolio'; // Exclude from featured section
 
 document.addEventListener('DOMContentLoaded', () => {
     initGitHubProjects();
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
  * Initialize GitHub project cards on the current page.
  * Finds all .projects-grid containers, shows a loading state,
  * fetches repos from the GitHub API, and renders cards into each grid.
- * Featured sections (on index.html) are limited to 2 repos.
+ * Featured sections (on index.html) are limited to 3 repos.
  */
 async function initGitHubProjects() {
     const grids = document.querySelectorAll('.projects-grid');
@@ -29,7 +30,10 @@ async function initGitHubProjects() {
         const repos = await fetchGitHubRepos(githubUsername);
         grids.forEach(grid => {
             const isFeatured = grid.closest('.featured-projects') !== null;
-            const displayRepos = isFeatured ? repos.slice(0, 2) : repos;
+            // Featured section excludes this portfolio repo and limits to 3
+            const displayRepos = isFeatured
+                ? repos.filter(repo => repo.name.toLowerCase() !== portfolioRepoName).slice(0, 3)
+                : repos;
             renderProjectCards(displayRepos, grid);
         });
     } catch (error) {

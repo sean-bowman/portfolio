@@ -38,16 +38,6 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* Contact Grid */
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* FAQ Grid */
-    .faq-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
     /* Footer */
     .footer .container {
         flex-direction: row;
@@ -100,10 +90,6 @@
         grid-template-columns: repeat(3, 1fr);
     }
 
-    /* Contact Grid - 2 columns */
-    .contact-grid {
-        grid-template-columns: 1.5fr 1fr;
-    }
 }
 
 
@@ -155,8 +141,7 @@
     .about,
     .featured-projects,
     .projects-section,
-    .contact-section,
-    .faq-section {
+    .connect-section {
         padding: var(--spacing-md) 0 var(--spacing-lg) 0;
     }
 
@@ -194,25 +179,6 @@
     }
 
     .filter-btn {
-        width: 100%;
-    }
-
-    /* Contact form full width */
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* FAQ single column */
-    .faq-grid {
-        grid-template-columns: 1fr;
-    }
-
-    /* Social links full width */
-    .social-links {
-        width: 100%;
-    }
-
-    .social-link {
         width: 100%;
     }
 
@@ -272,10 +238,6 @@
         grid-template-columns: repeat(2, 1fr);
     }
 
-    /* Contact grid single column */
-    .contact-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 
@@ -311,8 +273,7 @@
     }
 
     /* Page breaks */
-    .project-card,
-    .faq-item {
+    .project-card {
         page-break-inside: avoid;
     }
 
