@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Explore my portfolio of software development and technical projects">
-    <meta name="keywords" content="projects, portfolio, software, web development, coding">
+    <meta name="description" content="3D model showcase - interactive STL viewer for engineering and design models">
+    <meta name="keywords" content="3D models, STL viewer, Three.js, engineering, CAD, showcase">
     <meta name="author" content="Sean Bowman">
-    <title>Projects | Sean Bowman</title>
+    <title>Showcase | Sean Bowman</title>
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="./css/main.css">
@@ -16,13 +16,22 @@
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+
+    <!-- Three.js Import Map (ES Module imports without a bundler) -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.163.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.163.0/examples/jsm/"
+        }
+    }
+    </script>
 </head>
 <body>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="./index.html" class="nav-logo">
-                <!-- REPLACE: Your Name or Logo -->
                 Sean Bowman
             </a>
 
@@ -35,7 +44,7 @@
                     <a href="./index.html" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="./projects.html" class="nav-link active">Projects</a>
+                    <a href="./projects.html" class="nav-link">Projects</a>
                 </li>
                 <li class="nav-item">
                     <a href="./showcase.html" class="nav-link">Showcase</a>
@@ -49,22 +58,21 @@
 
     <!-- Main Content -->
     <main>
-        <!-- Projects Header -->
+        <!-- Page Header -->
         <section class="page-header">
             <div class="container">
-                <h1 class="page-title">My Projects</h1>
+                <h1 class="page-title">3D Showcase</h1>
                 <p class="page-description">
-                    A collection of my software development work, experiments, and technical projects.
-                    Click on any project to learn more about it.
+                    Interactive 3D models rendered in the browser. Drag to orbit, scroll to zoom, and right-click to pan.
                 </p>
             </div>
         </section>
 
-        <!-- Projects Grid -->
-        <section class="projects-section">
+        <!-- Showcase Grid -->
+        <section class="showcase-section">
             <div class="container">
-                <div class="projects-grid">
-                    <!-- Dynamically populated from GitHub API -->
+                <div class="showcase-grid" id="showcaseGrid">
+                    <!-- Populated by showcase.js -->
                 </div>
             </div>
         </section>
@@ -75,7 +83,6 @@
         <div class="container">
             <p>&copy; 2026 Sean Bowman. All rights reserved.</p>
             <div class="footer-links">
-                <!-- REPLACE: Add your social media links -->
                 <a href="#" aria-label="GitHub">GitHub</a>
                 <a href="#" aria-label="LinkedIn">LinkedIn</a>
                 <a href="#" aria-label="Email">Email</a>
@@ -86,7 +93,8 @@
     <!-- Scripts -->
     <script src="./js/navigation.js"></script>
     <script src="./js/main.js"></script>
-    <script src="./js/github.js"></script>
-    <script src="./js/projects.js"></script>
+
+    <!-- Showcase module (uses import map for Three.js) -->
+    <script src="./js/showcase.js" type="module"></script>
 </body>
 </html>
