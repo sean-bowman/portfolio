@@ -13,12 +13,21 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
    MODEL CONFIGURATION
    Add new models here to display them
    on the showcase page.
+
+   TODO: Replace these placeholders with real outputs from across the
+   repositories. Planned showcase items:
+     - Parametric surfboard (computationalEngineering/parametricSurfboard)
+       exported to STL and loaded via filePath.
+     - 3D-printable rocket nozzle geometry (PicoGK, languageShowcase).
+     - Additional visual outputs as projects produce exportable models.
+   To add one: export an STL into assets/models/, then set filePath to
+   './assets/models/<name>.stl' on a new entry below.
    ======================================== */
 
 const showcaseModels = [
     {
         name: 'Wireframe Icosahedron',
-        description: 'A placeholder wireframe shape demonstrating the Three.js viewer. Replace with real STL models as they become available.',
+        description: 'A placeholder wireframe shape demonstrating the Three.js viewer. To be replaced with a parametric surfboard model exported from the computationalEngineering repository.',
         filePath: null,
         color: '#5eadb5',
         category: 'placeholder'
@@ -32,7 +41,7 @@ const showcaseModels = [
     },
     {
         name: 'Coming Soon',
-        description: 'More computational engineering models will be added here as projects develop.',
+        description: 'A parametric surfboard and other visual outputs from across the repositories — rocket nozzle geometry, simulation results, and more — will be added here as exportable models become available.',
         filePath: null,
         color: '#94a3b8',
         category: 'placeholder'
