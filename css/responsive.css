@@ -84,9 +84,9 @@
         margin-right: 0;
     }
 
-    /* About Section - 2 columns */
+    /* About Section - bio on top, skills full-width below (single column) */
     .about-content {
-        grid-template-columns: 2fr 1fr;
+        grid-template-columns: 1fr;
         gap: var(--spacing-lg);
     }
 

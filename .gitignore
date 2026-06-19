@@ -65,10 +65,11 @@ build/
 *.tar
 *.gz
 
-# Large media files (optional - uncomment if needed)
-# *.mp4
-# *.mov
-# *.avi
+# Raw / source video (keep only the compressed clips under assets/video/)
+assets/images/personal/*.mp4
+*.DVR.mp4
+*.mov
+*.avi
 
 # Keep this file
 !.gitignore

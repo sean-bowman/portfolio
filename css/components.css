@@ -574,3 +574,150 @@
     color: var(--error);
     background-color: var(--background-dark);
 }
+
+
+/* ========================================
+   PERSONAL / BEYOND ENGINEERING
+   ======================================== */
+
+.personal-section {
+    padding: var(--spacing-lg) 0;
+}
+
+.personal-section.alt {
+    background-color: var(--background-alt);
+}
+
+.personal-intro {
+    max-width: 70ch;
+    margin: 0 auto var(--spacing-md);
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+}
+
+/* Featured photo + caption block (alternating image/text layout) */
+.feature-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.feature-block:last-child {
+    margin-bottom: 0;
+}
+
+/* Side-by-side image/text on tablet and up; alternate sides with .reverse */
+@media (min-width: 768px) {
+    .feature-block {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .feature-block.reverse .feature-media {
+        order: 2;
+    }
+}
+
+/* Text-only feature block (no media): single centered column */
+.feature-block.text-only {
+    grid-template-columns: 1fr;
+    max-width: 70ch;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.feature-body h3 {
+    color: var(--primary-light);
+    margin-bottom: var(--spacing-xs);
+}
+
+.feature-body p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-base);
+    line-height: 1.8;
+}
+
+.feature-media {
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-md);
+}
+
+.feature-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Styled placeholder shown until real photos/video are dropped in */
+.media-placeholder {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    background: linear-gradient(135deg, var(--background-alt) 0%, var(--background-dark) 100%);
+    border: 1px dashed var(--border-dark);
+    border-radius: var(--border-radius-lg);
+    color: var(--text-light);
+    text-align: center;
+    padding: var(--spacing-md);
+}
+
+.media-placeholder .placeholder-icon {
+    font-size: var(--font-size-4xl);
+    opacity: 0.6;
+}
+
+.media-placeholder .placeholder-label {
+    font-size: var(--font-size-sm);
+}
+
+/* Responsive 16:9 video embed wrapper */
+.video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-md);
+    background-color: var(--background-dark);
+}
+
+.video-embed iframe,
+.video-embed video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-embed.media-placeholder {
+    aspect-ratio: 16 / 9;
+}
+
+/* Beyond Engineering teaser card (lives in the Home About column) */
+.teaser-card {
+    margin-top: var(--spacing-md);
+    background: linear-gradient(135deg, var(--background-alt) 0%, var(--background-dark) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+}
+
+.teaser-card h3 {
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-light);
+}
+
+.teaser-card p {
+    margin: 0 0 var(--spacing-md);
+    color: var(--text-secondary);
+}
