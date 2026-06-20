@@ -1,6 +1,6 @@
 # Personal Code Styling Guidelines
 
-This document provides soft guidelines for coding practices to help you write code that integrates naturally with the existing codebase. These are not strict rules—use your judgment, prioritize clarity, and ask questions when uncertain.
+This document provides soft guidelines for coding practices to help you write code that integrates naturally with the existing codebase. These are not strict rules: use your judgment, prioritize clarity, and ask questions when uncertain.
 
 The goal is consistency and readability, not rigid enforcement. These conventions apply across all languages in this repository.
 
@@ -464,7 +464,7 @@ All other languages in this repository (JavaScript, Python, C++, C#) follow the 
 
 ## Philosophy
 
-1. **Clarity over cleverness** — Write code that's easy to read and maintain
-2. **Document the "why"** — Comments should explain intent, not repeat what the code does
-3. **Consistency within a file** — If you're editing an existing file, match its style
-4. **Ask when uncertain** — When patterns are ambiguous, ask the team
+1. **Clarity over cleverness**: Write code that's easy to read and maintain
+2. **Document the "why"**: Comments should explain intent, not repeat what the code does
+3. **Consistency within a file**: If you're editing an existing file, match its style
+4. **Ask when uncertain**: When patterns are ambiguous, ask the team

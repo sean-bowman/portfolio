@@ -41,7 +41,7 @@ const showcaseModels = [
     },
     {
         name: 'Coming Soon',
-        description: 'A parametric surfboard and other visual outputs from across the repositories — rocket nozzle geometry, simulation results, and more — will be added here as exportable models become available.',
+        description: 'A parametric surfboard and other visual outputs from across the repositories, rocket nozzle geometry, simulation results, and more, will be added here as exportable models become available.',
         filePath: null,
         color: '#94a3b8',
         category: 'placeholder'
