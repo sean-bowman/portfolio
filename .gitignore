@@ -54,6 +54,9 @@ build/
 *.bak
 *.backup
 
+# Local palette QA files (theme-palettes skill), not part of the live site
+palette-showcase/
+
 # Mac specific
 *.dmg
 
