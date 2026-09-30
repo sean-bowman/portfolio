@@ -16,9 +16,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
    TODO: Replace these placeholders with real outputs from across the
    repositories. Planned showcase items:
-     - Parametric surfboard (computationalEngineering/parametricSurfboard)
+     - Parametric surfboard (pySurf/parametricSurfboard)
        exported to STL and loaded via filePath.
-     - 3D-printable rocket nozzle geometry (PicoGK, languageShowcase).
      - Additional visual outputs as projects produce exportable models.
    To add one: export an STL into assets/models/, then set filePath to
    './assets/models/<name>.stl' on a new entry below.
@@ -27,7 +26,7 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 const showcaseModels = [
     {
         name: 'Wireframe Icosahedron',
-        description: 'A placeholder wireframe shape demonstrating the Three.js viewer. To be replaced with a parametric surfboard model exported from the computationalEngineering repository.',
+        description: 'A placeholder wireframe shape demonstrating the Three.js viewer. To be replaced with a parametric surfboard model exported from the pySurf repository.',
         filePath: null,
         color: '#5eadb5',
         category: 'placeholder'
