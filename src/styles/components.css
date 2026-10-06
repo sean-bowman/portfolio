@@ -588,9 +588,8 @@
     aspect-ratio: 16 / 9;
 }
 
-/* Beyond Engineering teaser card (lives in the Home About column) */
+/* Beyond Engineering teaser card, beside the bio in the Home About section */
 .teaser-card {
-    margin-top: var(--spacing-md);
     background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
     border: 1px solid var(--border);
     border-radius: var(--border-radius-lg);

@@ -24,7 +24,8 @@ export const sitePages = [
 
 /** Home page sections linked from the footer site map, by element id */
 export const homeSections = [
-    { label: 'Experience', id: 'experience' }
+    { label: 'Experience', id: 'experience' },
+    { label: 'Tools and Methods', id: 'tools' }
 ];
 
 /** External profiles shown in the footer and on the contact page */

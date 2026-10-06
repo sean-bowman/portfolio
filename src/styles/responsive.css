@@ -79,10 +79,11 @@
         margin-right: 0;
     }
 
-    /* About Section - bio on top, skills full-width below (single column) */
+    /* About Section - bio beside the Beyond Engineering teaser */
     .about-content {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
         gap: var(--spacing-lg);
+        align-items: start;
     }
 
     /* Projects Grid - 3 columns */

@@ -1,7 +1,7 @@
 ---
 /* ========================================
    HOME PAGE
-   Hero, about, skills, experience, and featured repositories
+   Hero, about, experience, tools, and featured repositories
    Sean Bowman [10/05/2026]
    ======================================== */
 
@@ -9,6 +9,7 @@ import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Experience from '../components/Experience.astro';
+import Tools from '../components/Tools.astro';
 import { getFeaturedRepos } from '../lib/github.js';
 import { withBase } from '../lib/paths.js';
 import heroImage from '../assets/images/El_Salvador_K59.JPG';
@@ -75,122 +76,24 @@ const featuredRepos = await getFeaturedRepos();
                         automation ranging from Playwright browsers to Raspberry Pi Pico HID provisioning --
                         turning raw physics into tools and actionable design insight.
                     </p>
-
-                    <!-- Beyond Engineering teaser: sits under the bio to balance the skills column -->
-                    <div class="teaser-card">
-                        <h3>Beyond Engineering</h3>
-                        <p>
-                            There's more to me than solvers and CAD: a lifelong surfer and
-                            waterman, a husband and dad of three, and a traveler who's chased
-                            waves from California to Ireland.
-                        </p>
-                        <a href={withBase('beyond-engineering')} class="btn btn-secondary">Get to Know Me</a>
-                    </div>
                 </div>
 
-                <div class="about-skills">
-                    <h3>Skills &amp; Technologies</h3>
-                    <p class="skills-intro">
-                        A blend of my public open-source work and professional engineering practice:
-                        from numerical simulation, 3D geometry, and web tooling to industry CAD/CAE,
-                        test operations, and team leadership.
+                <aside class="teaser-card">
+                    <h3>Beyond Engineering</h3>
+                    <p>
+                        There's more to me than solvers and CAD: a lifelong surfer and
+                        waterman, a husband and dad of three, and a traveler who's chased
+                        waves from California to Ireland.
                     </p>
-                    <div class="skills-categories">
-                        <div class="skill-category">
-                            <h4 class="skill-category-title">Languages</h4>
-                            <div class="skills-grid">
-                                <span class="skill-tag">Python</span>
-                                <span class="skill-tag">C#</span>
-                                <span class="skill-tag">C++</span>
-                                <span class="skill-tag">JavaScript</span>
-                                <span class="skill-tag">Rust</span>
-                                <span class="skill-tag">MATLAB</span>
-                                <span class="skill-tag">Fortran</span>
-                                <span class="skill-tag">VBScript</span>
-                                <span class="skill-tag">HTML/CSS</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category-title">Scientific Computing</h4>
-                            <div class="skills-grid">
-                                <span class="skill-tag">NumPy / SciPy</span>
-                                <span class="skill-tag">Plotly</span>
-                                <span class="skill-tag">Manim</span>
-                                <span class="skill-tag">SPH / CFD</span>
-                                <span class="skill-tag">Computational Geometry (PicoGK)</span>
-                                <span class="skill-tag">STL / Mesh Processing</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category-title">Engineering &amp; Simulation</h4>
-                            <div class="skills-grid">
-                                <span class="skill-tag">Propulsion &amp; Aerospace</span>
-                                <span class="skill-tag">Thermo-Fluids</span>
-                                <span class="skill-tag">Conjugate Heat Transfer</span>
-                                <span class="skill-tag">Method of Characteristics</span>
-                                <span class="skill-tag">REFPROP / CoolProp</span>
-                                <span class="skill-tag">NASA CEA</span>
-                                <span class="skill-tag">GFSSP</span>
-                                <span class="skill-tag">Numerical Methods</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category-title">CAD / CAE / PLM</h4>
-                            <div class="skills-grid">
-                                <span class="skill-tag">Siemens NX</span>
-                                <span class="skill-tag">SolidWorks</span>
-                                <span class="skill-tag">Simcenter Nastran</span>
-                                <span class="skill-tag">STAR-CCM+</span>
-                                <span class="skill-tag">ANSYS Fluent</span>
-                                <span class="skill-tag">Teamcenter (PLM)</span>
-                                <span class="skill-tag">LPBF / Additive Manufacturing</span>
-                                <span class="skill-tag">LaTeX</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category-title">Web &amp; Visualization</h4>
-                            <div class="skills-grid">
-                                <span class="skill-tag">Three.js / WebGL</span>
-                                <span class="skill-tag">Streamlit</span>
-                                <span class="skill-tag">Vite</span>
-                                <span class="skill-tag">Inline SVG</span>
-                                <span class="skill-tag">REST APIs</span>
-                                <span class="skill-tag">GitHub Pages</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category-title">Automation &amp; Systems</h4>
-                            <div class="skills-grid">
-                                <span class="skill-tag">Playwright</span>
-                                <span class="skill-tag">Web Scraping</span>
-                                <span class="skill-tag">PowerShell / winget</span>
-                                <span class="skill-tag">Raspberry Pi Pico (USB HID)</span>
-                                <span class="skill-tag">Email Automation (SMTP)</span>
-                                <span class="skill-tag">Tor / Self-Hosting</span>
-                                <span class="skill-tag">Git</span>
-                            </div>
-                        </div>
-                        <div class="skill-category">
-                            <h4 class="skill-category-title">Process &amp; Leadership</h4>
-                            <div class="skills-grid">
-                                <span class="skill-tag">Program Management</span>
-                                <span class="skill-tag">Mission Assurance</span>
-                                <span class="skill-tag">Test Planning &amp; Operations</span>
-                                <span class="skill-tag">Risk Assessment</span>
-                                <span class="skill-tag">DFM / DFA</span>
-                                <span class="skill-tag">Code Review</span>
-                                <span class="skill-tag">Technical Documentation</span>
-                                <span class="skill-tag">Team Leadership &amp; Mentorship</span>
-                                <span class="skill-tag">Jira / Confluence / Bitbucket</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <a href={withBase('beyond-engineering')} class="btn btn-secondary">Get to Know Me</a>
+                </aside>
             </div>
         </div>
     </section>
 
     <Experience />
+
+    <Tools />
 
     <!-- Featured Projects Section -->
     <section class="featured-projects">

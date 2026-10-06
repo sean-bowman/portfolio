@@ -241,7 +241,7 @@ ul, ol {
     margin-top: var(--spacing-md);
 }
 
-/* Keep the bio at a readable line length now that it spans full width */
+/* Bio at a readable line length; the Beyond Engineering teaser sits beside it on desktop */
 .about-text {
     max-width: 75ch;
 }
@@ -252,60 +252,10 @@ ul, ol {
     margin-bottom: var(--spacing-sm);
 }
 
-.about-skills h3 {
-    margin-bottom: var(--spacing-xs);
-    color: var(--text);
-}
-
-.skills-intro {
-    color: var(--text-muted);
-    font-size: var(--font-size-sm);
-    line-height: 1.7;
-    margin-bottom: var(--spacing-md);
-    max-width: 60ch;
-}
-
-.skills-categories {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: var(--spacing-md);
-}
-
-.skill-category-title {
-    font-size: var(--font-size-sm);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent-text);
-    margin-bottom: var(--spacing-xs);
-}
-
-.skills-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-xs);
-}
-
-.skill-tag {
-    padding: 0.5rem 1rem;
-    background-color: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: var(--border-radius);
-    font-size: var(--font-size-sm);
-    color: var(--text);
-    transition: var(--transition-fast);
-}
-
-.skill-tag:hover {
-    background-color: var(--accent);
-    color: var(--on-accent);
-    border-color: var(--accent);
-}
-
-
 /* Featured Projects Section */
 .featured-projects {
     padding: var(--spacing-xl) 0;
-    background-color: var(--bg);
+    background-color: var(--surface-2);
 }
 
 .view-all {
