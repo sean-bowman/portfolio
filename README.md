@@ -1,316 +1,77 @@
-# Portfolio Website
+# Portfolio
 
-A clean, modern, and responsive portfolio website built with HTML, CSS, and JavaScript. Designed for easy deployment to GitHub Pages.
+Source for [sean-bowman.github.io/portfolio](https://sean-bowman.github.io/portfolio/): an Astro static site with Three.js model viewers, deployed to GitHub Pages by a GitHub Actions workflow.
 
-## Features
+## Contents
 
-- **Multi-page structure**: Home, Projects, and Contact pages
-- **Responsive design**: Works seamlessly on mobile, tablet, and desktop
-- **Project filtering**: Filter projects by category (Software/Coding, General/Mixed)
-- **Mobile navigation**: Hamburger menu for mobile devices
-- **Modern UI**: Clean design with smooth animations and transitions
-- **Accessible**: ARIA labels, semantic HTML, keyboard navigation support
-- **SEO optimized**: Meta tags and semantic structure
-- **Easy to customize**: Clear placeholders and CSS variables
+- [Stack](#stack)
+- [Develop](#develop)
+- [Project layout](#project-layout)
+- [Deploy](#deploy)
+- [Adding content](#adding-content)
+- [Conventions](#conventions)
 
-## Project Structure
+## Stack
 
-```
-githubPagesSite/
-├── index.html                 # Home/About page
-├── projects.html              # Projects showcase
-├── contact.html               # Contact page
-├── README.md                  # This file
-├── .gitignore                 # Git ignore rules
-│
-├── css/
-│   ├── main.css              # Core styles and CSS variables
-│   ├── navigation.css        # Navigation bar styles
-│   ├── components.css        # Reusable components
-│   └── responsive.css        # Media queries
-│
-├── js/
-│   ├── main.js               # General utilities
-│   ├── navigation.js         # Navigation functionality
-│   └── projects.js           # Project filtering
-│
-└── assets/
-    └── images/
-        ├── profile-placeholder.jpg
-        ├── project-placeholder-1.jpg
-        ├── project-placeholder-2.jpg
-        └── favicon.ico
-```
+- [Astro](https://astro.build/) 7, static output. Pages are `.astro` files that compile to plain HTML; JavaScript ships only where a page has a client script.
+- [Three.js](https://threejs.org/) from npm for the Showcase viewers, bundled into its own chunk that loads only on pages with a 3D element.
+- `astro:assets` for images: every photo is resized and re-encoded to AVIF and WebP at build time.
+- `@astrojs/sitemap` for `sitemap-index.xml`.
+- Node 22.12 or later.
 
-## Getting Started
+## Develop
 
-### 1. Local Development
-
-To view the site locally:
-
-**Option 1: Using Python**
 ```bash
-# Python 3
-python -m http.server 8000
-
-# Python 2
-python -m SimpleHTTPServer 8000
+npm install
+npm run dev        # http://localhost:4321/portfolio
+npm run build      # writes dist/
+npm run preview    # serves dist/ at http://localhost:4321/portfolio
 ```
 
-**Option 2: Using Node.js**
+The site is served under `/portfolio` (the `base` in `astro.config.mjs`), so local URLs carry that prefix too.
+
+## Project layout
+
+```text
+astro.config.mjs        site, base path, build format, integrations
+src/
+  layouts/              BaseLayout.astro: <head>, header, footer, shared scripts
+  components/           Header, Footer, ProjectCard
+  pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
+  data/                 pages.js (nav and footer links), models.js (showcase models), reposFallback.json
+  lib/                  github.js (build-time repository fetch), paths.js (base-path URLs)
+  scripts/              client scripts: nav.js, site.js, showcase.js
+  styles/               global CSS, imported by BaseLayout in cascade order
+  assets/images/        photos processed by astro:assets
+public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/video/, assets/models/
+.github/workflows/      deploy.yml
+```
+
+`build.format: 'file'` emits `projects.html` and so on, so the `.html` URLs published before the Astro migration still resolve. Nav links use the extensionless form (`/portfolio/projects`), which GitHub Pages maps to the same file.
+
+Navigation between pages goes through Astro's client router (`<ClientRouter />` in `BaseLayout.astro`), which swaps page content without a full reload. Bundled scripts therefore execute once per visit: anything tied to a page's DOM runs on the `astro:page-load` event, and click handlers are delegated from `document`.
+
+## Deploy
+
+Every push to `main` runs `.github/workflows/deploy.yml`, which builds with `withastro/action` and publishes with `actions/deploy-pages`. A daily scheduled run rebuilds the site so the repository cards stay current.
+
+The Projects page and the Featured Projects cards are fetched from the GitHub REST API at build time (`src/lib/github.js`), authenticated with the workflow's `GITHUB_TOKEN`. If the fetch fails, the build uses `src/data/reposFallback.json`. To refresh that snapshot:
+
 ```bash
-npx serve
+gh api 'users/sean-bowman/repos?type=owner&sort=updated&per_page=100' \
+  --jq '[.[] | select(.fork == false) | {name, description, language, updated_at, html_url}]' \
+  > src/data/reposFallback.json
 ```
 
-**Option 3: Using VS Code**
-- Install the "Live Server" extension
-- Right-click on `index.html` and select "Open with Live Server"
+Repository setting required once: Settings, Pages, Source: GitHub Actions.
 
-Then visit `http://localhost:8000` (or the port shown) in your browser.
+## Adding content
 
-### 2. Customization
+- **A page.** Add `src/pages/<name>.astro` wrapped in `<BaseLayout title description current>`, and an entry in `sitePages` in `src/data/pages.js` so it appears in the nav.
+- **A showcase model.** Export a mesh to `public/assets/models/` and add an entry to `showcaseModels` in `src/data/models.js` with `filePath: 'assets/models/<name>.stl'`.
+- **A photo.** Put it in `src/assets/images/`, import it in the page's frontmatter, and render it with `<Picture>` (see `beyond-engineering.astro` for the widths and sizes used by the feature blocks).
+- **The resume.** Replace `public/assets/resume.pdf`. The source is `Documents/Resume/Resume_Sean_Bowman_LinkedIn.tex`, the variant with the phone number redacted.
 
-#### Update Personal Information
+## Conventions
 
-Search for the following markers and replace with your information:
-
-- `[YOUR NAME]` - Your name
-- `[YOUR TITLE/ROLE]` - Your job title or role
-- `[YOUR BACKGROUND]` - Your background and experience
-- `[YOUR SPECIALTIES]` - Your areas of expertise
-- `[YOUR STORY]` - Your personal story
-- `[YOUR INTERESTS]` - Your interests and hobbies
-- `your.email@example.com` - Your email address
-- Social media URLs (GitHub, LinkedIn, Twitter)
-
-#### Change Colors
-
-Edit `css/main.css` and modify the CSS variables:
-
-```css
-:root {
-    --primary-color: #2563eb;      /* Change to your preferred color */
-    --secondary-color: #10b981;
-    /* ... other variables ... */
-}
-```
-
-#### Add Your Images
-
-Replace placeholder images in `assets/images/`:
-
-1. **Profile Photo** (`profile-placeholder.jpg`):
-   - Recommended size: 400x400px
-   - Square image works best
-   - Formats: JPG, PNG, or WebP
-
-2. **Project Screenshots** (`project-placeholder-1.jpg`, `project-placeholder-2.jpg`):
-   - Recommended size: 600x400px (3:2 aspect ratio)
-   - Clear screenshots of your projects
-   - Optimize images (keep under 500KB each)
-
-3. **Favicon** (`favicon.ico`):
-   - Size: 32x32px or 16x16px
-   - Use a favicon generator for best results
-
-#### Add/Edit Projects
-
-In `projects.html`, duplicate a project card and customize:
-
-```html
-<article class="project-card" data-category="software">
-    <div class="project-image">
-        <img src="./assets/images/your-project.jpg" alt="Project name">
-    </div>
-    <div class="project-content">
-        <div class="project-category">
-            <span class="category-badge software">Software/Coding</span>
-        </div>
-        <h3 class="project-title">Your Project Title</h3>
-        <p class="project-description">
-            Description of your project...
-        </p>
-        <div class="project-tags">
-            <span class="tag">JavaScript</span>
-            <span class="tag">React</span>
-        </div>
-        <div class="project-links">
-            <a href="https://your-demo.com" class="btn btn-outline btn-sm">Live Demo</a>
-            <a href="https://github.com/you/repo" class="btn btn-outline btn-sm">GitHub</a>
-        </div>
-    </div>
-</article>
-```
-
-**Important**: Set `data-category` to either `software` or `general` for filtering to work.
-
-#### Set Up Contact Form
-
-The contact form requires a backend service. Choose one:
-
-1. **Formspree** (https://formspree.io) - Free tier available
-2. **FormSubmit** (https://formsubmit.co) - Completely free
-3. **Netlify Forms** (https://www.netlify.com/products/forms/) - If hosting on Netlify
-4. **Your own backend** - Custom solution
-
-Update the form action in `contact.html`:
-
-```html
-<form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-```
-
-## Deploying to GitHub Pages
-
-### Option 1: User/Organization Site
-
-1. Create a repository named `username.github.io` (replace `username` with your GitHub username)
-
-2. Initialize git and push your code:
-```bash
-git init
-git add .
-git commit -m "Initial commit: Portfolio website"
-git branch -M main
-git remote add origin https://github.com/username/username.github.io.git
-git push -u origin main
-```
-
-3. Your site will be live at `https://username.github.io`
-
-### Option 2: Project Site
-
-1. Create a repository with any name (e.g., `portfolio`)
-
-2. Push your code:
-```bash
-git init
-git add .
-git commit -m "Initial commit: Portfolio website"
-git branch -M main
-git remote add origin https://github.com/username/portfolio.git
-git push -u origin main
-```
-
-3. Enable GitHub Pages:
-   - Go to repository Settings
-   - Navigate to "Pages" section
-   - Under "Source", select `main` branch and `/ (root)` folder
-   - Click "Save"
-
-4. Your site will be live at `https://username.github.io/portfolio`
-
-### Using a Custom Domain (Optional)
-
-1. Create a file named `CNAME` in the root directory with your domain:
-```
-yourdomain.com
-```
-
-2. Configure DNS settings with your domain provider:
-   - For apex domain (yourdomain.com):
-     - Create A records pointing to GitHub's IPs:
-       - 185.199.108.153
-       - 185.199.109.153
-       - 185.199.110.153
-       - 185.199.111.153
-   - For subdomain (www.yourdomain.com):
-     - Create CNAME record pointing to `username.github.io`
-
-3. In GitHub repository settings, under "Pages", enter your custom domain
-
-## Optimization Tips
-
-### Image Optimization
-
-- **Compress images**: Use tools like TinyPNG or ImageOptim
-- **Use appropriate formats**:
-  - JPG for photos
-  - PNG for graphics with transparency
-  - WebP for modern browsers (with fallback)
-- **Lazy loading**: Already implemented for images
-
-### Performance
-
-- All CSS and JS files are already optimized for performance
-- No external dependencies (no jQuery, no Bootstrap)
-- Minimal file sizes
-
-### SEO
-
-- Update meta tags in each HTML file:
-  - `<meta name="description">`
-  - `<meta name="keywords">`
-  - `<title>` tags
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## Accessibility Features
-
-- Semantic HTML5 elements
-- ARIA labels for screen readers
-- Keyboard navigation support
-- Sufficient color contrast (WCAG AA compliant)
-- Focus indicators for interactive elements
-- Alt text for images
-
-## Future Enhancements
-
-Ideas for extending your portfolio:
-
-1. **Blog section**: Add a `blog.html` page following the same pattern
-2. **Dark mode**: Uncomment dark mode CSS in `responsive.css`
-3. **Project detail pages**: Create individual pages for each project
-4. **Animations**: Enable scroll animations in `main.js`
-5. **Search functionality**: Enable project search in `projects.js`
-6. **Resume page**: Add a dedicated resume/CV page
-7. **Analytics**: Add Google Analytics tracking code
-8. **Testimonials**: Add a testimonials section to the home page
-
-## Troubleshooting
-
-### Site not loading on GitHub Pages
-
-- Check that you've enabled GitHub Pages in repository settings
-- Verify the branch and folder are correctly set
-- Wait 1-2 minutes after pushing changes (deployment takes time)
-- Check repository name matches pattern for user sites
-
-### Images not showing
-
-- Verify file paths are correct (case-sensitive on GitHub Pages)
-- Use relative paths starting with `./` (e.g., `./assets/images/photo.jpg`)
-- Check image files are committed to the repository
-
-### Contact form not working
-
-- Verify form action URL is set correctly
-- Check form service (Formspree, FormSubmit) is configured
-- Ensure form method is set to "POST"
-
-### Mobile menu not toggling
-
-- Check that `navigation.js` is loaded correctly
-- Verify no JavaScript errors in browser console
-- Ensure HTML class names match those in JavaScript
-
-## License
-
-This project is open source and available for personal use. Feel free to modify and customize it for your own portfolio.
-
-## Credits
-
-Created as a portfolio template for GitHub Pages deployment. Built with vanilla HTML, CSS, and JavaScript.
-
----
-
-**Need help?** Create an issue in the repository or reach out via the contact form on your deployed site.
-
-**Live Demo**: [Add your deployed URL here]
-
-**Last Updated**: January 2026
+camelCase JavaScript, kebab-case CSS classes and custom properties, single quotes, JSDoc on functions, and a header block with author and date at the top of every source file. Astro component files use PascalCase names. Client scripts carry `// @ts-check` so the editor type-checks them against the Three.js and Astro types.

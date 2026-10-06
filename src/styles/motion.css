@@ -1,0 +1,48 @@
+/* ========================================
+   MOTION
+   Entrance reveal, SVG draw-on, and offscreen pause (driven by src/scripts/motion.js)
+   ======================================== */
+
+/* Everything here is gated on html.anim, so visitors without JS or with reduced motion
+   see the final state. */
+
+/* Reveal: a keyframe animation on the standalone translate property, so it composes with
+   an element's own transform and leaves its transition list alone (card hover lifts keep
+   working). Removing .in resets the element for the next entrance. */
+html.anim [data-reveal] {
+    opacity: 0;
+}
+
+html.anim [data-reveal].in {
+    animation: reveal-rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+    animation-delay: calc(var(--d, 0) * 70ms);
+}
+
+@keyframes reveal-rise {
+    from {
+        opacity: 0;
+        translate: 0 22px;
+    }
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+/* Draw-on: every stroked shape carries pathLength="1", so one dash pattern draws any shape */
+html.anim [data-draw] [data-dl] {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--d, 0) * 60ms);
+}
+
+html.anim [data-draw].in [data-dl] {
+    stroke-dashoffset: 0;
+}
+
+/* Offscreen pause for infinite loops inside an svg[data-loops] */
+.is-paused,
+.is-paused * {
+    animation-play-state: paused !important;
+}

@@ -1,0 +1,42 @@
+---
+/* ========================================
+   PROJECTS PAGE
+   Every public, non-forked repository, fetched at build time
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getRepos } from '../lib/github.js';
+
+const repos = await getRepos();
+---
+
+<BaseLayout
+    title="Projects"
+    description="Sean Bowman's public repositories: computational engineering, simulation, web visualization, and automation."
+    current="projects"
+>
+    <!-- Projects Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">My Projects</h1>
+            <p class="page-description">
+                My public repositories: computational engineering, simulation,
+                web visualization, and automation. Pulled from GitHub; click any card to
+                explore the code.
+            </p>
+        </div>
+    </section>
+
+    <!-- Projects Grid -->
+    <section class="projects-section">
+        <div class="container">
+            <div class="projects-grid">
+                {repos.length > 0
+                    ? repos.map(repo => <ProjectCard repo={repo} headingLevel={2} />)
+                    : <p class="no-projects">No projects found.</p>}
+            </div>
+        </div>
+    </section>
+</BaseLayout>

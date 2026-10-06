@@ -1,0 +1,29 @@
+---
+/* ========================================
+   SITE FOOTER
+   Copyright line and external profile links
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import { externalLinks } from '../data/pages.js';
+
+// Build year, so the copyright line stays current without edits
+const buildYear = new Date().getFullYear();
+---
+
+<footer class="footer">
+    <div class="container">
+        <p>&copy; {buildYear} Sean Bowman. All rights reserved.</p>
+        <div class="footer-links">
+            {externalLinks.map(link => (
+                <a
+                    href={link.href}
+                    aria-label={link.label}
+                    {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                    {link.label}
+                </a>
+            ))}
+        </div>
+    </div>
+</footer>

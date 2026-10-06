@@ -1,0 +1,126 @@
+/* ========================================
+   COLOR TOKENS
+   Surfy Pastels palette (theme-palettes skill), light and dark
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+/*
+   Light is the palette default and sits on bare :root. Dark applies when the visitor's
+   OS prefers dark and no explicit choice is stored (the media query), or when
+   data-theme="dark" is set on <html> by the theme toggle. data-theme="light" pins light
+   regardless of the OS setting.
+
+   Beyond the palette's 17-variable contract, the site defines:
+     --accent-text  accent color for text (links, nav, labels). Light seafoam fails WCAG
+                    on sand (about 2.0:1), so light mode uses a deepened teal.
+     --on-accent    text placed on an --accent fill (buttons, badges).
+     --shadow-*     elevation shadows, softer on the light ground.
+   Light --text-muted is deepened from the palette's #6B7280 so it clears 4.5:1 on
+   --surface-2. Every text/background pair used on the site measures 4.58:1 or higher in
+   both modes (WCAG 2.x relative-luminance contrast).
+*/
+
+:root {
+    color-scheme: light;
+
+    /* Backgrounds */
+    --bg:           #F7F1E6;   /* warm sand */
+    --surface:      #FFFCF6;
+    --surface-2:    #EFE4CE;
+    --border:       #E1D3B8;
+
+    /* Text */
+    --text:         #3A3F4B;
+    --text-muted:   #5F6673;   /* palette #6B7280, deepened for contrast */
+    --text-dim:     #9CA3AF;   /* decorative only: fails contrast as text */
+
+    /* Accent */
+    --accent:       #4FBDB3;   /* seafoam turquoise: fills, strokes, borders, focus */
+    --accent-dim:   #3D9C93;
+    --accent-muted: #D8EFEC;
+    --accent-text:  #237068;   /* seafoam deepened for text: 5.2:1 on --bg */
+    --on-accent:    #16232A;   /* text on an --accent fill: 7.1:1 */
+
+    /* Semantic status colors */
+    --green:        #8FBF7F;
+    --red:          #E8776B;
+    --yellow:       #F0C36D;
+    --blue:         #7FB8D9;
+    --orange:       #F2A65A;
+    --purple:       #B79FD1;
+    --cyan:         #6FD1C7;
+
+    /* Elevation */
+    --shadow-sm:    0 1px 2px rgba(58, 63, 75, 0.08);
+    --shadow:       0 1px 3px rgba(58, 63, 75, 0.12);
+    --shadow-md:    0 4px 8px rgba(58, 63, 75, 0.12);
+    --shadow-lg:    0 10px 20px rgba(58, 63, 75, 0.14);
+}
+
+/* Dark variant: night ocean. Declared twice so the OS preference and an explicit
+   data-theme="dark" both reach it; keep the two blocks identical. */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        color-scheme: dark;
+
+        --bg:           #16232A;   /* night ocean */
+        --surface:      #1D2E36;
+        --surface-2:    #263C46;
+        --border:       #35505C;
+
+        --text:         #E8F0EC;
+        --text-muted:   #9FB3AE;
+        --text-dim:     #6B7F7A;
+
+        --accent:       #5FD4C7;
+        --accent-dim:   #47AFA3;
+        --accent-muted: #1E3B39;
+        --accent-text:  #5FD4C7;   /* the accent itself clears 9:1 on the dark ground */
+        --on-accent:    #16232A;
+
+        --green:        #9BCB86;
+        --red:          #F08A7C;
+        --yellow:       #F2CE82;
+        --blue:         #8FC4E3;
+        --orange:       #F5B072;
+        --purple:       #C6ACDE;
+        --cyan:         #7EDDD0;
+
+        --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
+        --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);
+        --shadow-md:    0 4px 6px rgba(0, 0, 0, 0.4);
+        --shadow-lg:    0 10px 15px rgba(0, 0, 0, 0.4);
+    }
+}
+
+:root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --bg:           #16232A;
+    --surface:      #1D2E36;
+    --surface-2:    #263C46;
+    --border:       #35505C;
+
+    --text:         #E8F0EC;
+    --text-muted:   #9FB3AE;
+    --text-dim:     #6B7F7A;
+
+    --accent:       #5FD4C7;
+    --accent-dim:   #47AFA3;
+    --accent-muted: #1E3B39;
+    --accent-text:  #5FD4C7;
+    --on-accent:    #16232A;
+
+    --green:        #9BCB86;
+    --red:          #F08A7C;
+    --yellow:       #F2CE82;
+    --blue:         #8FC4E3;
+    --orange:       #F5B072;
+    --purple:       #C6ACDE;
+    --cyan:         #7EDDD0;
+
+    --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md:    0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg:    0 10px 15px rgba(0, 0, 0, 0.4);
+}

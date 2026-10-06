@@ -1,0 +1,68 @@
+---
+/* ========================================
+   CONTACT PAGE
+   Email, profiles, location, and resume download
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths.js';
+---
+
+<BaseLayout
+    title="Contact"
+    description="Connect with Sean Bowman: find me on GitHub, LinkedIn, or reach out via email."
+    current="contact"
+>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Connect With Me</h1>
+        </div>
+    </section>
+
+    <!-- Connect Content -->
+    <section class="connect-section">
+        <div class="container">
+            <div class="connect-content">
+
+                <!-- Email -->
+                <div class="connect-method">
+                    <h2>Email</h2>
+                    <p>
+                        <a href="mailto:seanbowman9@gmail.com">seanbowman9@gmail.com</a>
+                    </p>
+                </div>
+
+                <!-- Social Links -->
+                <div class="connect-method">
+                    <h2>Find Me Online</h2>
+                    <div class="social-links-grid">
+                        <a href="https://github.com/sean-bowman" class="social-card" target="_blank" rel="noopener noreferrer">
+                            <span class="social-icon">&#128230;</span>
+                            <span class="social-label">GitHub</span>
+                        </a>
+                        <a href="https://linkedin.com/in/sean-bowman" class="social-card" target="_blank" rel="noopener noreferrer">
+                            <span class="social-icon">&#128188;</span>
+                            <span class="social-label">LinkedIn</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="connect-method">
+                    <h2>Location</h2>
+                    <p>Melbourne, Florida</p>
+                </div>
+
+                <!-- Resume -->
+                <div class="connect-method connect-resume">
+                    <h2>Resume</h2>
+                    <p>Interested in working together?</p>
+                    <a href={withBase('assets/resume.pdf')} class="btn btn-outline" download>Download Resume (PDF)</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+</BaseLayout>

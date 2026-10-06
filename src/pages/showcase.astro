@@ -1,0 +1,54 @@
+---
+/* ========================================
+   SHOWCASE PAGE
+   Interactive Three.js model viewers
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { showcaseModels } from '../data/models.js';
+---
+
+<BaseLayout
+    title="Showcase"
+    description="3D model showcase: interactive viewers for engineering and design models."
+    current="showcase"
+>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">3D Showcase</h1>
+            <p class="page-description">
+                Interactive 3D models rendered in the browser. Drag to orbit, scroll to zoom, and right-click to pan.
+            </p>
+        </div>
+    </section>
+
+    <!-- Showcase Grid: one card per entry in src/data/models.js -->
+    <section class="showcase-section">
+        <div class="container">
+            <div class="showcase-grid" id="showcaseGrid">
+                {showcaseModels.map((model, index) => (
+                    <article class="showcase-card" data-viewer-index={index}>
+                        <div class="showcase-viewer-container">
+                            <canvas class="showcase-canvas" id={`showcaseCanvas${index}`}></canvas>
+                            <div class="showcase-loading">
+                                <div class="loading"></div>
+                                <p>Loading model...</p>
+                            </div>
+                        </div>
+                        <div class="showcase-content">
+                            <h2 class="showcase-title">{model.name}</h2>
+                            <p class="showcase-description">{model.description}</p>
+                            {!model.filePath && <span class="badge">Placeholder</span>}
+                        </div>
+                    </article>
+                ))}
+            </div>
+        </div>
+    </section>
+
+    <script>
+        import '../scripts/showcase.js';
+    </script>
+</BaseLayout>

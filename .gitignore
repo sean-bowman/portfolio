@@ -36,9 +36,9 @@ yarn-error.log*
 tmpclaude-*
 nul
 
-# Node modules (if you add Node.js later)
+# Node modules (package-lock.json stays tracked: it pins the build and tells
+# withastro/action which package manager to use)
 node_modules/
-package-lock.json
 yarn.lock
 
 # Environment variables
@@ -46,9 +46,10 @@ yarn.lock
 .env.local
 .env.*.local
 
-# Build outputs (if you add a build process later)
+# Astro build output and generated types
 dist/
 build/
+.astro/
 
 # Backup files
 *.bak
@@ -56,6 +57,9 @@ build/
 
 # Local palette QA files (theme-palettes skill), not part of the live site
 palette-showcase/
+
+# Local feature roadmaps and planning notes, not part of the live site
+planning/
 
 # Mac specific
 *.dmg

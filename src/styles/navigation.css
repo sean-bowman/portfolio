@@ -5,11 +5,11 @@
 .navbar {
     position: sticky;
     top: 0;
-    background-color: var(--background);
-    border-bottom: 1px solid var(--border-color);
+    background-color: var(--bg);
+    border-bottom: 1px solid var(--border);
     padding: var(--spacing-sm) 0;
     z-index: 1000;
-    box-shadow: var(--box-shadow-sm);
+    box-shadow: var(--shadow-sm);
 }
 
 .nav-container {
@@ -24,12 +24,12 @@
 .nav-logo {
     font-size: var(--font-size-xl);
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text);
     transition: var(--transition-fast);
 }
 
 .nav-logo:hover {
-    color: var(--primary-color);
+    color: var(--accent-text);
 }
 
 .nav-menu {
@@ -43,7 +43,7 @@
 }
 
 .nav-link {
-    color: var(--text-secondary);
+    color: var(--text-muted);
     font-size: var(--font-size-base);
     font-weight: 500;
     padding: 0.5rem 1rem;
@@ -53,13 +53,13 @@
 }
 
 .nav-link:hover {
-    color: var(--primary-color);
-    background-color: var(--background-alt);
+    color: var(--accent-text);
+    background-color: var(--surface-2);
 }
 
 .nav-link.active {
-    color: var(--primary-color);
-    background-color: var(--background-alt);
+    color: var(--accent-text);
+    background-color: var(--surface-2);
 }
 
 /* Active indicator line */
@@ -71,7 +71,7 @@
     transform: translateX(-50%);
     width: 60%;
     height: 2px;
-    background-color: var(--primary-color);
+    background-color: var(--accent);
 }
 
 
@@ -92,7 +92,7 @@
     position: relative;
     width: 24px;
     height: 2px;
-    background-color: var(--text-primary);
+    background-color: var(--text);
     transition: var(--transition-fast);
 }
 
@@ -102,7 +102,7 @@
     position: absolute;
     width: 24px;
     height: 2px;
-    background-color: var(--text-primary);
+    background-color: var(--text);
     transition: var(--transition-fast);
 }
 
@@ -144,11 +144,11 @@
         top: 100%;
         left: 0;
         right: 0;
-        background-color: var(--background);
+        background-color: var(--bg);
         flex-direction: column;
         gap: 0;
         padding: var(--spacing-sm);
-        box-shadow: var(--box-shadow-md);
+        box-shadow: var(--shadow-md);
         max-height: 0;
         overflow: hidden;
         opacity: 0;
@@ -176,7 +176,7 @@
     }
 
     .nav-link.active {
-        border-left: 4px solid var(--primary-color);
+        border-left: 4px solid var(--accent);
         text-align: left;
     }
 }

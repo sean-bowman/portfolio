@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bell nozzle in side view: chamber, converging section, throat, diverging bell -->
+  <style>
+    path { stroke: #3D9C93; }
+    @media (prefers-color-scheme: dark) { path { stroke: #5FD4C7; } }
+  </style>
+  <path d="M3 9 V23" stroke-width="2.2"/>
+  <path d="M3 9 H10 C12 9 13 13.5 15 13.5 C20 13.5 25 8 29 4" stroke-width="2.2"/>
+  <path d="M3 23 H10 C12 23 13 18.5 15 18.5 C20 18.5 25 24 29 28" stroke-width="2.2"/>
+</svg>

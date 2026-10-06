@@ -1,0 +1,41 @@
+---
+/* ========================================
+   SITE HEADER
+   Navigation bar shared by every page
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import { sitePages } from '../data/pages.js';
+import { withBase } from '../lib/paths.js';
+
+interface Props {
+    /** Id from sitePages of the page being rendered; marks its nav link active */
+    current: string;
+}
+
+const { current } = Astro.props;
+---
+
+<nav class="navbar" aria-label="Main">
+    <div class="nav-container">
+        <a href={withBase()} class="nav-logo">Sean Bowman</a>
+
+        <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span class="hamburger"></span>
+        </button>
+
+        <ul class="nav-menu">
+            {sitePages.map(page => (
+                <li class="nav-item">
+                    <a
+                        href={withBase(page.path)}
+                        class:list={['nav-link', { active: page.id === current }]}
+                        aria-current={page.id === current ? 'page' : undefined}
+                    >
+                        {page.label}
+                    </a>
+                </li>
+            ))}
+        </ul>
+    </div>
+</nav>

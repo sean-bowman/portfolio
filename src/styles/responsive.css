@@ -193,18 +193,6 @@
         height: 250px;
     }
 
-    /* Filter buttons stack on mobile */
-    .filter-buttons {
-        flex-direction: column;
-        width: 100%;
-        max-width: 300px;
-        margin: 0 auto;
-    }
-
-    .filter-btn {
-        width: 100%;
-    }
-
     /* Footer stack vertically */
     .footer .container {
         flex-direction: column;
@@ -272,8 +260,7 @@
     /* Hide navigation and footer when printing */
     .navbar,
     .footer,
-    .back-to-top,
-    .filter-buttons {
+    .back-to-top {
         display: none;
     }
 
@@ -343,10 +330,10 @@
    HIGH CONTRAST MODE (Accessibility)
    ======================================== */
 
-@media (prefers-contrast: high) {
-    :root {
-        --border-color: #e2e8f0;
-        --text-secondary: #f1f5f9;
+@media (prefers-contrast: more) {
+    :root:is(:root) {
+        --border: var(--text-muted);
+        --text-muted: var(--text);
     }
 
     .btn-outline {
