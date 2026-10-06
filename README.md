@@ -37,9 +37,10 @@ The site is served under `/portfolio` (the `base` in `astro.config.mjs`), so loc
 astro.config.mjs        site, base path, build format, integrations
 src/
   layouts/              BaseLayout.astro: <head>, header, footer, shared scripts
-  components/           Header, Footer, ThemeToggle, ProjectCard
+  components/           Header, Footer, ThemeToggle, Experience, ProjectCard
+  components/glyphs/    one animated SVG illustration per role
   pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
-  data/                 pages.js (nav and footer links), models.js (showcase models), reposFallback.json
+  data/                 pages.js (nav and footer links), roles.js (Experience), models.js (showcase models), reposFallback.json
   lib/                  github.js (build-time repository fetch), paths.js (base-path URLs)
   scripts/              client scripts: motion.js, theme.js, nav.js, site.js, showcase.js
   scripts/three/        Three.js toolkit: renderer defaults, theme colors, visibility-gated render loop
@@ -75,6 +76,7 @@ Repository setting required once: Settings, Pages, Source: GitHub Actions.
 
 - **A page.** Add `src/pages/<name>.astro` wrapped in `<BaseLayout title description current>`, and an entry in `sitePages` in `src/data/pages.js` so it appears in the nav.
 - **A showcase model.** Export a mesh to `public/assets/models/` and add an entry to `showcaseModels` in `src/data/models.js` with `filePath: 'assets/models/<name>.stl'`.
+- **A role.** Add it to `companies` in `src/data/roles.js` (keep it in step with the resume) and give it a `glyph` key. A new illustration goes in `src/components/glyphs/` as an inline SVG with `data-draw` and `data-loops`, registered in the `glyphs` map in `Experience.astro`, with its loops in `src/styles/glyphs.css`.
 - **A photo.** Put it in `src/assets/images/`, import it in the page's frontmatter, and render it with `<Picture>` (see `beyond-engineering.astro` for the widths and sizes used by the feature blocks).
 - **The resume.** Replace `public/assets/resume.pdf`. The source is `Documents/Resume/Resume_Sean_Bowman_LinkedIn.tex`, the variant with the phone number redacted.
 

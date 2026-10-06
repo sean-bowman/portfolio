@@ -1,13 +1,14 @@
 ---
 /* ========================================
    HOME PAGE
-   Hero, about, skills, and featured repositories
+   Hero, about, skills, experience, and featured repositories
    Sean Bowman [10/05/2026]
    ======================================== */
 
 import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import Experience from '../components/Experience.astro';
 import { getFeaturedRepos } from '../lib/github.js';
 import { withBase } from '../lib/paths.js';
 import heroImage from '../assets/images/El_Salvador_K59.JPG';
@@ -188,6 +189,8 @@ const featuredRepos = await getFeaturedRepos();
             </div>
         </div>
     </section>
+
+    <Experience />
 
     <!-- Featured Projects Section -->
     <section class="featured-projects">

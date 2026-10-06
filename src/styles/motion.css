@@ -29,16 +29,22 @@ html.anim [data-reveal].in {
     }
 }
 
-/* Draw-on: every stroked shape carries pathLength="1", so one dash pattern draws any shape */
+/* Draw-on: every stroked shape carries pathLength="1", so one dash pattern draws any shape.
+   The gap is slightly longer than the path and the start offset sits inside it: with a
+   plain "1" dash and an offset of exactly 1, both path ends fall on dash boundaries and
+   round caps render there as dots before the stroke draws. */
 html.anim [data-draw] [data-dl] {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 1.3s cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: calc(var(--d, 0) * 60ms);
+    stroke-dasharray: 1 1.1;
+    stroke-dashoffset: 1.05;
 }
 
+/* The transition lives on the drawn state only, so strokes snap back to undrawn (when the
+   gate class arrives after load, or when the svg leaves the screen) instead of visibly
+   erasing */
 html.anim [data-draw].in [data-dl] {
     stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--d, 0) * 60ms);
 }
 
 /* Offscreen pause for infinite loops inside an svg[data-loops] */

@@ -1,0 +1,32 @@
+---
+/* ========================================
+   GLYPH: VENTURI WITH PIEZOMETER TUBES
+   Teaching Assistant Lead role: the fluid mechanics lab's classic Bernoulli demonstration
+   Sean Bowman [10/06/2026]
+   ======================================== */
+
+// Converging-diverging tube with three piezometer columns at the inlet, throat, and
+// outlet. The throat column sits lowest (highest velocity, lowest static pressure) and
+// the outlet recovers part of the inlet head. The columns pulse with the flow: inlet and
+// outlet rise while the throat falls. 48-unit viewBox.
+---
+
+<svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-draw data-loops>
+    <!-- Fluid columns (drawn first so the tube outlines sit on top) -->
+    <g data-loop>
+        <rect class="vm-col" x="7.3" y="10" width="1.4" height="20" />
+        <rect class="vm-col vm-col-throat" x="23.3" y="22" width="1.4" height="12" />
+        <rect class="vm-col" x="39.3" y="14" width="1.4" height="16" />
+    </g>
+
+    <!-- Piezometer tubes and a scale beside the inlet tube -->
+    <path d="M7 30 V4 M9 30 V4 M23 34 V4 M25 34 V4 M39 30 V4 M41 30 V4" stroke-width="0.7" />
+    <path d="M4.5 8 H6 M4.5 12 H6 M4.5 16 H6 M4.5 20 H6 M4.5 24 H6" stroke-width="0.4" stroke-opacity="0.5" />
+
+    <!-- Venturi walls -->
+    <path d="M3 30 H12 C16 30 18 34 22 34 H26 C30 34 32 30 36 30 H45" stroke-width="1" />
+    <path d="M3 42 H12 C16 42 18 38 22 38 H26 C30 38 32 42 36 42 H45" stroke-width="1" />
+
+    <!-- Flow along the centerline -->
+    <path class="vm-flow" data-loop d="M3 36 H45" />
+</svg>

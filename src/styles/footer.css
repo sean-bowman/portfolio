@@ -37,6 +37,16 @@
     color: var(--text);
 }
 
+/* Home page sections, indented under Home */
+.footer-sublist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    padding-left: var(--spacing-sm);
+    border-left: 1px solid var(--border);
+}
+
 .footer-list a:hover,
 .footer-list a[aria-current='page'] {
     color: var(--accent-text);

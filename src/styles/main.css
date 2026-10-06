@@ -52,6 +52,12 @@ html {
     scroll-behavior: smooth;
 }
 
+/* Anchor jumps land below the 56 px sticky header */
+section[id],
+article[id] {
+    scroll-margin-top: 72px;
+}
+
 body {
     font-family: var(--font-primary);
     font-size: var(--font-size-base);
@@ -299,7 +305,7 @@ ul, ol {
 /* Featured Projects Section */
 .featured-projects {
     padding: var(--spacing-xl) 0;
-    background-color: var(--surface-2);
+    background-color: var(--bg);
 }
 
 .view-all {

@@ -14,6 +14,7 @@
      --accent-text  accent color for text (links, nav, labels). Light seafoam fails WCAG
                     on sand (about 2.0:1), so light mode uses a deepened teal.
      --on-accent    text placed on an --accent fill (buttons, badges).
+     --flame-*      exhaust fills in the role illustrations (decorative, never text).
      --shadow-*     elevation shadows, softer on the light ground.
    Light --text-muted is deepened from the palette's #6B7280 so it clears 4.5:1 on
    --surface-2. Every text/background pair used on the site measures 4.58:1 or higher in
@@ -49,6 +50,11 @@
     --orange:       #F2A65A;
     --purple:       #B79FD1;
     --cyan:         #6FD1C7;
+
+    /* Exhaust in the role illustrations: decorative fills, outside the semantic set */
+    --flame-core:   #F7C85C;
+    --flame-mid:    #F29B4C;
+    --flame-outer:  #E5735A;
 
     /* Elevation */
     --shadow-sm:    0 1px 2px rgba(58, 63, 75, 0.08);
@@ -86,6 +92,10 @@
         --purple:       #C6ACDE;
         --cyan:         #7EDDD0;
 
+        --flame-core:   #FFE8A8;
+        --flame-mid:    #F7A863;
+        --flame-outer:  #EF7D6C;
+
         --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
         --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);
         --shadow-md:    0 4px 6px rgba(0, 0, 0, 0.4);
@@ -118,6 +128,10 @@
     --orange:       #F5B072;
     --purple:       #C6ACDE;
     --cyan:         #7EDDD0;
+
+    --flame-core:   #FFE8A8;
+    --flame-mid:    #F7A863;
+    --flame-outer:  #EF7D6C;
 
     --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);

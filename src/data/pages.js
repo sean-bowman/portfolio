@@ -22,6 +22,11 @@ export const sitePages = [
     { id: 'contact', label: 'Contact', path: 'contact' }
 ];
 
+/** Home page sections linked from the footer site map, by element id */
+export const homeSections = [
+    { label: 'Experience', id: 'experience' }
+];
+
 /** External profiles shown in the footer and on the contact page */
 export const externalLinks = [
     { label: 'GitHub', href: 'https://github.com/sean-bowman' },
