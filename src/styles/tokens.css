@@ -15,6 +15,7 @@
                     on sand (about 2.0:1), so light mode uses a deepened teal.
      --on-accent    text placed on an --accent fill (buttons, badges).
      --flame-*      exhaust fills in the role illustrations (decorative, never text).
+     --scene-*      colors of the footer site-map scene (decorative, never text).
      --shadow-*     elevation shadows, softer on the light ground.
    Light --text-muted is deepened from the palette's #6B7280 so it clears 4.5:1 on
    --surface-2. Every text/background pair used on the site measures 4.58:1 or higher in
@@ -56,6 +57,16 @@
     --flame-mid:    #F29B4C;
     --flame-outer:  #E5735A;
 
+    /* Site-map launch complex (footer scene): sky gradient, ground, sea, structures */
+    --scene-sky-top:   #D6ECEE;
+    --scene-sky-low:   #F7F1E6;
+    --scene-ocean:     #8FC9C4;
+    --scene-land:      #EADCC0;
+    --scene-scrub:     #A7BC8C;
+    --scene-structure: #FFFCF6;
+    --scene-ink:       #3A3F4B;
+    --scene-foam:      #FFFFFF;
+
     /* Elevation */
     --shadow-sm:    0 1px 2px rgba(58, 63, 75, 0.08);
     --shadow:       0 1px 3px rgba(58, 63, 75, 0.12);
@@ -96,6 +107,15 @@
         --flame-mid:    #F7A863;
         --flame-outer:  #EF7D6C;
 
+        --scene-sky-top:   #0B151B;
+        --scene-sky-low:   #16232A;
+        --scene-ocean:     #1F4140;
+        --scene-land:      #24363E;
+        --scene-scrub:     #3B5548;
+        --scene-structure: #2E4752;
+        --scene-ink:       #9FB3AE;
+        --scene-foam:      #A9C4BE;
+
         --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
         --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);
         --shadow-md:    0 4px 6px rgba(0, 0, 0, 0.4);
@@ -132,6 +152,15 @@
     --flame-core:   #FFE8A8;
     --flame-mid:    #F7A863;
     --flame-outer:  #EF7D6C;
+
+    --scene-sky-top:   #0B151B;
+    --scene-sky-low:   #16232A;
+    --scene-ocean:     #1F4140;
+    --scene-land:      #24363E;
+    --scene-scrub:     #3B5548;
+    --scene-structure: #2E4752;
+    --scene-ink:       #9FB3AE;
+    --scene-foam:      #A9C4BE;
 
     --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);

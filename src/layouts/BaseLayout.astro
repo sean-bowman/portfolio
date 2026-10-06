@@ -107,7 +107,8 @@ const previewImageUrl = new URL(previewImage.src, Astro.site);
 
     <ClientRouter />
 </head>
-<body>
+<!-- data-page tells persisted components (the site map) which page is showing -->
+<body data-page={current}>
     <a class="skip-to-main" href="#main">Skip to content</a>
 
     <Header current={current} />

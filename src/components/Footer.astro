@@ -5,12 +5,12 @@
    Sean Bowman [10/05/2026]
    ======================================== */
 
-// The plain site map below is always visible: it is the keyboard, no-JS, and no-WebGL
-// path to every page, so the 3D site map that will sit above it (roadmap item 4) needs
-// no hidden fallback list.
+// The plain site map is always visible: it is the keyboard, no-JS, and no-WebGL path to
+// every page, so the 3D site map above it needs no hidden fallback list.
 
 import { sitePages, homeSections, externalLinks } from '../data/pages.js';
 import { withBase } from '../lib/paths.js';
+import SiteMap from './SiteMap.astro';
 
 interface Props {
     /** Id from sitePages of the page being rendered */
@@ -27,6 +27,8 @@ const sourceUrl = 'https://github.com/sean-bowman/portfolio';
 
 <footer class="footer">
     <div class="container">
+        <SiteMap />
+
         <div class="footer-columns">
             <nav class="footer-column" aria-label="Site map">
                 <h2 class="footer-heading">Pages</h2>

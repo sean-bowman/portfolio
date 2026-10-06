@@ -8,6 +8,7 @@ Source for [sean-bowman.github.io/portfolio](https://sean-bowman.github.io/portf
 - [Develop](#develop)
 - [Project layout](#project-layout)
 - [Theme](#theme)
+- [Site map](#site-map)
 - [Deploy](#deploy)
 - [Adding content](#adding-content)
 - [Conventions](#conventions)
@@ -37,13 +38,14 @@ The site is served under `/portfolio` (the `base` in `astro.config.mjs`), so loc
 astro.config.mjs        site, base path, build format, integrations
 src/
   layouts/              BaseLayout.astro: <head>, header, footer, shared scripts
-  components/           Header, Footer, ThemeToggle, Experience, Tools, ProjectCard
+  components/           Header, Footer, SiteMap, ThemeToggle, Experience, Tools, ProjectCard
   components/glyphs/    one animated SVG illustration per role
   pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
   data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js (showcase models), reposFallback.json
   lib/                  github.js (build-time repository fetch), paths.js (base-path URLs)
   scripts/              client scripts: motion.js, theme.js, nav.js, site.js, showcase.js
   scripts/three/        Three.js toolkit: renderer defaults, theme colors, visibility-gated render loop
+  scripts/siteMap/      footer launch-complex scene: clock, plan, materials, structures, launches
   styles/               tokens.css (Surfy Pastels light/dark) first, then the global CSS in cascade order
   assets/images/        photos processed by astro:assets
 public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/video/, assets/models/
@@ -57,6 +59,15 @@ Navigation between pages goes through Astro's client router (`<ClientRouter />` 
 ## Theme
 
 Colors come from the Surfy Pastels palette in `src/styles/tokens.css`: light on bare `:root`, dark under `html[data-theme="dark"]` and under the OS dark preference when no theme attribute is set. An inline script in the `<head>` of `BaseLayout.astro` sets `data-theme` before first paint (a stored choice in `localStorage['site-theme']` wins; otherwise the OS setting) and re-applies it after every client-side navigation. The toggle (`ThemeToggle.astro`, `src/scripts/theme.js`) reveals the new theme as a circle growing from the button through the View Transitions API and dispatches a `themechange` event that the Three.js scenes use to recolor.
+
+## Site map
+
+The top of the footer is a Three.js launch complex on the Florida coast that builds out while the visitor stays: road, tracking dish, test stand, propellant farm, hangar, two pads, a landing zone, and a droneship, then routine launches with booster returns. Five facilities are the site's pages; their labels link to them. Build progress follows a visit clock (`src/scripts/siteMap/clock.js`) that counts seconds on site, pauses in hidden tabs, and starts over on a full reload. The container carries `transition:persist`, so one scene and one clock last the whole visit across client-side navigation.
+
+- Preview a later state with `?t=<seconds>`; the full build completes at 301 s.
+- Layout and build order: `src/scripts/siteMap/plan.js`. Colors: the `--scene-*` tokens in `tokens.css`.
+- `window.__siteMapInfo()` in the console reports draw calls, triangles, visit and scene time, launches, and camera position.
+- Without WebGL the scene hides and the plain HTML site map below it remains.
 
 ## Deploy
 

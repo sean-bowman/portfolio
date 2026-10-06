@@ -1,0 +1,104 @@
+---
+/* ========================================
+   SITE MAP
+   Three.js launch complex at the top of the footer, persisted across pages
+   Sean Bowman [10/06/2026]
+   ======================================== */
+
+// transition:persist keeps this element, its canvas, its WebGL context, and the scene
+// module's state alive across client-side navigation, so a visit has one scene and one
+// clock. Because the element is not re-rendered, the current page is read from
+// <body data-page> on every astro:page-load, not from props. The plain HTML site map
+// below it in the footer is the keyboard, no-JS, and no-WebGL path; facility labels
+// here duplicate it for pointer users and are hidden from assistive technology.
+
+import { sitePages } from '../data/pages.js';
+import { withBase } from '../lib/paths.js';
+import '../styles/siteMap.css';
+---
+
+<div class="site-map" transition:persist="site-map" aria-hidden="true">
+    <canvas class="site-map-canvas"></canvas>
+    <div class="site-map-labels">
+        {sitePages.map(page => (
+            <a class="site-map-label is-hidden" href={withBase(page.path)} data-page={page.id} tabindex="-1">
+                <span class="site-map-label-name">{page.label}</span>
+                <span class="site-map-label-detail"></span>
+            </a>
+        ))}
+    </div>
+    <p class="site-map-status">T+00:00</p>
+</div>
+
+<script>
+    import { startClock } from '../scripts/siteMap/clock.js';
+
+    // Runs once per visit. The clock starts with the visit; the scene module (and with
+    // it Three.js) loads only when the footer comes within 400 px of the viewport, in idle
+    // time. There is no up-front WebGL probe: creating a throwaway context costs a long
+    // main-thread task on every page load. If the renderer cannot get a context, the
+    // scene module rejects and the map hides, leaving the HTML site map.
+    startClock();
+
+    const container = /** @type {HTMLElement | null} */ (document.querySelector('.site-map'));
+
+    /**
+     * @param {() => void} task
+     */
+    function whenIdle(task) {
+        if ('requestIdleCallback' in window) window.requestIdleCallback(task, { timeout: 1500 });
+        else window.setTimeout(task, 200);
+    }
+
+    // On a short page the footer is in view at load. Parsing Three.js is one long task
+    // (about 0.8 s on a throttled phone), so in that case the scene waits for the
+    // visitor's first interaction or 4 s, whichever comes first: the page's own content
+    // becomes interactive before the footer decoration loads. A footer reached by
+    // scrolling has already had its interaction and loads straight away.
+    const firstLoadDelayMs = 4000;
+    const interactionEvents = ['scroll', 'pointerdown', 'pointermove', 'keydown', 'touchstart'];
+    let interacted = false;
+    /** @type {(() => void) | null} */
+    let pendingLoad = null;
+
+    function onFirstInteraction() {
+        interacted = true;
+        interactionEvents.forEach(type => window.removeEventListener(type, onFirstInteraction));
+        if (pendingLoad) {
+            const load = pendingLoad;
+            pendingLoad = null;
+            load();
+        }
+    }
+    interactionEvents.forEach(type => window.addEventListener(type, onFirstInteraction, { passive: true }));
+
+    function loadScene() {
+        whenIdle(() => {
+            import('../scripts/siteMap/scene.js')
+                .then(module => module.initSiteMap(/** @type {HTMLElement} */ (container)))
+                .catch(error => {
+                    console.warn('Site map unavailable:', error instanceof Error ? error.message : error);
+                    container?.classList.add('is-unsupported');
+                });
+        });
+    }
+
+    if (container) {
+        const loadObserver = new IntersectionObserver((entries) => {
+            if (!entries.some(entry => entry.isIntersecting)) return;
+            loadObserver.disconnect();
+            if (interacted || performance.now() >= firstLoadDelayMs) {
+                loadScene();
+                return;
+            }
+            // In view before any interaction: wait for one, or for the delay to run out
+            pendingLoad = loadScene;
+            window.setTimeout(() => {
+                if (!pendingLoad) return;
+                pendingLoad = null;
+                loadScene();
+            }, firstLoadDelayMs - performance.now());
+        }, { rootMargin: '400px 0px' });
+        loadObserver.observe(container);
+    }
+</script>
