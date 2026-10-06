@@ -401,51 +401,15 @@ ul, ol {
 }
 
 
-/* Footer */
-.footer {
-    padding: var(--spacing-md) 0;
-    background-color: var(--surface-2);
-    border-top: 1px solid var(--border);
-    color: var(--text);
-    text-align: center;
-}
-
-.footer .container {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    align-items: center;
-}
-
-.footer p {
-    color: var(--text-muted);
-    margin: 0;
-}
-
-.footer-links {
-    display: flex;
-    gap: var(--spacing-md);
-}
-
-.footer-links a {
-    color: var(--text-muted);
-    transition: var(--transition-fast);
-}
-
-.footer-links a:hover {
-    color: var(--accent-text);
-}
-
-
 /* ========================================
    ACCESSIBILITY
    ======================================== */
 
-/* Focus styles for keyboard navigation */
-a:focus,
-button:focus,
-input:focus,
-textarea:focus {
+/* Focus rings for keyboard navigation; :focus-visible leaves mouse clicks without one */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 2px;
 }
@@ -462,7 +426,7 @@ textarea:focus {
     z-index: 100;
 }
 
-.skip-to-main:focus {
+.skip-to-main:focus-visible {
     top: 0;
 }
 

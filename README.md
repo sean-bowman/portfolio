@@ -7,6 +7,7 @@ Source for [sean-bowman.github.io/portfolio](https://sean-bowman.github.io/portf
 - [Stack](#stack)
 - [Develop](#develop)
 - [Project layout](#project-layout)
+- [Theme](#theme)
 - [Deploy](#deploy)
 - [Adding content](#adding-content)
 - [Conventions](#conventions)
@@ -36,12 +37,13 @@ The site is served under `/portfolio` (the `base` in `astro.config.mjs`), so loc
 astro.config.mjs        site, base path, build format, integrations
 src/
   layouts/              BaseLayout.astro: <head>, header, footer, shared scripts
-  components/           Header, Footer, ProjectCard
+  components/           Header, Footer, ThemeToggle, ProjectCard
   pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
   data/                 pages.js (nav and footer links), models.js (showcase models), reposFallback.json
   lib/                  github.js (build-time repository fetch), paths.js (base-path URLs)
-  scripts/              client scripts: nav.js, site.js, showcase.js
-  styles/               global CSS, imported by BaseLayout in cascade order
+  scripts/              client scripts: motion.js, theme.js, nav.js, site.js, showcase.js
+  scripts/three/        Three.js toolkit: renderer defaults, theme colors, visibility-gated render loop
+  styles/               tokens.css (Surfy Pastels light/dark) first, then the global CSS in cascade order
   assets/images/        photos processed by astro:assets
 public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/video/, assets/models/
 .github/workflows/      deploy.yml
@@ -50,6 +52,10 @@ public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/vid
 `build.format: 'file'` emits `projects.html` and so on, so the `.html` URLs published before the Astro migration still resolve. Nav links use the extensionless form (`/portfolio/projects`), which GitHub Pages maps to the same file.
 
 Navigation between pages goes through Astro's client router (`<ClientRouter />` in `BaseLayout.astro`), which swaps page content without a full reload. Bundled scripts therefore execute once per visit: anything tied to a page's DOM runs on the `astro:page-load` event, and click handlers are delegated from `document`.
+
+## Theme
+
+Colors come from the Surfy Pastels palette in `src/styles/tokens.css`: light on bare `:root`, dark under `html[data-theme="dark"]` and under the OS dark preference when no theme attribute is set. An inline script in the `<head>` of `BaseLayout.astro` sets `data-theme` before first paint (a stored choice in `localStorage['site-theme']` wins; otherwise the OS setting) and re-applies it after every client-side navigation. The toggle (`ThemeToggle.astro`, `src/scripts/theme.js`) reveals the new theme as a circle growing from the button through the View Transitions API and dispatches a `themechange` event that the Three.js scenes use to recolor.
 
 ## Deploy
 

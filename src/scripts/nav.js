@@ -1,6 +1,6 @@
 /* ========================================
    NAVIGATION
-   Mobile menu toggle for the site header
+   Mobile menu toggle and scrolled state for the site header
    Sean Bowman [10/05/2026]
    ======================================== */
 
@@ -45,6 +45,16 @@ document.addEventListener('click', (event) => {
         setMenuOpen(false);
     }
 });
+
+// The bar's hairline and shadow show only once the page has scrolled
+const scrolledThresholdPx = 8;
+
+function updateScrolledState() {
+    document.querySelector('.navbar')?.classList.toggle('is-scrolled', window.scrollY > scrolledThresholdPx);
+}
+
+window.addEventListener('scroll', updateScrolledState, { passive: true });
+document.addEventListener('astro:page-load', updateScrolledState);
 
 // Close the menu when the window grows past the mobile layout
 let resizeTimer = 0;

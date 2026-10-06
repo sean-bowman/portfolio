@@ -59,21 +59,17 @@ export function themeColors(names) {
 }
 
 /**
- * Call back whenever the active palette mode changes: the theme toggle's
- * 'themechange' event, or an OS light/dark switch while no explicit choice is stored.
+ * Call back whenever the active palette mode changes. 'themechange' fires for the
+ * theme toggle (src/scripts/theme.js) and for an OS light/dark switch while no choice
+ * is stored (the pre-paint script in BaseLayout.astro).
  * @param {() => void} callback
  * @returns {() => void} Unsubscribe function
  */
 export function onThemeChange(callback) {
-    const media = window.matchMedia('(prefers-color-scheme: dark)');
     // Let the new CSS custom properties resolve before the callback reads them
     const handler = () => requestAnimationFrame(callback);
     document.addEventListener('themechange', handler);
-    media.addEventListener('change', handler);
-    return () => {
-        document.removeEventListener('themechange', handler);
-        media.removeEventListener('change', handler);
-    };
+    return () => document.removeEventListener('themechange', handler);
 }
 
 /**

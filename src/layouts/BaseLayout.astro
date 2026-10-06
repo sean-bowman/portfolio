@@ -18,6 +18,8 @@ import '../styles/main.css';
 import '../styles/navigation.css';
 import '../styles/components.css';
 import '../styles/responsive.css';
+import '../styles/footer.css';
+import '../styles/theme.css';
 import '../styles/motion.css';
 
 interface Props {
@@ -51,6 +53,42 @@ const previewImageUrl = new URL(previewImage.src, Astro.site);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F7F1E6">
+
+    <!-- Pre-paint theme: runs before the body renders, so there is no flash of the wrong
+         theme. A stored choice wins; otherwise the OS setting decides. data-theme is always
+         set so CSS and the toggle have one source of truth. The client router copies the
+         new page's <html> attributes on navigation, so the theme is re-applied after every
+         swap. While nothing is stored, OS changes are followed live and announced with the
+         same 'themechange' event the toggle dispatches. -->
+    <script is:inline>
+        (() => {
+            const storageKey = 'site-theme';
+            const themeColors = { light: '#F7F1E6', dark: '#16232A' };
+            const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            const storedTheme = () => {
+                try {
+                    const value = localStorage.getItem(storageKey);
+                    return value === 'light' || value === 'dark' ? value : null;
+                } catch {
+                    return null;
+                }
+            };
+            const applyTheme = () => {
+                const theme = storedTheme() || (darkQuery.matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColors[theme]);
+                return theme;
+            };
+            applyTheme();
+            document.addEventListener('astro:after-swap', applyTheme);
+            darkQuery.addEventListener('change', () => {
+                if (storedTheme()) return;
+                const theme = applyTheme();
+                document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+            });
+        })();
+    </script>
     <meta name="description" content={description}>
     <meta name="author" content="Sean Bowman">
     <title>{fullTitle}</title>
@@ -78,13 +116,14 @@ const previewImageUrl = new URL(previewImage.src, Astro.site);
         <slot />
     </main>
 
-    <Footer />
+    <Footer current={current} />
 
     <button class="back-to-top" type="button" aria-label="Back to top" title="Back to top">&uarr;</button>
 
     <script>
         import '../scripts/motion.js';
         import '../scripts/nav.js';
+        import '../scripts/theme.js';
         import '../scripts/site.js';
     </script>
 </body>

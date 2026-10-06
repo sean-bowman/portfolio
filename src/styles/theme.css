@@ -1,0 +1,93 @@
+/* ========================================
+   THEME TOGGLE
+   Button, sun/moon icon, and the circular reveal (driven by src/scripts/theme.js)
+   ======================================== */
+
+.theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background-color: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover {
+    border-color: var(--accent);
+    color: var(--accent-text);
+}
+
+/* The pre-paint script always sets data-theme; without JavaScript the button cannot
+   work, so it stays hidden and the OS setting decides */
+html:not([data-theme]) .theme-toggle {
+    display: none;
+}
+
+.theme-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.theme-icon-wave {
+    stroke: var(--accent);
+}
+
+/* Light: the sun is up and the moon waits below the waterline. Dark: the reverse.
+   Translations are in viewBox units; 12 units clears the 16.4-unit clip region. */
+.theme-icon-sun,
+.theme-icon-moon {
+    transition: transform 0.5s cubic-bezier(0.3, 1.4, 0.5, 1);
+}
+
+.theme-icon-moon {
+    transform: translateY(12px);
+}
+
+:root[data-theme="dark"] .theme-icon-sun {
+    transform: translateY(12px);
+}
+
+:root[data-theme="dark"] .theme-icon-moon {
+    transform: translateY(0);
+}
+
+/* Circular reveal: the old page holds still underneath while the new theme grows from
+   the button. The vt-theme class scopes these rules to theme switches, leaving the
+   client router's page transitions alone. */
+html.vt-theme::view-transition-old(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+html.vt-theme::view-transition-new(root) {
+    mix-blend-mode: normal;
+    animation: theme-reveal 0.7s cubic-bezier(0.4, 0, 0.25, 1) both;
+}
+
+/* The nav indicator carries a view-transition name for page navigation; during a theme
+   switch it should belong to the root snapshot so the circle clips it like everything
+   else, instead of crossfading on its own layer */
+html.vt-theme .nav-indicator {
+    view-transition-name: none !important;
+}
+
+@keyframes theme-reveal {
+    from {
+        clip-path: circle(0 at var(--vt-x) var(--vt-y));
+    }
+    to {
+        clip-path: circle(var(--vt-r) at var(--vt-x) var(--vt-y));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-icon-sun,
+    .theme-icon-moon {
+        transition: none;
+    }
+}
