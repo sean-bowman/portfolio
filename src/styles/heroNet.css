@@ -68,7 +68,18 @@
    The net draws from the throat to the exit in the order the solve marched, once per
    arrival at the page, then drifts slowly. Without html.anim (no JS, reduced motion) it
    shows drawn and still.
+
+   Timeline: a characteristic starts drawing at --t x --net-sweep (its upstream end's
+   position along the nozzle) and takes --net-draw. The last starts at t = 0.90, so the
+   net is complete at about 0.90 x 12 + 3.5 = 14.3 s. The wall draws at a steady rate over
+   the same span, keeping pace with the front, and the drift begins once it is done.
    ======================================== */
+
+.hero-net {
+    --net-sweep: 12s;
+    --net-draw: 3.5s;
+    --net-total: 14.5s;
+}
 
 html.anim .hero-net path {
     stroke-dasharray: 1 1.1;
@@ -81,12 +92,13 @@ html.anim .hero-net-axis {
 
 html.anim .hero-net.in path {
     stroke-dashoffset: 0;
-    transition: stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-    transition-delay: calc(var(--t, 0) * 1.6s);
+    transition: stroke-dashoffset var(--net-draw) cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--t, 0) * var(--net-sweep));
 }
 
 html.anim .hero-net.in .hero-net-wall {
-    transition-duration: 2.2s;
+    transition-duration: var(--net-total);
+    transition-timing-function: linear;
     transition-delay: 0s;
 }
 
@@ -96,7 +108,7 @@ html.anim .hero-net.in .hero-net-axis {
 }
 
 html.anim .hero-net.in .hero-net-svg {
-    animation: hero-net-drift 26s ease-in-out 2.6s infinite alternate;
+    animation: hero-net-drift 26s ease-in-out var(--net-total) infinite alternate;
 }
 
 @keyframes hero-net-drift {
