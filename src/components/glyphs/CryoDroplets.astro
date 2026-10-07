@@ -1,0 +1,56 @@
+---
+/* ========================================
+   GLYPH: CRYOGENIC DROPLETS IN CROSSFLOW
+   Graduate Research Assistant role: injected droplets bend downstream and evaporate
+   Sean Bowman [10/06/2026]
+   ======================================== */
+
+// A duct with crossflow arrows, an injector in the upper wall, and three dashed droplet
+// tracks of different penetration (the DPM trajectories). Each droplet is a round-capped
+// near-zero dash on a pathLength="1" copy of its track: the animation moves it along the
+// track while its stroke width shrinks and it fades, which reads as evaporation. --rest
+// and --size place the droplets for the still frame shown without animation.
+// 48-unit viewBox.
+const tracks = [
+    'M12 13 C14 17 22 20 43 21',
+    'M12 13 C13 19 19 25 43 27',
+    'M12 13 C12.5 22 20 30 43 33'
+];
+const droplets = [
+    { track: 0, delay: '0s', rest: -0.65, size: 1.2 },
+    { track: 0, delay: '-1.3s', rest: -0.2, size: 2.3 },
+    { track: 1, delay: '-0.45s', rest: -0.45, size: 1.7 },
+    { track: 1, delay: '-1.75s', rest: -0.85, size: 0.9 },
+    { track: 2, delay: '-0.9s', rest: -0.3, size: 2 },
+    { track: 2, delay: '-2.2s', rest: -0.7, size: 1.1 }
+];
+---
+
+<svg class="glyph" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-draw data-loops>
+    <!-- Duct walls with hatching outside the flow -->
+    <path d="M3 12 H45 M3 38 H45" stroke-width="1" />
+    <path d="M17 12 L19 9.5 M23 12 L25 9.5 M29 12 L31 9.5 M35 12 L37 9.5 M41 12 L43 9.5 M6 38 L8 40.5 M12 38 L14 40.5 M18 38 L20 40.5 M24 38 L26 40.5 M30 38 L32 40.5 M36 38 L38 40.5 M42 38 L44 40.5" stroke-width="0.4" stroke-opacity="0.4" />
+
+    <!-- Injector through the upper wall -->
+    <path d="M10.5 3 V12 M13.5 3 V12" stroke-width="0.8" />
+
+    <!-- Crossflow arrows -->
+    <path d="M4 20 H8 M6.5 18.5 L8 20 L6.5 21.5 M4 26 H8 M6.5 24.5 L8 26 L6.5 27.5 M4 32 H8 M6.5 30.5 L8 32 L6.5 33.5" stroke-width="0.6" stroke-opacity="0.6" />
+
+    <!-- Droplet tracks -->
+    <g class="cd-tracks" data-loop>
+        {tracks.map(d => <path d={d} />)}
+    </g>
+
+    <!-- Droplets -->
+    <g data-loop>
+        {droplets.map(drop => (
+            <path
+                class="cd-drop"
+                d={tracks[drop.track]}
+                pathLength="1"
+                style={`animation-delay: ${drop.delay}; --rest: ${drop.rest}; --size: ${drop.size};`}
+            />
+        ))}
+    </g>
+</svg>

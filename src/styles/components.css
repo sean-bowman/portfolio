@@ -1,0 +1,507 @@
+/* ========================================
+   BUTTONS
+   ======================================== */
+
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    text-decoration: none;
+    font-family: inherit;
+}
+
+.btn-primary {
+    background-color: var(--accent);
+    color: var(--on-accent);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-dim);
+    color: var(--on-accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.btn-secondary {
+    background-color: var(--accent-muted);
+    color: var(--text);
+    box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.btn-secondary:hover {
+    background-color: var(--surface-2);
+    color: var(--text);
+    transform: translateY(-2px);
+    box-shadow: inset 0 0 0 1px var(--accent), var(--shadow-md);
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: var(--accent-text);
+    border: 2px solid var(--accent);
+}
+
+.btn-outline:hover {
+    background-color: var(--accent);
+    color: var(--on-accent);
+    transform: translateY(-2px);
+}
+
+.btn-sm {
+    padding: 0.5rem 1rem;
+    font-size: var(--font-size-sm);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+    transform: none;
+}
+
+
+/* ========================================
+   PROJECT CARDS
+   ======================================== */
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.project-card {
+    background-color: var(--surface);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.project-image {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-color: var(--surface-2);
+    position: relative;
+}
+
+.project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.project-card:hover .project-image img {
+    transform: scale(1.05);
+}
+
+.project-content {
+    padding: var(--spacing-md);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project-category {
+    margin-bottom: var(--spacing-xs);
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    border-radius: var(--border-radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.category-badge.software {
+    background-color: var(--accent-muted);
+    color: var(--accent-text);
+}
+
+.category-badge.general {
+    background-color: var(--surface-2);
+    color: var(--text);
+}
+
+.project-title {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-xs);
+    color: var(--text);
+}
+
+.project-description {
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-sm);
+    flex: 1;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: var(--spacing-sm);
+}
+
+.tag {
+    padding: 0.25rem 0.75rem;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+.project-links {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+}
+
+.project-card.featured {
+    grid-column: span 1;
+}
+
+
+/* ========================================
+   CARDS (General)
+   ======================================== */
+
+.card {
+    background-color: var(--surface);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+
+/* ========================================
+   BADGES
+   ======================================== */
+
+.badge {
+    display: inline-block;
+    align-self: flex-start;
+    padding: 0.25rem 0.75rem;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+}
+
+.badge-success {
+    background-color: var(--green);
+}
+
+.badge-error {
+    background-color: var(--red);
+}
+
+.badge-warning {
+    background-color: var(--yellow);
+}
+
+
+/* ========================================
+   LOADING STATE
+   ======================================== */
+
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--border);
+    border-radius: 50%;
+    border-top-color: var(--accent);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+/* ========================================
+   BACK TO TOP BUTTON
+   ======================================== */
+
+.back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: var(--accent);
+    color: var(--on-accent);
+    border: none;
+    border-radius: 50%;
+    font-size: var(--font-size-xl);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.back-to-top:hover {
+    background-color: var(--accent-dim);
+    transform: translateY(-4px);
+}
+
+
+/* ========================================
+   HIDE/SHOW ANIMATION
+   ======================================== */
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+
+/* Project card filter animations */
+.project-card.hidden {
+    display: none;
+}
+
+
+/* ========================================
+   GITHUB REPO CARD ELEMENTS
+   ======================================== */
+
+.repo-meta {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+.repo-language {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 500;
+}
+
+.language-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.repo-updated {
+    color: var(--text-muted);
+}
+
+.projects-loading {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-lg) 0;
+    color: var(--text-muted);
+}
+
+.projects-error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-lg) 0;
+    color: var(--text-muted);
+}
+
+.no-projects {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: var(--spacing-lg) 0;
+    color: var(--text-muted);
+}
+
+
+/* ========================================
+   PERSONAL / BEYOND ENGINEERING
+   ======================================== */
+
+.personal-section {
+    padding: var(--spacing-lg) 0;
+}
+
+.personal-section.alt {
+    background-color: var(--surface-2);
+}
+
+.personal-intro {
+    max-width: 70ch;
+    margin: 0 auto var(--spacing-md);
+    text-align: center;
+    color: var(--text-muted);
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+}
+
+/* Featured photo + caption block (alternating image/text layout) */
+.feature-block {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.feature-block:last-child {
+    margin-bottom: 0;
+}
+
+/* Side-by-side image/text on tablet and up; alternate sides with .reverse */
+@media (min-width: 768px) {
+    .feature-block {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-lg);
+    }
+
+    .feature-block.reverse .feature-media {
+        order: 2;
+    }
+}
+
+/* Text-only feature block (no media): single centered column */
+.feature-block.text-only {
+    grid-template-columns: 1fr;
+    max-width: 70ch;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.feature-body h3 {
+    color: var(--accent-text);
+    margin-bottom: var(--spacing-xs);
+}
+
+.feature-body p {
+    color: var(--text-muted);
+    font-size: var(--font-size-base);
+    line-height: 1.8;
+}
+
+.feature-media {
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.feature-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Styled placeholder shown until real photos/video are dropped in */
+.media-placeholder {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px dashed var(--border);
+    border-radius: var(--border-radius-lg);
+    color: var(--text-muted);
+    text-align: center;
+    padding: var(--spacing-md);
+}
+
+.media-placeholder .placeholder-icon {
+    font-size: var(--font-size-4xl);
+    opacity: 0.6;
+}
+
+.media-placeholder .placeholder-label {
+    font-size: var(--font-size-sm);
+}
+
+/* Responsive 16:9 video embed wrapper */
+.video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    background-color: var(--surface-2);
+}
+
+.video-embed iframe,
+.video-embed video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-embed.media-placeholder {
+    aspect-ratio: 16 / 9;
+}
+
+/* Beyond Engineering teaser card, beside the bio in the Home About section */
+.teaser-card {
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-2) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-md);
+}
+
+.teaser-card h3 {
+    margin-bottom: var(--spacing-xs);
+    color: var(--accent-text);
+}
+
+.teaser-card p {
+    margin: 0 0 var(--spacing-md);
+    color: var(--text-muted);
+}

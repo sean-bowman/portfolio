@@ -1,0 +1,16 @@
+{
+  "thrustKn": 100,
+  "propellants": "LOX/LH2",
+  "chamberPressureMpa": 6.89,
+  "mixtureRatio": 5.5,
+  "expansionRatio": 40.0,
+  "lengthFraction": 0.8,
+  "regenEndAreaRatio": 3.0,
+  "channelCount": 60,
+  "channelType": "circle",
+  "coolant": "Hydrogen",
+  "throatRadiusMm": 50.3,
+  "exitRadiusMm": 318.3,
+  "overallLengthMm": 1164,
+  "overallDiameterMm": 637
+}

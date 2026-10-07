@@ -1,0 +1,63 @@
+---
+/* ========================================
+   GLYPH: NEW GLENN LAUNCH
+   Blue Origin role: a heavy-lift stack lifts off its pad on an 8 s cycle
+   Sean Bowman [10/06/2026]
+   ======================================== */
+
+// Public exterior only: stack outline, booster fins and strakes, engine cluster, plume.
+// 96-unit viewBox. Cycle (src/styles/glyphs.css): on the pad, ignition with ground
+// cloud at 20 to 30%, ease-in ascent out of the frame by 72%, then a fade back onto the
+// pad. With animation off, it rests on a still frame of ignition.
+---
+
+<svg class="glyph glyph-lg" viewBox="0 0 96 96" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-draw data-loops>
+    <!-- Ground -->
+    <path d="M4 86 H92" stroke-width="1.2" />
+    <path d="M14 89.5 H82" stroke-width="0.6" stroke-opacity="0.45" />
+
+    <!-- Tower: two legs, rungs every 6 units, light cross-bracing, beacon -->
+    <path d="M19 86 V18 M26 86 V18 M19 18 H26" stroke-width="1" />
+    <path d="M19 80 H26 M19 74 H26 M19 68 H26 M19 62 H26 M19 56 H26 M19 50 H26 M19 44 H26 M19 38 H26 M19 32 H26 M19 26 H26" stroke-width="0.6" />
+    <path d="M19 80 L26 74 L19 68 L26 62 L19 56 L26 50 L19 44 L26 38 L19 32 L26 26 L19 20" stroke-width="0.4" stroke-opacity="0.4" />
+    <path d="M26 41 H41.5" stroke-width="0.8" />
+    <path d="M22.5 18 V16.6" stroke-width="0.6" />
+    <circle class="ng-beacon" cx="22.5" cy="15.6" r="1" fill="currentColor" stroke="none" />
+
+    <!-- Launch mount over the flame trench -->
+    <path d="M34 86 L37 80 H59 L62 86" stroke-width="1" />
+    <path d="M40 80 V86 M56 80 V86" stroke-width="0.6" stroke-opacity="0.5" />
+
+    <!-- Ground cloud: puffs filled with the section background so they hide the lines behind -->
+    <g class="ng-smoke" data-loop>
+        <circle cx="30" cy="85" r="2.6" />
+        <circle cx="36" cy="84" r="3" />
+        <circle cx="42" cy="86" r="3.4" />
+        <circle cx="54" cy="86" r="3.4" />
+        <circle cx="60" cy="84" r="3" />
+        <circle cx="66" cy="85" r="2.6" />
+    </g>
+
+    <!-- The stack, with its plume, rises as one group -->
+    <g class="ng-stack">
+        <g class="ng-plume" data-loop>
+            <path class="flame-outer" d="M44 81 C43 88 44 96 48 104 C52 96 53 88 52 81 Z" />
+            <path class="flame-mid" d="M45.4 81 C45 87 46 93 48 99 C50 93 51 87 50.6 81 Z" />
+            <path class="flame-core" d="M46.8 81 C46.6 85 47.2 89 48 92.5 C48.8 89 49.4 85 49.2 81 Z" />
+        </g>
+
+        <!-- Shaded right half -->
+        <path d="M48 21.5 C50 24.3 51.5 28.5 51.5 34 V80 H48 Z" fill="currentColor" fill-opacity="0.12" stroke="none" />
+        <!-- Outline: ogive fairing on a constant-diameter stack -->
+        <path d="M44.5 80 V34 C44.5 28.5 46 24.3 48 21.5 C50 24.3 51.5 28.5 51.5 34 V80 Z" stroke-width="1.1" />
+        <!-- Fairing base, interstage, tank joint -->
+        <path d="M44.5 34 H51.5" stroke-width="0.6" />
+        <path d="M44.5 45 H51.5 M44.5 47 H51.5" stroke-width="0.7" />
+        <path d="M44.5 62 H51.5" stroke-width="0.4" stroke-opacity="0.5" />
+        <!-- Booster fins near the interstage, strakes along the lower booster -->
+        <path d="M44.5 48.5 L42.3 51 L44.5 53 M51.5 48.5 L53.7 51 L51.5 53" stroke-width="0.8" />
+        <path d="M44.5 64 L42.6 79 L44.5 80 M51.5 64 L53.4 79 L51.5 80" stroke-width="0.8" />
+        <!-- Engine bells -->
+        <path d="M45.3 80 L45 81.6 H47 L46.7 80 M47.3 80 L47 81.6 H49 L48.7 80 M49.3 80 L49 81.6 H51 L50.7 80" stroke-width="0.5" />
+    </g>
+</svg>

@@ -1,0 +1,435 @@
+/* ========================================
+   CSS VARIABLES & DESIGN SYSTEM
+   ======================================== */
+
+:root {
+    /* Colors and shadows: tokens.css (Surfy Pastels, light and dark) */
+
+    /* Typography */
+    --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+
+    --font-size-xs: 0.75rem;       /* 12px */
+    --font-size-sm: 0.875rem;      /* 14px */
+    --font-size-base: 1rem;        /* 16px */
+    --font-size-lg: 1.125rem;      /* 18px */
+    --font-size-xl: 1.25rem;       /* 20px */
+    --font-size-2xl: 1.5rem;       /* 24px */
+    --font-size-3xl: 1.875rem;     /* 30px */
+    --font-size-4xl: 2.25rem;      /* 36px */
+    --font-size-5xl: 3rem;         /* 48px */
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;          /* 8px */
+    --spacing-sm: 1rem;            /* 16px */
+    --spacing-md: 2rem;            /* 32px */
+    --spacing-lg: 4rem;            /* 64px */
+    --spacing-xl: 6rem;            /* 96px */
+
+    /* Layout */
+    --max-width: 1200px;
+    --border-radius: 8px;
+    --border-radius-sm: 4px;
+    --border-radius-lg: 12px;
+
+    /* Transitions */
+    --transition: all 0.3s ease;
+    --transition-fast: all 0.15s ease;
+}
+
+
+/* ========================================
+   RESET & BASE STYLES
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Anchor jumps land below the 56 px sticky header */
+section[id],
+article[id] {
+    scroll-margin-top: 72px;
+}
+
+body {
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--text);
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+}
+
+h1 {
+    font-size: var(--font-size-4xl);
+}
+
+h2 {
+    font-size: var(--font-size-3xl);
+}
+
+h3 {
+    font-size: var(--font-size-2xl);
+}
+
+h4 {
+    font-size: var(--font-size-xl);
+}
+
+h5 {
+    font-size: var(--font-size-lg);
+}
+
+h6 {
+    font-size: var(--font-size-base);
+}
+
+p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-muted);
+}
+
+a {
+    color: var(--accent-text);
+    text-decoration: none;
+    transition: var(--transition-fast);
+}
+
+a:hover {
+    color: var(--text);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+
+/* ========================================
+   UTILITY CLASSES
+   ======================================== */
+
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+}
+
+.section-description {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto var(--spacing-md);
+    color: var(--text-muted);
+}
+
+.page-title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+}
+
+.page-description {
+    font-size: var(--font-size-lg);
+    color: var(--text-muted);
+    max-width: 700px;
+}
+
+
+/* ========================================
+   LAYOUT SECTIONS
+   ======================================== */
+
+/* Hero Section */
+.hero {
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--surface-2) 100%);
+}
+
+.hero .container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    align-items: center;
+}
+
+.hero-content {
+    text-align: center;
+}
+
+.hero-title {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-sm);
+    color: var(--text);
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-2xl);
+    color: var(--accent-text);
+    margin-bottom: var(--spacing-sm);
+    font-weight: 600;
+}
+
+.hero-description {
+    font-size: var(--font-size-lg);
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-md);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.hero-image {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-img {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 30%;
+    border: 4px solid var(--accent);
+    box-shadow: var(--shadow-lg);
+}
+
+
+/* About Section */
+.about {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--bg);
+}
+
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+/* Bio at a readable line length; the Beyond Engineering teaser sits beside it on desktop */
+.about-text {
+    max-width: 75ch;
+}
+
+.about-text p {
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-sm);
+}
+
+/* Featured Projects Section */
+.featured-projects {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--surface-2);
+}
+
+.view-all {
+    text-align: center;
+    margin-top: var(--spacing-md);
+}
+
+
+/* Page Header */
+.page-header {
+    padding: var(--spacing-lg) 0;
+    background: linear-gradient(135deg, var(--surface-2) 0%, var(--bg) 100%);
+    text-align: center;
+}
+
+.page-header .page-title {
+    color: var(--accent-text);
+    margin-bottom: var(--spacing-sm);
+}
+
+.page-header .page-description {
+    color: var(--text-muted);
+    margin: 0 auto;
+}
+
+
+/* Projects Section */
+.projects-section {
+    padding: var(--spacing-lg) 0;
+}
+
+
+/* Connect Section */
+.connect-section {
+    padding: var(--spacing-lg) 0;
+}
+
+.connect-content {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.connect-method h2 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xs);
+}
+
+.connect-method p {
+    font-size: var(--font-size-base);
+}
+
+.social-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.social-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-md);
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    transition: var(--transition-fast);
+    text-align: center;
+}
+
+.social-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Brand marks in the text color: near-black in light mode, near-white in dark */
+.social-card .social-icon {
+    display: block;
+    width: 32px;
+    height: 32px;
+    color: var(--text);
+}
+
+/* LinkedIn publishes its mark as PNG only; its alpha masks a fill in the text color. The
+   image sits in one custom property so the build inlines it once for both mask spellings. */
+.social-icon-linkedin {
+    --linkedin-mark: url('../assets/icons/linkedin-in-bug.png');
+    background-color: currentColor;
+    -webkit-mask: var(--linkedin-mark) center / contain no-repeat;
+    mask: var(--linkedin-mark) center / contain no-repeat;
+}
+
+.social-card .social-label {
+    font-weight: 600;
+    color: var(--text);
+}
+
+.connect-resume {
+    padding: var(--spacing-md);
+    background-color: var(--surface);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.connect-resume h2 {
+    margin-bottom: var(--spacing-xs);
+}
+
+
+/* ========================================
+   ACCESSIBILITY
+   ======================================== */
+
+/* Focus rings for keyboard navigation; :focus-visible leaves mouse clicks without one */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Skip to main content link (for screen readers) */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--accent);
+    color: var(--on-accent);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    text-decoration: none;
+    z-index: 100;
+}
+
+.skip-to-main:focus-visible {
+    top: 0;
+}
+
+
+/* ========================================
+   HELPER CLASSES
+   ======================================== */
+
+.text-center {
+    text-align: center;
+}
+
+.mb-1 { margin-bottom: var(--spacing-xs); }
+.mb-2 { margin-bottom: var(--spacing-sm); }
+.mb-3 { margin-bottom: var(--spacing-md); }
+.mb-4 { margin-bottom: var(--spacing-lg); }
+
+.mt-1 { margin-top: var(--spacing-xs); }
+.mt-2 { margin-top: var(--spacing-sm); }
+.mt-3 { margin-top: var(--spacing-md); }
+.mt-4 { margin-top: var(--spacing-lg); }
+
+.hidden {
+    display: none;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}

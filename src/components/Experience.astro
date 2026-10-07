@@ -1,0 +1,71 @@
+---
+/* ========================================
+   EXPERIENCE
+   Work history by company, one animated illustration per role
+   Sean Bowman [10/06/2026]
+   ======================================== */
+
+import { companies } from '../data/roles.js';
+import NewGlennLaunch from './glyphs/NewGlennLaunch.astro';
+import HybridTestStand from './glyphs/HybridTestStand.astro';
+import RegenNozzle from './glyphs/RegenNozzle.astro';
+import SupercriticalTs from './glyphs/SupercriticalTs.astro';
+import CryoDroplets from './glyphs/CryoDroplets.astro';
+import VenturiManometer from './glyphs/VenturiManometer.astro';
+import '../styles/experience.css';
+import '../styles/glyphs.css';
+
+// Keys match the glyph field of each role in src/data/roles.js
+const glyphs = {
+    newGlennLaunch: NewGlennLaunch,
+    hybridTestStand: HybridTestStand,
+    regenNozzle: RegenNozzle,
+    supercriticalTs: SupercriticalTs,
+    cryoDroplets: CryoDroplets,
+    venturiManometer: VenturiManometer
+};
+
+for (const company of companies) {
+    for (const role of company.roles) {
+        if (!(role.glyph in glyphs)) {
+            throw new Error(`Role ${role.id} names an unknown glyph '${role.glyph}'`);
+        }
+    }
+}
+---
+
+<section class="experience" id="experience">
+    <div class="container">
+        <h2 class="section-title">Experience</h2>
+
+        <div class="experience-list">
+            {companies.map(company => (
+                <div class="company" data-reveal>
+                    <div class="company-header">
+                        <h3 class="company-name">{company.name}</h3>
+                        <span class="company-location">{company.location}</span>
+                    </div>
+
+                    {company.roles.map(role => {
+                        const Glyph = glyphs[role.glyph as keyof typeof glyphs];
+                        return (
+                            <article class="role" id={role.id}>
+                                <div class="role-meta">
+                                    <Glyph />
+                                    <p class="role-dates"><span>{role.start} &ndash;</span> <span>{role.end}</span></p>
+                                </div>
+                                <div class="role-body">
+                                    <h4 class="role-title">{role.title}</h4>
+                                    {role.team && <p class="role-team">{role.team}</p>}
+                                    <ul class="role-points">
+                                        {role.points.map(point => <li>{point}</li>)}
+                                    </ul>
+                                </div>
+                            </article>
+                        );
+                    })}
+                </div>
+            ))}
+        </div>
+    </div>
+</section>

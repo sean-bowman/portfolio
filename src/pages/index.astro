@@ -1,0 +1,115 @@
+---
+/* ========================================
+   HOME PAGE
+   Hero, about, experience, tools, and featured repositories
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroNet from '../components/HeroNet.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import Experience from '../components/Experience.astro';
+import Tools from '../components/Tools.astro';
+import { getFeaturedRepos } from '../lib/github.js';
+import { withBase } from '../lib/paths.js';
+import heroImage from '../assets/images/El_Salvador_K59.JPG';
+
+const featuredRepos = await getFeaturedRepos();
+---
+
+<BaseLayout
+    title="Home"
+    description="Portfolio of Sean Bowman: propulsion design and computational engineer building computational tools across simulation, 3D geometry, web visualization, and automation."
+    current="home"
+>
+    <!-- Hero Section: NOVA's characteristic net behind the content -->
+    <section class="hero">
+        <HeroNet />
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Hi, I'm Sean Bowman
+                </h1>
+                <p class="hero-subtitle">
+                    Propulsion Design &amp; Computational Engineer
+                </p>
+                <p class="hero-description">
+                    I design and analyze rocket propulsion systems and build the computational
+                    tools around them: numerical solvers, 3D geometry generators, and interactive
+                    visualizations. My public work spans CFD and computational geometry, browser and
+                    hardware automation, and full-stack data tools in Python and JavaScript.
+                </p>
+                <div class="hero-buttons">
+                    <a href={withBase('projects')} class="btn btn-primary">View My Work</a>
+                    <a href={withBase('contact')} class="btn btn-secondary">Get In Touch</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Rendered at 250 to 350 px (responsive.css); widths cover 2x displays -->
+                <Picture
+                    src={heroImage}
+                    alt="Profile picture of Sean Bowman"
+                    class="profile-img"
+                    formats={['avif', 'webp']}
+                    widths={[250, 350, 500, 700]}
+                    sizes="(max-width: 639px) 250px, 350px"
+                    loading="eager"
+                />
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>
+                        I'm a propulsion design and computational engineer with a passion for solving complex engineering
+                        challenges. I specialize in propulsion system design, computational methods,
+                        and building simulation tools that accelerate the engineering workflow.
+                    </p>
+                    <p>
+                        My work sits at the intersection of aerospace engineering and software development.
+                        Across my repositories I build custom solvers and SPH/CFD simulations, 3D-printable
+                        nozzle geometry generated from the physics, interactive Three.js and Streamlit
+                        interfaces, and automation ranging from Playwright browsers to Raspberry Pi Pico HID
+                        provisioning, turning raw physics into tools and actionable design insight.
+                    </p>
+                </div>
+
+                <aside class="teaser-card">
+                    <h3>Beyond Engineering</h3>
+                    <p>
+                        There's more to me than solvers and CAD: a lifelong surfer and
+                        waterman, a husband and dad of three, and a traveler who's chased
+                        waves from California to Ireland.
+                    </p>
+                    <a href={withBase('beyond-engineering')} class="btn btn-secondary">Get to Know Me</a>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <Experience />
+
+    <Tools />
+
+    <!-- Featured Projects Section -->
+    <section class="featured-projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-description">Here are some highlights from my recent work</p>
+
+            <div class="projects-grid">
+                {featuredRepos.map(repo => <ProjectCard repo={repo} />)}
+            </div>
+
+            <div class="view-all">
+                <a href={withBase('projects')} class="btn btn-primary">View All Projects</a>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

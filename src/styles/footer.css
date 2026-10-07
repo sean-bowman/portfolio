@@ -1,0 +1,76 @@
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.footer {
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+    background-color: var(--surface-2);
+    border-top: 1px solid var(--border);
+}
+
+.footer-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+/* Small mono eyebrow labels, matching the wordmark */
+.footer-heading {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: var(--spacing-xs);
+}
+
+.footer-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.footer-list a {
+    color: var(--text);
+}
+
+/* Home page sections, indented under Home */
+.footer-sublist {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    padding-left: var(--spacing-sm);
+    border-left: 1px solid var(--border);
+}
+
+.footer-list a:hover,
+.footer-list a[aria-current='page'] {
+    color: var(--accent-text);
+}
+
+.footer-legal {
+    margin: var(--spacing-md) 0 0;
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--border);
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Phones: pages and links side by side, colophon below */
+@media (max-width: 639px) {
+    .footer {
+        padding-top: var(--spacing-md);
+    }
+
+    .footer-columns {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .footer-colophon {
+        grid-column: 1 / -1;
+    }
+}

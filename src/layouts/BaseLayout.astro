@@ -1,0 +1,131 @@
+---
+/* ========================================
+   BASE LAYOUT
+   Document head, header, footer, and shared scripts for every page
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import { ClientRouter } from 'astro:transitions';
+import { getImage } from 'astro:assets';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { withBase } from '../lib/paths.js';
+import heroImage from '../assets/images/El_Salvador_K59.JPG';
+
+// Global stylesheets: color tokens first, then the cascade order the site was built around
+import '../styles/tokens.css';
+import '../styles/main.css';
+import '../styles/navigation.css';
+import '../styles/components.css';
+import '../styles/responsive.css';
+import '../styles/footer.css';
+import '../styles/theme.css';
+import '../styles/motion.css';
+
+interface Props {
+    /** Page title; ' | Sean Bowman' is appended */
+    title: string;
+    /** Meta description, also used for link previews */
+    description: string;
+    /** Id from sitePages of this page */
+    current: string;
+}
+
+const { title, description, current } = Astro.props;
+const fullTitle = `${title} | Sean Bowman`;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site);
+
+// Link-preview image: the profile photo cropped to the 1200x630 card size link
+// previews expect, generated once at build time
+const previewImage = await getImage({
+    src: heroImage,
+    width: 1200,
+    height: 630,
+    fit: 'cover',
+    format: 'jpg',
+    quality: 75
+});
+const previewImageUrl = new URL(previewImage.src, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F7F1E6">
+
+    <!-- Pre-paint theme: runs before the body renders, so there is no flash of the wrong
+         theme. A stored choice wins; otherwise the OS setting decides. data-theme is always
+         set so CSS and the toggle have one source of truth. The client router copies the
+         new page's <html> attributes on navigation, so the theme is re-applied after every
+         swap. While nothing is stored, OS changes are followed live and announced with the
+         same 'themechange' event the toggle dispatches. -->
+    <script is:inline>
+        (() => {
+            const storageKey = 'site-theme';
+            const themeColors = { light: '#F7F1E6', dark: '#16232A' };
+            const darkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            const storedTheme = () => {
+                try {
+                    const value = localStorage.getItem(storageKey);
+                    return value === 'light' || value === 'dark' ? value : null;
+                } catch {
+                    return null;
+                }
+            };
+            const applyTheme = () => {
+                const theme = storedTheme() || (darkQuery.matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-theme', theme);
+                document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColors[theme]);
+                return theme;
+            };
+            applyTheme();
+            document.addEventListener('astro:after-swap', applyTheme);
+            darkQuery.addEventListener('change', () => {
+                if (storedTheme()) return;
+                const theme = applyTheme();
+                document.dispatchEvent(new CustomEvent('themechange', { detail: { theme } }));
+            });
+        })();
+    </script>
+    <meta name="description" content={description}>
+    <meta name="author" content="Sean Bowman">
+    <title>{fullTitle}</title>
+    <link rel="canonical" href={canonicalUrl}>
+
+    <!-- Link previews (Open Graph, read by LinkedIn and Slack; Twitter card for X) -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content={fullTitle}>
+    <meta property="og:description" content={description}>
+    <meta property="og:url" content={canonicalUrl}>
+    <meta property="og:image" content={previewImageUrl}>
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')}>
+    <link rel="sitemap" href={withBase('sitemap-index.xml')}>
+
+    <ClientRouter />
+</head>
+<!-- data-page tells persisted components (the site map) which page is showing -->
+<body data-page={current}>
+    <a class="skip-to-main" href="#main">Skip to content</a>
+
+    <Header current={current} />
+
+    <main id="main">
+        <slot />
+    </main>
+
+    <Footer current={current} />
+
+    <button class="back-to-top" type="button" aria-label="Back to top" title="Back to top">&uarr;</button>
+
+    <script>
+        import '../scripts/motion.js';
+        import '../scripts/nav.js';
+        import '../scripts/theme.js';
+        import '../scripts/site.js';
+    </script>
+</body>
+</html>

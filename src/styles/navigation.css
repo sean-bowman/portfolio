@@ -1,0 +1,224 @@
+/* ========================================
+   NAVIGATION BAR
+   ======================================== */
+
+/* The hairline and shadow appear once the page scrolls (nav.js sets .is-scrolled), so
+   the bar sits flush with the hero at the top of the page */
+.navbar {
+    position: sticky;
+    top: 0;
+    background-color: var(--bg);
+    border-bottom: 1px solid transparent;
+    z-index: 1000;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.navbar.is-scrolled {
+    border-bottom-color: var(--border);
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-container {
+    max-width: var(--max-width);
+    height: 56px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Text wordmark: the name set in mono, no image */
+.wordmark {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: var(--accent-text);
+}
+
+.nav-logo {
+    font-size: var(--font-size-lg);
+    margin-right: auto;
+    transition: var(--transition-fast);
+}
+
+.nav-logo:hover {
+    color: var(--text);
+}
+
+.nav-menu {
+    display: flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+}
+
+.nav-item {
+    list-style: none;
+}
+
+.nav-link {
+    color: var(--text-muted);
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition-fast);
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    color: var(--accent-text);
+    background-color: var(--surface-2);
+}
+
+.nav-link.active {
+    color: var(--accent-text);
+    background-color: var(--surface-2);
+}
+
+/* Active indicator: a real element (not ::after) so it can carry a view-transition name */
+.nav-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    width: 60%;
+    height: 2px;
+    background-color: var(--accent);
+}
+
+.nav-resume::after {
+    content: ' \2197';
+    font-size: 0.85em;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+/* Tighter links between the phone layout and full desktop width */
+@media (min-width: 769px) and (max-width: 1023px) {
+    .nav-menu {
+        gap: 0;
+    }
+
+    .nav-link {
+        padding: 0.4rem 0.55rem;
+        font-size: var(--font-size-sm);
+    }
+}
+
+
+/* ========================================
+   MOBILE MENU TOGGLE
+   ======================================== */
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.hamburger {
+    position: relative;
+    width: 22px;
+    height: 2px;
+    background-color: var(--text);
+    transition: var(--transition-fast);
+}
+
+.hamburger::before,
+.hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 22px;
+    height: 2px;
+    background-color: var(--text);
+    transition: var(--transition-fast);
+}
+
+.hamburger::before {
+    top: -7px;
+}
+
+.hamburger::after {
+    top: 7px;
+}
+
+/* Hamburger animation when menu is open */
+.nav-toggle.active .hamburger {
+    background-color: transparent;
+}
+
+.nav-toggle.active .hamburger::before {
+    top: 0;
+    transform: rotate(45deg);
+}
+
+.nav-toggle.active .hamburger::after {
+    top: 0;
+    transform: rotate(-45deg);
+}
+
+
+/* ========================================
+   MOBILE NAVIGATION (Hidden by default)
+   ======================================== */
+
+@media (max-width: 768px) {
+    .nav-toggle {
+        display: flex;
+    }
+
+    .nav-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--bg);
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        gap: 0;
+        padding: 0 var(--spacing-sm);
+        box-shadow: var(--shadow-md);
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    }
+
+    .nav-menu.active {
+        max-height: 500px;
+        padding: var(--spacing-sm);
+        opacity: 1;
+    }
+
+    .nav-item {
+        width: 100%;
+    }
+
+    .nav-link {
+        display: block;
+        width: 100%;
+        padding: var(--spacing-sm);
+        border-left: 4px solid transparent;
+    }
+
+    .nav-indicator {
+        display: none;
+    }
+
+    .nav-link.active {
+        border-left-color: var(--accent);
+    }
+}

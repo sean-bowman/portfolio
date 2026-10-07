@@ -1,0 +1,128 @@
+[
+  {
+    "description": "NOVA: Nozzle Optimization for Variable Applications. Rocket nozzle design suite: method-of-characteristics contours, regeneratively cooled jackets, volutes, film and radiative cooling, and exhaust plumes, generated programmatically from first-principles physics.",
+    "html_url": "https://github.com/sean-bowman/NOVA",
+    "language": "Python",
+    "name": "NOVA",
+    "updated_at": "2026-10-04T02:18:59Z"
+  },
+  {
+    "description": "Personal portfolio for Github Pages",
+    "html_url": "https://github.com/sean-bowman/portfolio",
+    "language": "JavaScript",
+    "name": "portfolio",
+    "updated_at": "2026-09-30T17:32:49Z"
+  },
+  {
+    "description": "A showcase repository for personal computational engineering projects.",
+    "html_url": "https://github.com/sean-bowman/pySurf",
+    "language": "Python",
+    "name": "pySurf",
+    "updated_at": "2026-09-30T17:32:03Z"
+  },
+  {
+    "description": "A language showcase repository using general aerospace engineering topics.",
+    "html_url": "https://github.com/sean-bowman/languageShowcase",
+    "language": "Python",
+    "name": "languageShowcase",
+    "updated_at": "2026-09-30T17:15:09Z"
+  },
+  {
+    "description": "Scheduled Playwright browser automation that claims the hourly boxed.gg gem-drop pool",
+    "html_url": "https://github.com/sean-bowman/boxedGemWatcher",
+    "language": "Python",
+    "name": "boxedGemWatcher",
+    "updated_at": "2026-09-30T17:11:46Z"
+  },
+  {
+    "description": "Markdown or HTML to a styled, self-contained HTML or PDF document. MathJax math, mermaid diagrams, One Dark Pro code, embedded figures.",
+    "html_url": "https://github.com/sean-bowman/documentProcessor",
+    "language": "Python",
+    "name": "documentProcessor",
+    "updated_at": "2026-09-07T01:54:19Z"
+  },
+  {
+    "description": "Every English Pokemon TCG card whose artwork features a beach or ocean scene",
+    "html_url": "https://github.com/sean-bowman/pokemonBinder",
+    "language": "HTML",
+    "name": "pokemonBinder",
+    "updated_at": "2026-09-02T00:14:01Z"
+  },
+  {
+    "description": "Orbital-class launch vehicle engineering reference and toolset. Technical documentation paired with Python libraries that size and analyze real hardware, organized by domain.",
+    "html_url": "https://github.com/sean-bowman/orbitalRockets",
+    "language": "Python",
+    "name": "orbitalRockets",
+    "updated_at": "2026-09-01T10:52:29Z"
+  },
+  {
+    "description": "Personal Claude Code skills and engineering onboarding resources",
+    "html_url": "https://github.com/sean-bowman/codeAssistantTools",
+    "language": null,
+    "name": "codeAssistantTools",
+    "updated_at": "2026-08-11T01:20:26Z"
+  },
+  {
+    "description": "Self-hosted aerospace news pipeline: RSS + scrape ingestion, keyword filtering, paywall tagging and Jaccard dedup into SQLite, with a weekly HTML email digest and a 30-minute Telegram breaking-news monitor",
+    "html_url": "https://github.com/sean-bowman/aerospaceNewsScraper",
+    "language": "Python",
+    "name": "aerospaceNewsScraper",
+    "updated_at": "2026-07-21T12:27:15Z"
+  },
+  {
+    "description": "A Three.js portfolio self-hosted as a Tor v3 onion service, with a full reproduction guide for onion-service hosting",
+    "html_url": "https://github.com/sean-bowman/torOnionPortfolio",
+    "language": "JavaScript",
+    "name": "torOnionPortfolio",
+    "updated_at": "2026-07-21T12:22:03Z"
+  },
+  {
+    "description": "A hands-on programming crash course with a worked pipe-flow example",
+    "html_url": "https://github.com/sean-bowman/programmingCrashCourse",
+    "language": "Python",
+    "name": "programmingCrashCourse",
+    "updated_at": "2026-06-24T20:12:31Z"
+  },
+  {
+    "description": "Self-hosted project planner with task lists, sprints, and Gantt scheduling",
+    "html_url": "https://github.com/sean-bowman/jiraAtHome",
+    "language": "HTML",
+    "name": "jiraAtHome",
+    "updated_at": "2026-06-24T20:12:29Z"
+  },
+  {
+    "description": "Streamlit app for engineering compensation analysis and market benchmarking",
+    "html_url": "https://github.com/sean-bowman/compensationCalculator",
+    "language": "Python",
+    "name": "compensationCalculator",
+    "updated_at": "2026-06-24T20:12:25Z"
+  },
+  {
+    "description": "Configurable, self-hosted weekly pregnancy update emailer — anchor-based week math, markdown content, dark-theme HTML report with an inline SVG growth chart",
+    "html_url": "https://github.com/sean-bowman/pregnancyUpdates",
+    "language": "Python",
+    "name": "pregnancyUpdates",
+    "updated_at": "2026-06-20T17:57:01Z"
+  },
+  {
+    "description": "USB-deployable Windows 11 dev-environment provisioner: Raspberry Pi Pico HID payload + winget/PowerShell bootstrap (Miniconda, VS Code, .NET, Node, Rust; REFPROP/CoolProp)",
+    "html_url": "https://github.com/sean-bowman/environmentSetup",
+    "language": "Python",
+    "name": "environmentSetup",
+    "updated_at": "2026-06-20T17:56:46Z"
+  },
+  {
+    "description": "Interactive Streamlit meta explorer and team builder for Pokemon Champions VGC",
+    "html_url": "https://github.com/sean-bowman/competitivePokemon",
+    "language": "Python",
+    "name": "competitivePokemon",
+    "updated_at": "2026-06-20T17:56:36Z"
+  },
+  {
+    "description": "Retired iOS/Android mindfulness app for couples — daily shared messages, partner push notifications, and a location-aware family learning feed. Built with React Native, Expo (SDK 54), and Firebase.",
+    "html_url": "https://github.com/sean-bowman/mindfulnessApp",
+    "language": "TypeScript",
+    "name": "mindfulnessApp",
+    "updated_at": "2026-06-18T20:58:53Z"
+  }
+]

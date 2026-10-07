@@ -1,0 +1,185 @@
+---
+/* ========================================
+   BEYOND ENGINEERING PAGE
+   Hobbies, family, and travel
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import { Picture } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../lib/paths.js';
+import surfNicaragua from '../assets/images/personal/surfNicaragua.jpg';
+import spearFish from '../assets/images/personal/spearFish.jpg';
+import snowboardJump from '../assets/images/personal/snowboardJump.jpg';
+import wedding from '../assets/images/personal/WED_1523.jpg';
+import surfElSalvador from '../assets/images/personal/El_Salvador_K59_2.JPG';
+import snowboardTrip from '../assets/images/personal/snowboardTrip.JPG';
+
+// Feature photos fill one column of the two-column feature block (about 560 px at
+// full container width) and the full width on phones
+const photoWidths = [480, 720, 960, 1200];
+const photoSizes = '(max-width: 768px) 100vw, 560px';
+const photoFormats: ('avif' | 'webp')[] = ['avif', 'webp'];
+---
+
+<BaseLayout
+    title="Beyond Engineering"
+    description="Beyond engineering: Sean Bowman as a lifelong waterman and surfer, husband and father of three, and traveler chasing waves and mountains."
+    current="beyond"
+>
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Beyond Engineering</h1>
+            <p class="page-description">
+                The rest of me: a lifelong waterman and former multi-sport athlete,
+                a husband and father of three, and a traveler who has followed waves and
+                mountains across two continents.
+            </p>
+        </div>
+    </section>
+
+    <!--
+        Adding media: import a photo from src/assets/images/personal/ in the frontmatter and
+        render it with <Picture src={photo} alt="..." widths={photoWidths} sizes={photoSizes}
+        formats={photoFormats} />. Self-hosted video goes in public/assets/video/ and is
+        referenced with withBase('assets/video/<file>.mp4').
+    -->
+
+    <!-- Hobbies & Recreation -->
+    <section class="personal-section">
+        <div class="container">
+            <h2 class="section-title">Hobbies &amp; Recreation</h2>
+            <p class="personal-intro">
+                What I get up to away from the workbench: time in the ocean, days on the
+                mountain, and a competitive streak that never really switched off.
+            </p>
+
+            <div class="feature-block" data-reveal>
+                <div class="feature-media">
+                    <Picture src={surfNicaragua} alt="Surfing in Nicaragua" widths={photoWidths} sizes={photoSizes} formats={photoFormats} />
+                </div>
+                <div class="feature-body">
+                    <h3>Surfing</h3>
+                    <p>
+                        I started competing at ten and didn't really stop until grad school,
+                        riding for Florida Tech's surf team at NSSA Nationals in California.
+                        Between a demanding career and a growing family there's less time to
+                        compete now, but surfing is the constant that's followed me from a New
+                        Jersey childhood to the Florida coast; whenever the swell and the
+                        schedule line up, I paddle out.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-block reverse" data-reveal>
+                <div class="feature-media">
+                    <Picture src={spearFish} alt="Freediving and spearfishing" widths={photoWidths} sizes={photoSizes} formats={photoFormats} />
+                </div>
+                <div class="feature-body">
+                    <h3>Freediving &amp; Spearfishing</h3>
+                    <p>
+                        I'm a waterman at heart, so when I'm not riding waves I'm usually under
+                        them. Freediving and spearfishing scratch the same itch surfing does:
+                        time in the ocean on its own terms, with the added reward
+                        of bringing dinner home.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-block" data-reveal>
+                <div class="feature-media">
+                    <Picture src={snowboardJump} alt="Snowboarding" widths={photoWidths} sizes={photoSizes} formats={photoFormats} />
+                </div>
+                <div class="feature-body">
+                    <h3>Snowboarding &amp; a Multi-Sport Upbringing</h3>
+                    <p>
+                        Growing up in the Northeast made me a multi-sport kid: ice hockey,
+                        lacrosse, and soccer through school, and snowboarding every winter I could
+                        get to the mountains. Adult life leaves less room for all of it, but the
+                        athlete's habits never really left me.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-block reverse" data-reveal>
+                <div class="video-embed">
+                    <video src={withBase('assets/video/rocketLeagueSnowDay.mp4')} muted controls playsinline preload="metadata"></video>
+                </div>
+                <div class="feature-body">
+                    <h3>Rocket League -- Florida Tech Esports</h3>
+                    <p>
+                        In grad school I played Rocket League for Florida Tech's esports team,
+                        channeling the same competitive streak from the surf contest circuit into
+                        the arena. The clip is from a run when I was ranked top 100 in the world in
+                        Snow Day, Rocket League's hockey mode.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Family & Personal Life -->
+    <section class="personal-section alt">
+        <div class="container">
+            <h2 class="section-title">Family Life</h2>
+            <p class="personal-intro">
+                These days I'm a family man first: everything else fits around the people
+                at home.
+            </p>
+
+            <div class="feature-block" data-reveal>
+                <div class="feature-media">
+                    <Picture src={wedding} alt="Sean and his wife" widths={photoWidths} sizes={photoSizes} formats={photoFormats} />
+                </div>
+                <div class="feature-body">
+                    <h3>My Crew</h3>
+                    <p>
+                        My wife and I have three kids: our daughter, our son, and a second
+                        daughter arriving in the summer of 2026. They take after both of us:
+                        happiest outdoors and in the water, already drawn to the same coast that
+                        shaped me.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel & Adventures -->
+    <section class="personal-section">
+        <div class="container">
+            <h2 class="section-title">Travel &amp; Adventures</h2>
+            <p class="personal-intro">
+                Surfing has been my passport, and chasing snow has filled in the rest of the map.
+            </p>
+
+            <div class="feature-block" data-reveal>
+                <div class="feature-media">
+                    <Picture src={surfElSalvador} alt="Surfing in El Salvador" widths={photoWidths} sizes={photoSizes} formats={photoFormats} />
+                </div>
+                <div class="feature-body">
+                    <h3>Chasing Waves</h3>
+                    <p>
+                        Surfing has taken me a long way. Domestically I've worked the entire
+                        California coast and the East Coast from Rhode Island down to Key West.
+                        Abroad, the search has led to El Salvador, Costa Rica, Nicaragua, Puerto
+                        Rico, Tortola, and Ireland.
+                    </p>
+                </div>
+            </div>
+
+            <div class="feature-block reverse" data-reveal>
+                <div class="feature-media">
+                    <Picture src={snowboardTrip} alt="Snowboarding trip" widths={photoWidths} sizes={photoSizes} formats={photoFormats} />
+                </div>
+                <div class="feature-body">
+                    <h3>Mountains &amp; Snow</h3>
+                    <p>
+                        When I've chased snow instead of swell, it's taken me to Utah, Colorado,
+                        and Canada: the same drive to be outside, just pointed uphill.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

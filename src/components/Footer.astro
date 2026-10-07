@@ -1,0 +1,82 @@
+---
+/* ========================================
+   SITE FOOTER
+   HTML site map, external links, colophon, and copyright
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+// The plain site map is always visible: it is the keyboard, no-JS, and no-WebGL path to
+// every page, so the 3D site map above it needs no hidden fallback list.
+
+import { sitePages, homeSections, externalLinks } from '../data/pages.js';
+import { withBase } from '../lib/paths.js';
+import SiteMap from './SiteMap.astro';
+
+interface Props {
+    /** Id from sitePages of the page being rendered */
+    current: string;
+}
+
+const { current } = Astro.props;
+
+const buildDate = new Date();
+const buildYear = buildDate.getFullYear();
+const buildDateLabel = buildDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+const sourceUrl = 'https://github.com/sean-bowman/portfolio';
+---
+
+<footer class="footer">
+    <div class="container">
+        <SiteMap />
+
+        <div class="footer-columns">
+            <nav class="footer-column" aria-label="Site map">
+                <h2 class="footer-heading">Pages</h2>
+                <ul class="footer-list">
+                    {sitePages.map(page => (
+                        <li>
+                            <a href={withBase(page.path)} aria-current={page.id === current ? 'page' : undefined}>
+                                {page.label}
+                            </a>
+                            {page.id === 'home' && (
+                                <ul class="footer-sublist">
+                                    {homeSections.map(section => (
+                                        <li><a href={`${withBase()}#${section.id}`}>{section.label}</a></li>
+                                    ))}
+                                </ul>
+                            )}
+                        </li>
+                    ))}
+                </ul>
+            </nav>
+
+            <div class="footer-column">
+                <h2 class="footer-heading">Elsewhere</h2>
+                <ul class="footer-list">
+                    {externalLinks.map(link => (
+                        <li>
+                            <a
+                                href={link.href}
+                                {...(link.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                            >
+                                {link.label}
+                            </a>
+                        </li>
+                    ))}
+                    <li><a href={withBase('assets/resume.pdf')} target="_blank" rel="noopener noreferrer">Resume (PDF)</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column footer-colophon">
+                <h2 class="footer-heading">Colophon</h2>
+                <ul class="footer-list">
+                    <li>Built with Astro and Three.js</li>
+                    <li><a href={sourceUrl} target="_blank" rel="noopener noreferrer">Source on GitHub</a></li>
+                    <li>Last built {buildDateLabel}</li>
+                </ul>
+            </div>
+        </div>
+
+        <p class="footer-legal">&copy; {buildYear} Sean Bowman</p>
+    </div>
+</footer>

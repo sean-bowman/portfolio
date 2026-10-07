@@ -1,0 +1,46 @@
+---
+/* ========================================
+   PROJECT CARD
+   One GitHub repository, rendered at build time
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import { getLanguageColor, formatUpdated } from '../lib/github.js';
+
+interface Props {
+    repo: {
+        name: string;
+        description: string | null;
+        language: string | null;
+        updated_at: string;
+        html_url: string;
+    };
+    /** Heading level for the repo name: 3 under a section h2 (Home), 2 directly under the page h1 (Projects) */
+    headingLevel?: 2 | 3;
+}
+
+const { repo, headingLevel = 3 } = Astro.props;
+const Heading = headingLevel === 2 ? 'h2' : 'h3';
+---
+
+<article class="project-card" data-category="software" data-reveal>
+    <div class="project-content">
+        <div class="project-category">
+            <span class="category-badge software">{repo.language || 'Repository'}</span>
+        </div>
+        <Heading class="project-title">{repo.name}</Heading>
+        <p class="project-description">{repo.description || 'No description provided.'}</p>
+        <div class="repo-meta">
+            {repo.language && (
+                <span class="repo-language">
+                    <span class="language-dot" style={`background-color: ${getLanguageColor(repo.language)}`}></span>
+                    {repo.language}
+                </span>
+            )}
+            <span class="repo-updated">Updated {formatUpdated(repo.updated_at)}</span>
+        </div>
+        <div class="project-links">
+            <a href={repo.html_url} target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">View on GitHub</a>
+        </div>
+    </div>
+</article>

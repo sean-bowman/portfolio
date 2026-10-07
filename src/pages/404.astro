@@ -1,0 +1,36 @@
+---
+/* ========================================
+   NOT FOUND PAGE
+   Served by GitHub Pages for any missing route
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { sitePages } from '../data/pages.js';
+import { withBase } from '../lib/paths.js';
+---
+
+<BaseLayout
+    title="Page Not Found"
+    description="The page you were looking for does not exist."
+    current=""
+>
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Page Not Found</h1>
+            <p class="page-description">
+                That address does not match a page on this site. These do:
+            </p>
+        </div>
+    </section>
+
+    <section class="connect-section">
+        <div class="container">
+            <div class="hero-buttons">
+                {sitePages.map(page => (
+                    <a href={withBase(page.path)} class="btn btn-outline">{page.label}</a>
+                ))}
+            </div>
+        </div>
+    </section>
+</BaseLayout>

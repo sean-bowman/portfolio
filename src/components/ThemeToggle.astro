@@ -1,0 +1,45 @@
+---
+/* ========================================
+   THEME TOGGLE
+   Sun sets below a wave and the moon rises, or the reverse
+   Sean Bowman [10/06/2026]
+   ======================================== */
+
+// Behavior lives in src/scripts/theme.js (delegated click handler); the icon state is
+// pure CSS keyed on html[data-theme] (src/styles/theme.css). aria-pressed is synced on
+// every page load, since the server cannot know the visitor's theme.
+---
+
+<button class="theme-toggle" type="button" aria-label="Dark theme" aria-pressed="false" title="Toggle dark theme">
+    <svg class="theme-icon" viewBox="0 0 24 24" fill="none" stroke-linecap="round" aria-hidden="true">
+        <defs>
+            <!-- Everything above the waterline; the sun and moon slide below it to set -->
+            <clipPath id="themeIconSky">
+                <rect x="0" y="0" width="24" height="16.4" />
+            </clipPath>
+            <mask id="themeIconMoonCut">
+                <rect x="0" y="0" width="24" height="24" fill="white" />
+                <circle cx="15.2" cy="6.6" r="4.1" fill="black" />
+            </mask>
+        </defs>
+        <g clip-path="url(#themeIconSky)">
+            <g class="theme-icon-sun">
+                <circle cx="12" cy="9" r="3.2" fill="currentColor" />
+                <g stroke="currentColor" stroke-width="1.5">
+                    <line x1="12" y1="2.4" x2="12" y2="3.6" />
+                    <line x1="16.7" y1="4.3" x2="15.8" y2="5.2" />
+                    <line x1="18.6" y1="9" x2="17.4" y2="9" />
+                    <line x1="16.7" y1="13.7" x2="15.8" y2="12.8" />
+                    <line x1="7.3" y1="13.7" x2="8.2" y2="12.8" />
+                    <line x1="5.4" y1="9" x2="6.6" y2="9" />
+                    <line x1="7.3" y1="4.3" x2="8.2" y2="5.2" />
+                </g>
+            </g>
+            <g class="theme-icon-moon">
+                <circle cx="12" cy="9" r="5" fill="currentColor" mask="url(#themeIconMoonCut)" />
+            </g>
+        </g>
+        <!-- Three swells across the full width: half-period 3.5, amplitude 1.6 -->
+        <path class="theme-icon-wave" d="M1.5 17.6 C2.7 16 3.8 16 5 17.6 S7.3 19.2 8.5 17.6 S10.8 16 12 17.6 S14.3 19.2 15.5 17.6 S17.8 16 19 17.6 S21.3 19.2 22.5 17.6" stroke-width="1.6" />
+    </svg>
+</button>

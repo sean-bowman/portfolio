@@ -1,0 +1,219 @@
+/* ========================================
+   TOOLS AND METHODS
+   ======================================== */
+
+.tools {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--bg);
+}
+
+/* ========================================
+   CREDENTIALS STRIP
+   ======================================== */
+
+.creds {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+}
+
+.creds-label {
+    margin-bottom: var(--spacing-xs);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+/* Hairline cells: the list draws the top and left edges, each cell its right and bottom */
+/* Nine software cells: three full rows of three */
+.creds-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+}
+
+.creds-list-single {
+    grid-template-columns: 1fr;
+}
+
+.cred {
+    display: grid;
+    grid-template-columns: 26px 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.75rem;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.15s ease;
+}
+
+.cred:hover {
+    background-color: var(--surface);
+}
+
+.cred-icon {
+    grid-row: 1 / 3;
+    width: 26px;
+    height: 26px;
+    color: var(--text-muted);
+    transition: color 0.15s ease;
+}
+
+.cred:hover .cred-icon {
+    color: var(--accent);
+}
+
+.cred-name {
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+}
+
+.cred-detail {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--text-muted);
+}
+
+/* ========================================
+   WORKFLOW CARDS
+   ======================================== */
+
+/* The 1 px gap shows the grid's border-colored background as hairline dividers. Six
+   cards fill every row at 3, 2, and 1 columns, so no empty cell shows the line color. */
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background-color: var(--border);
+    border: 1px solid var(--border);
+}
+
+.tool-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) 1.5rem 1.25rem;
+    background-color: var(--bg);
+}
+
+.tool-title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+}
+
+.tool-summary {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    line-height: 1.6;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.chip {
+    padding: 6px 9px;
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    transition: border-color 0.15s ease;
+}
+
+.chip.core {
+    border-color: var(--text-muted);
+    background-color: var(--surface);
+    color: var(--text);
+}
+
+.chip:hover {
+    border-color: var(--accent);
+}
+
+/* Pinned to the card bottom so the links line up across a row */
+.tool-proof {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 14px;
+    margin: auto 0 0;
+    padding-top: 0.75rem;
+    border-top: 1px dashed var(--border);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.tool-proof-label {
+    color: var(--text-muted);
+}
+
+.tool-proof a {
+    position: relative;
+    color: var(--accent-text);
+}
+
+.tool-proof a::after {
+    content: ' \2192';
+}
+
+/* Enlarged tap target without changing the layout */
+.tool-proof a::before {
+    content: '';
+    position: absolute;
+    inset: -6px -4px;
+}
+
+.tool-proof a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1023px) {
+    .tool-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .creds {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .tool-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 639px) {
+    .tools {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .creds-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .creds-list-single {
+        grid-template-columns: 1fr;
+    }
+
+    .cred {
+        padding: 0.75rem;
+    }
+
+    .tool-card {
+        padding: 1.25rem 1rem 1rem;
+    }
+}

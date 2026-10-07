@@ -1,0 +1,56 @@
+---
+/* ========================================
+   SITE HEADER
+   Wordmark, page links, resume link, and theme toggle
+   Sean Bowman [10/05/2026]
+   ======================================== */
+
+import ThemeToggle from './ThemeToggle.astro';
+import { sitePages } from '../data/pages.js';
+import { withBase } from '../lib/paths.js';
+
+interface Props {
+    /** Id from sitePages of the page being rendered; marks its nav link active */
+    current: string;
+}
+
+const { current } = Astro.props;
+---
+
+<nav class="navbar" aria-label="Main">
+    <div class="nav-container">
+        <a href={withBase()} class="nav-logo wordmark">Sean Bowman</a>
+
+        <ul class="nav-menu" id="navMenu">
+            {sitePages.map(page => (
+                <li class="nav-item">
+                    <a
+                        href={withBase(page.path)}
+                        class:list={['nav-link', { active: page.id === current }]}
+                        aria-current={page.id === current ? 'page' : undefined}
+                    >
+                        {page.label}
+                        {/* One named indicator per page: the client router slides it from the
+                            old active link to the new one */}
+                        {page.id === current && (
+                            <span class="nav-indicator" transition:name="nav-indicator" aria-hidden="true"></span>
+                        )}
+                    </a>
+                </li>
+            ))}
+            <li class="nav-item">
+                <a href={withBase('assets/resume.pdf')} class="nav-link nav-resume" target="_blank" rel="noopener noreferrer">
+                    Resume
+                </a>
+            </li>
+        </ul>
+
+        <!-- Stays in the bar when the menu collapses on narrow screens -->
+        <div class="nav-actions">
+            <ThemeToggle />
+            <button class="nav-toggle" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="navMenu">
+                <span class="hamburger"></span>
+            </button>
+        </div>
+    </div>
+</nav>

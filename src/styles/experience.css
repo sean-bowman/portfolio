@@ -1,0 +1,117 @@
+/* ========================================
+   EXPERIENCE
+   ======================================== */
+
+.experience {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--surface-2);
+    /* Fill for illustration elements that must hide the lines behind them (smoke) */
+    --glyph-ground: var(--surface-2);
+}
+
+.experience-list {
+    max-width: 900px;
+    margin: var(--spacing-md) auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.company-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--spacing-sm);
+    padding-bottom: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--border);
+}
+
+.company-name {
+    font-size: var(--font-size-xl);
+    margin: 0;
+}
+
+.company-location {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+/* Illustration and dates on the left, title and points on the right */
+.role {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+}
+
+.role + .role {
+    border-top: 1px dashed var(--border);
+}
+
+.role-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-xs);
+}
+
+.role-dates {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+}
+
+/* Each date stays whole; a range that wraps breaks only after the dash */
+.role-dates span {
+    white-space: nowrap;
+}
+
+.role-title {
+    font-size: var(--font-size-lg);
+    margin-bottom: 0.2rem;
+}
+
+.role-team {
+    margin-bottom: var(--spacing-xs);
+    font-size: var(--font-size-sm);
+    color: var(--accent-text);
+}
+
+.role-points {
+    list-style: disc;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.role-points li {
+    color: var(--text-muted);
+    line-height: 1.6;
+}
+
+.role-points li::marker {
+    color: var(--accent);
+}
+
+/* Phones: illustration and dates side by side above the role text */
+@media (max-width: 639px) {
+    .company-header {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .role {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+
+    .role-meta {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--spacing-sm);
+    }
+}

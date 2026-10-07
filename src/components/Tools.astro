@@ -1,0 +1,106 @@
+---
+/* ========================================
+   TOOLS AND METHODS
+   Credentials strip and six workflow cards with links to where each skill shows up
+   Sean Bowman [10/06/2026]
+   ======================================== */
+
+import { education, industrySoftware, toolCards } from '../data/tools.js';
+import { companies } from '../data/roles.js';
+import { sitePages } from '../data/pages.js';
+import { withBase } from '../lib/paths.js';
+import '../styles/tools.css';
+
+const roles = companies.flatMap(company => company.roles);
+
+/**
+ * Resolve a "Shown in" entry to a link. Unknown role or page ids fail the build, so a
+ * card can never point at a missing anchor.
+ * @param {import('../data/tools.js').ShownIn} entry
+ * @returns {{ href: string, label: string, external: boolean }}
+ */
+function resolveShownIn(entry) {
+    if (entry.role) {
+        const role = roles.find(candidate => candidate.id === entry.role);
+        if (!role) throw new Error(`Tools: unknown role id '${entry.role}'`);
+        return { href: `#${role.id}`, label: role.short, external: false };
+    }
+    if (entry.page) {
+        const page = sitePages.find(candidate => candidate.id === entry.page);
+        if (!page) throw new Error(`Tools: unknown page id '${entry.page}'`);
+        return { href: withBase(page.path), label: page.label, external: false };
+    }
+    if (entry.href && entry.label) {
+        return { href: entry.href, label: entry.label, external: true };
+    }
+    throw new Error('Tools: a shownIn entry needs a role, a page, or an href with a label');
+}
+
+const cards = toolCards.map(card => ({ ...card, links: card.shownIn.map(resolveShownIn) }));
+---
+
+<section class="tools" id="tools">
+    <div class="container">
+        <h2 class="section-title">Tools and Methods</h2>
+
+        <div class="creds" data-reveal>
+            <div class="creds-group">
+                <h3 class="creds-label">Education</h3>
+                <ul class="creds-list creds-list-single">
+                    {education.map(item => (
+                        <li class="cred">
+                            <svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-draw>
+                                <path d="M2.5 9 L12 5 L21.5 9 L12 13 Z" />
+                                <path d="M6.5 11 V15.5 C6.5 17 9 18.5 12 18.5 C15 18.5 17.5 17 17.5 15.5 V11" />
+                                <path d="M21.5 9 V14" />
+                            </svg>
+                            <span class="cred-name">{item.name}</span>
+                            <span class="cred-detail">{item.detail}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <div class="creds-group">
+                <h3 class="creds-label">Industry software</h3>
+                <ul class="creds-list">
+                    {industrySoftware.map(item => (
+                        <li class="cred">
+                            <svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-draw>
+                                <rect x="3" y="5" width="18" height="14" rx="2" />
+                                <path d="M3 9 H21" />
+                                <path d="M7 12.5 L9.5 14.5 L7 16.5 M11.5 16.5 H15" />
+                            </svg>
+                            <span class="cred-name">{item.name}</span>
+                            <span class="cred-detail">{item.detail}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
+
+        <div class="tool-grid">
+            {cards.map(card => (
+                <article class="tool-card" data-reveal>
+                    <h3 class="tool-title">{card.title}</h3>
+                    <p class="tool-summary">{card.summary}</p>
+                    <ul class="chips" aria-label={`${card.title} skills`}>
+                        {card.core.map(chip => <li class="chip core">{chip}</li>)}
+                        {card.other.map(chip => <li class="chip">{chip}</li>)}
+                    </ul>
+                    <p class="tool-proof">
+                        <span class="tool-proof-label">Shown in</span>
+                        {card.links.map(link => (
+                            <a
+                                href={link.href}
+                                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                            >
+                                {link.label}
+                            </a>
+                        ))}
+                    </p>
+                </article>
+            ))}
+        </div>
+    </div>
+</section>

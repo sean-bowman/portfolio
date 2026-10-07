@@ -1,0 +1,135 @@
+/* ========================================
+   SITE MAP
+   Launch complex scene at the top of the footer
+   ======================================== */
+
+.site-map {
+    position: relative;
+    height: 300px;
+    margin-bottom: var(--spacing-md);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    /* Ends on the scene fog color by the horizon so sky and sea meet without a seam */
+    background: linear-gradient(180deg, var(--scene-sky-top) 0%, var(--scene-sky-low) 42%);
+}
+
+.site-map.is-unsupported {
+    display: none;
+}
+
+/* Sun by day, moon and a few stars by night, painted behind the transparent canvas */
+.site-map::before {
+    content: '';
+    position: absolute;
+    top: 18px;
+    right: 9%;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--flame-core) 0%, var(--flame-core) 55%, transparent 72%);
+    opacity: 0.9;
+}
+
+:root[data-theme='dark'] .site-map::before {
+    width: 24px;
+    height: 24px;
+    background: var(--scene-foam);
+    box-shadow: inset -7px -3px 0 0 var(--scene-sky-top);
+    opacity: 0.85;
+}
+
+:root[data-theme='dark'] .site-map::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: transparent;
+    box-shadow:
+        8vw 22px var(--scene-foam), 17vw 48px var(--scene-foam), 26vw 14px var(--scene-foam),
+        34vw 36px var(--scene-foam), 43vw 20px var(--scene-foam), 51vw 52px var(--scene-foam),
+        58vw 28px var(--scene-foam), 66vw 10px var(--scene-foam), 73vw 44px var(--scene-foam),
+        12vw 66px var(--scene-foam), 39vw 70px var(--scene-foam), 62vw 62px var(--scene-foam);
+    opacity: 0.6;
+}
+
+.site-map-canvas {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: pan-y;
+}
+
+.site-map-status {
+    position: absolute;
+    z-index: 2;
+    left: 0.75rem;
+    top: 0.6rem;
+    margin: 0;
+    padding: 2px 8px;
+    border-radius: var(--border-radius-sm);
+    background-color: color-mix(in srgb, var(--bg) 78%, transparent);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+.site-map-labels {
+    position: absolute;
+    z-index: 2;
+    inset: 0;
+    pointer-events: none;
+}
+
+.site-map-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2px 6px;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    line-height: 1.3;
+    color: var(--text);
+    white-space: nowrap;
+    pointer-events: auto;
+    transition: color 0.15s ease, opacity 0.3s ease;
+}
+
+.site-map-label.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.site-map-label:hover,
+.site-map-label.is-hot,
+.site-map-label[aria-current='page'] {
+    color: var(--accent-text);
+}
+
+.site-map-label-detail {
+    color: var(--text-muted);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease;
+}
+
+.site-map-label:hover .site-map-label-detail,
+.site-map-label.is-hot .site-map-label-detail {
+    max-height: 1.4em;
+}
+
+@media (max-width: 639px) {
+    .site-map {
+        height: 220px;
+    }
+}
