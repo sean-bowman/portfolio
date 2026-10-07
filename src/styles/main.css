@@ -336,8 +336,21 @@ ul, ol {
     box-shadow: var(--shadow-md);
 }
 
+/* Brand marks in the text color: near-black in light mode, near-white in dark */
 .social-card .social-icon {
-    font-size: var(--font-size-3xl);
+    display: block;
+    width: 32px;
+    height: 32px;
+    color: var(--text);
+}
+
+/* LinkedIn publishes its mark as PNG only; its alpha masks a fill in the text color. The
+   image sits in one custom property so the build inlines it once for both mask spellings. */
+.social-icon-linkedin {
+    --linkedin-mark: url('../assets/icons/linkedin-in-bug.png');
+    background-color: currentColor;
+    -webkit-mask: var(--linkedin-mark) center / contain no-repeat;
+    mask: var(--linkedin-mark) center / contain no-repeat;
 }
 
 .social-card .social-label {
