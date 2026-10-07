@@ -140,10 +140,6 @@ html.anim .hero-net.in .hero-net-svg {
     color: var(--text-muted);
 }
 
-.hero-net-caption a {
-    color: var(--accent-text);
-}
-
 /* ========================================
    SMALLER SCREENS
    Below 1024 px the hero stacks and centers its text, so the fade is dropped for a uniform

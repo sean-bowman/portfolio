@@ -71,7 +71,7 @@ Behind the home-page hero is the characteristic net from the method-of-character
 - Each characteristic draws on over 1.75 s, starting at 6.2 s times its `t`, the axial position of its upstream end as a fraction of the nozzle length, so the net fills from the throat to the exit in the order the solve marched it; the wall draws at a steady rate alongside, and the whole net is complete at about 7.3 s. The timing is three custom properties at the top of `heroNet.css`. It draws once per arrival at the page, then drifts slowly and follows the pointer by up to 8 px. Under reduced motion, or without JavaScript, it shows finished and still.
 - Two mask layers keep the hero text legible: the net drops to 6% strength behind the text column, except in the strip below the buttons where the throat sits. Measured worst-case contrast of every hero text element with the net behind it is 4.64:1 or higher in both themes from 640 to 1920 px (the light-mode description, 4.83:1 without the net). Stroke opacities are the `--hero-net-*` tokens.
 - Below 1024 px the hero stacks, so the net drops the fade for a uniform half strength; below 640 px it and its caption are hidden.
-- Regenerate with `python tools/exportNovaNet.py` (or `--pickled` to reuse the last solve). The caption names the case and links its validation status.
+- Regenerate with `python tools/exportNovaNet.py` (or `--pickled` to reuse the last solve). The caption names the case.
 
 ## Showcase
 
