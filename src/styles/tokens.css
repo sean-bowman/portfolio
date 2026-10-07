@@ -17,6 +17,8 @@
      --flame-*      exhaust fills in the role illustrations (decorative, never text).
      --scene-*      colors of the 3D scenes: the footer site map and the Showcase models
                     (decorative, never text).
+     --hero-net-*   stroke opacities of the characteristic net behind the home-page hero, in
+                    --accent; set low enough that the hero text keeps its contrast.
      --shadow-*     elevation shadows, softer on the light ground.
    Light --text-muted is deepened from the palette's #6B7280 so it clears 4.5:1 on
    --surface-2. Every text/background pair used on the site measures 4.58:1 or higher in
@@ -68,6 +70,10 @@
     --scene-ink:       #3A3F4B;
     --scene-foam:      #FFFFFF;
 
+    /* Hero characteristic net (decorative, behind text) */
+    --hero-net-line:   0.55;
+    --hero-net-wall:   0.85;
+
     /* Elevation */
     --shadow-sm:    0 1px 2px rgba(58, 63, 75, 0.08);
     --shadow:       0 1px 3px rgba(58, 63, 75, 0.12);
@@ -117,6 +123,9 @@
         --scene-ink:       #9FB3AE;
         --scene-foam:      #A9C4BE;
 
+        --hero-net-line:   0.45;
+        --hero-net-wall:   0.75;
+
         --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
         --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);
         --shadow-md:    0 4px 6px rgba(0, 0, 0, 0.4);
@@ -162,6 +171,9 @@
     --scene-structure: #2E4752;
     --scene-ink:       #9FB3AE;
     --scene-foam:      #A9C4BE;
+
+    --hero-net-line:   0.45;
+    --hero-net-wall:   0.75;
 
     --shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow:       0 1px 3px rgba(0, 0, 0, 0.4);

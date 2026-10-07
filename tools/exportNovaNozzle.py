@@ -29,16 +29,13 @@ Date:   10/07/2026
 import json
 import os
 import subprocess
-import sys
-import tempfile
 from pathlib import Path
 
 import numpy as np
 import trimesh
 
-siteRoot = Path(__file__).resolve().parents[1]
-novaRoot = siteRoot.parent / 'NOVA'
-workDir = Path(tempfile.gettempdir()) / 'novaShowcaseExport'
+from novaCase import readOption, runWorkedExample, siteRoot, workDir
+
 factsPath = siteRoot / 'src' / 'data' / 'novaNozzleFacts.json'
 revolveSegments = 96
 
@@ -116,27 +113,9 @@ def ringStations(axial: np.ndarray, radius: np.ndarray, count: int) -> list:
     return sorted({int(np.argmin(np.abs(arcLength - target))) for target in targets})
 
 def main() -> None:
-    sys.path.insert(0, str(novaRoot / 'src'))
-    from NOVA import Nozzle
+    # Same case as the README worked example; only the outputs change (see novaCase.py)
+    nozzle, config = runWorkedExample()
     from NOVA.exports import py2cad
-
-    workDir.mkdir(parents=True, exist_ok=True)
-    config = json.loads((novaRoot / 'src' / 'NOVA' / 'assets' / 'NOVANozzle.json').read_text(encoding='utf-8'))
-
-    # Same case as the README worked example; only the outputs change: no figures, a
-    # separate output folder name so the run does not overwrite the example's own outputs
-    def setOption(node: dict, key: str, value) -> bool:
-        if key in node:
-            node[key] = value
-            return True
-        return any(setOption(child, key, value) for child in node.values() if isinstance(child, dict))
-    for key, value in (('plotsEnabled', False), ('export', True), ('filename', 'portfolioShowcase')):
-        assert setOption(config, key, value), key
-    configPath = workDir / 'portfolioShowcase.json'
-    configPath.write_text(json.dumps(config, indent=2), encoding='utf-8')
-
-    nozzle = Nozzle()
-    nozzle.generateNozzle(configPath=str(configPath))
 
     # Hot wall (full gas-side contour) and closeout shell, revolved and written by NOVA's writer
     outputDir = Path(nozzle.dataFolder)
@@ -217,15 +196,6 @@ def main() -> None:
 
     # Card numbers: the operating point straight from the configuration, sizes from the
     # generated geometry
-    def readOption(node: dict, key: str):
-        if key in node:
-            return node[key]
-        for child in node.values():
-            if isinstance(child, dict):
-                found = readOption(child, key)
-                if found is not None:
-                    return found
-        return None
     extents = scene.bounding_box.extents
     facts = {
         'thrustKn': round(readOption(config, 'thrust') / 1e3),
@@ -238,7 +208,9 @@ def main() -> None:
         'channelCount': int(nozzle.nChannel),
         'channelType': str(nozzle.channelType),
         'coolant': readOption(config, 'coolant'),
-        'throatRadiusMm': round(float(np.min(nozzle.rNozzleWall)) * 1e3, 1),
+        # The throat radius that sizes the nozzle (from the choked throat area). The resampled
+        # wall has no point exactly at the throat, so its minimum radius reads about 0.5% high.
+        'throatRadiusMm': round(float(nozzle.nozzleScalingFactor) * 1e3, 1),
         'exitRadiusMm': round(float(nozzle.rNozzleWall[-1]) * 1e3, 1),
         'overallLengthMm': round(float(extents[2]) * 1e3),
         'overallDiameterMm': round(float(max(extents[0], extents[1])) * 1e3),

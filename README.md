@@ -8,6 +8,7 @@ Source for [sean-bowman.github.io/portfolio](https://sean-bowman.github.io/portf
 - [Develop](#develop)
 - [Project layout](#project-layout)
 - [Theme](#theme)
+- [Hero net](#hero-net)
 - [Showcase](#showcase)
 - [Site map](#site-map)
 - [Deploy](#deploy)
@@ -39,10 +40,10 @@ The site is served under `/portfolio` (the `base` in `astro.config.mjs`), so loc
 astro.config.mjs        site, base path, build format, integrations
 src/
   layouts/              BaseLayout.astro: <head>, header, footer, shared scripts
-  components/           Header, Footer, SiteMap, ThemeToggle, Experience, Tools, ProjectCard
+  components/           Header, Footer, HeroNet, SiteMap, ThemeToggle, Experience, Tools, ProjectCard
   components/glyphs/    one animated SVG illustration per role
   pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
-  data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js and novaNozzleFacts.json (Showcase), reposFallback.json
+  data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js and novaNozzleFacts.json (Showcase), heroNet.json (hero), reposFallback.json
   lib/                  github.js (build-time repository fetch), paths.js (base-path URLs)
   scripts/              client scripts: motion.js, theme.js, nav.js, site.js
   scripts/three/        Three.js toolkit: renderer defaults, theme colors, visibility-gated render loop
@@ -51,7 +52,7 @@ src/
   styles/               tokens.css (Surfy Pastels light/dark) first, then the global CSS in cascade order
   assets/images/        photos processed by astro:assets
 public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/video/, assets/models/
-tools/                  build-time exporters run by hand: exportNovaNozzle.py
+tools/                  exporters run by hand: exportNovaNozzle.py, exportNovaNet.py (novaCase.py runs the NOVA case they share)
 .github/workflows/      deploy.yml
 ```
 
@@ -62,6 +63,15 @@ Navigation between pages goes through Astro's client router (`<ClientRouter />` 
 ## Theme
 
 Colors come from the Surfy Pastels palette in `src/styles/tokens.css`: light on bare `:root`, dark under `html[data-theme="dark"]` and under the OS dark preference when no theme attribute is set. An inline script in the `<head>` of `BaseLayout.astro` sets `data-theme` before first paint (a stored choice in `localStorage['site-theme']` wins; otherwise the OS setting) and re-applies it after every client-side navigation. The toggle (`ThemeToggle.astro`, `src/scripts/theme.js`) reveals the new theme as a circle growing from the button through the View Transitions API and dispatches a `themechange` event that the Three.js scenes use to recolor.
+
+## Hero net
+
+Behind the home-page hero is the characteristic net from the method-of-characteristics solve of NOVA's worked-example nozzle: the upper half of the meridional plane, the wall from the end of the converging section to the exit, and a dash-dot centerline. `src/components/HeroNet.astro` builds it as inline SVG at compile time from `src/data/heroNet.json`, so Home ships no 3D library for it.
+
+- Each characteristic draws on with a delay of 1.6 s times its `t`, the axial position of its upstream end as a fraction of the nozzle length, so the net fills from the throat to the exit in the order the solve marched it. It draws once per arrival at the page, then drifts slowly and follows the pointer by up to 8 px. Under reduced motion, or without JavaScript, it shows finished and still.
+- Two mask layers keep the hero text legible: the net drops to 6% strength behind the text column, except in the strip below the buttons where the throat sits. Measured worst-case contrast of every hero text element with the net behind it is 4.64:1 or higher in both themes from 640 to 1920 px (the light-mode description, 4.83:1 without the net). Stroke opacities are the `--hero-net-*` tokens.
+- Below 1024 px the hero stacks, so the net drops the fade for a uniform half strength; below 640 px it and its caption are hidden.
+- Regenerate with `python tools/exportNovaNet.py` (or `--pickled` to reuse the last solve). The caption names the case and links its validation status.
 
 ## Showcase
 

@@ -1,0 +1,174 @@
+/* ========================================
+   HERO NET
+   NOVA's characteristic net behind the home-page hero (src/components/HeroNet.astro)
+   ======================================== */
+
+.hero {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* Fills the hero behind the content. On wide screens the net fades toward the left, where
+   the hero text sits, except in the strip below the buttons, so the throat, where the net
+   starts, stays visible. Two mask layers add: the strip, and the fade. */
+.hero-net {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    color: var(--accent);
+    pointer-events: none;
+    -webkit-mask-image:
+        linear-gradient(to top, #000 64px, transparent 104px),
+        linear-gradient(to right, rgb(0 0 0 / 0.06) 0%, rgb(0 0 0 / 0.06) 50%, #000 78%);
+    mask-image:
+        linear-gradient(to top, #000 64px, transparent 104px),
+        linear-gradient(to right, rgb(0 0 0 / 0.06) 0%, rgb(0 0 0 / 0.06) 50%, #000 78%);
+    translate: var(--shift-x, 0px) var(--shift-y, 0px);
+    transition: translate 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.hero-net-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+/* Stroke widths are in throat radii x 100, so they step up as the net scales down */
+.hero-net-lines path {
+    stroke-width: 1.6;
+    stroke-opacity: var(--hero-net-line);
+}
+
+.hero-net-lines .net-right {
+    stroke-opacity: calc(var(--hero-net-line) * 0.7);
+}
+
+.hero-net-wall {
+    stroke-width: 3.2;
+    stroke-opacity: var(--hero-net-wall);
+}
+
+/* Centerline: long dash, gap, short dash, gap */
+.hero-net-axis {
+    stroke-width: 1.6;
+    stroke-dasharray: 28 10 4 10;
+    stroke-opacity: var(--hero-net-wall);
+}
+
+/* ========================================
+   DRAW-ON AND DRIFT
+   The net draws from the throat to the exit in the order the solve marched, once per
+   arrival at the page, then drifts slowly. Without html.anim (no JS, reduced motion) it
+   shows drawn and still.
+   ======================================== */
+
+html.anim .hero-net path {
+    stroke-dasharray: 1 1.1;
+    stroke-dashoffset: 1.05;
+}
+
+html.anim .hero-net-axis {
+    opacity: 0;
+}
+
+html.anim .hero-net.in path {
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+    transition-delay: calc(var(--t, 0) * 1.6s);
+}
+
+html.anim .hero-net.in .hero-net-wall {
+    transition-duration: 2.2s;
+    transition-delay: 0s;
+}
+
+html.anim .hero-net.in .hero-net-axis {
+    opacity: 1;
+    transition: opacity 1.2s ease;
+}
+
+html.anim .hero-net.in .hero-net-svg {
+    animation: hero-net-drift 26s ease-in-out 2.6s infinite alternate;
+}
+
+@keyframes hero-net-drift {
+    from {
+        transform: translate(0, 0);
+    }
+    to {
+        transform: translate(-12px, 5px);
+    }
+}
+
+/* ========================================
+   CAPTION
+   ======================================== */
+
+.hero-net-caption {
+    position: absolute;
+    right: var(--spacing-sm);
+    bottom: var(--spacing-xs);
+    z-index: 1;
+    max-width: calc(100% - 2 * var(--spacing-sm));
+    margin: 0;
+    padding: 4px 8px;
+    background-color: var(--bg);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+    color: var(--text-muted);
+}
+
+.hero-net-caption a {
+    color: var(--accent-text);
+}
+
+/* ========================================
+   SMALLER SCREENS
+   Below 1024 px the hero stacks and centers its text, so the fade is dropped for a uniform
+   low opacity, and the strokes widen as the net scales down
+   ======================================== */
+
+@media (max-width: 1023px) {
+    .hero-net {
+        -webkit-mask-image: none;
+        mask-image: none;
+        opacity: 0.5;
+    }
+
+    .hero-net-lines path,
+    .hero-net-axis {
+        stroke-width: 2.8;
+    }
+
+    .hero-net-wall {
+        stroke-width: 5;
+    }
+}
+
+/* On a phone the net would be a thin strip behind the photo; the hero goes without it */
+@media (max-width: 639px) {
+    .hero-net,
+    .hero-net-caption {
+        display: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-net {
+        transition: none;
+    }
+
+    .hero-net-svg {
+        animation: none !important;
+    }
+}

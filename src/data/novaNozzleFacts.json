@@ -9,7 +9,7 @@
   "channelCount": 60,
   "channelType": "circle",
   "coolant": "Hydrogen",
-  "throatRadiusMm": 50.6,
+  "throatRadiusMm": 50.3,
   "exitRadiusMm": 318.3,
   "overallLengthMm": 1164,
   "overallDiameterMm": 637

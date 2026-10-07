@@ -1,0 +1,121 @@
+---
+/* ========================================
+   HERO NET
+   NOVA's method-of-characteristics net behind the home-page hero
+   Sean Bowman [10/07/2026]
+   ======================================== */
+
+// Inline SVG built from src/data/heroNet.json (written by tools/exportNovaNet.py): the upper
+// half of the worked-example nozzle's characteristic net, the wall, and the centerline.
+// Coordinates are throat radii; the path data stores them in hundredths, with the radius
+// flipped to SVG's downward y. Each characteristic carries --t, the axial position of its
+// upstream end as a fraction of the nozzle length, so the draw-on runs from the throat to
+// the exit in the order the solve marched.
+
+import net from '../data/heroNet.json';
+import '../styles/heroNet.css';
+
+const scale = 100;
+
+/**
+ * Compact SVG path data for a flat [x0, r0, x1, r1, ...] polyline: one absolute move, then
+ * relative line-to pairs in rounded units.
+ * @param {number[]} points
+ * @returns {string}
+ */
+function pathData(points) {
+    let previousX = 0;
+    let previousY = 0;
+    let data = '';
+    for (let i = 0; i < points.length; i += 2) {
+        const x = Math.round(points[i] * scale);
+        const y = Math.round(-points[i + 1] * scale);
+        if (i === 0) {
+            data = `M${x} ${y}l`;
+        } else {
+            const dx = x - previousX;
+            const dy = y - previousY;
+            // A minus sign separates numbers on its own
+            data += `${i > 2 && dx >= 0 ? ' ' : ''}${dx}${dy >= 0 ? ' ' : ''}${dy}`;
+        }
+        previousX = x;
+        previousY = y;
+    }
+    return data;
+}
+
+const left = -260;
+const right = Math.round(net.exitX * scale) + 30;
+const top = -Math.round(net.exitR * scale) - 30;
+const bottom = 20;
+const viewBox = `${left} ${top} ${right - left} ${bottom - top}`;
+---
+
+<div class="hero-net" aria-hidden="true">
+    <svg class="hero-net-svg" viewBox={viewBox} preserveAspectRatio="xMidYMax meet" data-loops
+         fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <line class="hero-net-axis" x1={left} y1="0" x2={right} y2="0" />
+        <g class="hero-net-lines">
+            {net.lines.map(line => (
+                <path class={line.family === '+' ? 'net-left' : 'net-right'} d={pathData(line.points)} pathLength="1" style={`--t:${line.t}`} />
+            ))}
+        </g>
+        <path class="hero-net-wall" d={pathData(net.wall)} pathLength="1" />
+    </svg>
+</div>
+<p class="hero-net-caption">
+    Characteristic net from NOVA's worked example: {net.case.thrustKn} kN {net.case.propellants}, area ratio {net.case.expansionRatio}.{' '}
+    <a href="https://github.com/sean-bowman/NOVA/blob/main/docs/NozzleContourValidation.md" target="_blank" rel="noopener noreferrer">Validation status</a>
+</p>
+
+<script>
+    // The net draws on once per arrival at the page, not on every scroll back: .in is added
+    // two frames after load so the undrawn state has painted first. A pointer over the hero
+    // shifts the net by up to 8 px.
+    import { reducedMotion } from '../scripts/motion.js';
+
+    const maxShiftPx = 8;
+    /** @type {(() => void) | null} */
+    let stopParallax = null;
+
+    function setUpNet() {
+        const wrapper = /** @type {HTMLElement | null} */ (document.querySelector('.hero-net'));
+        const hero = wrapper?.closest('.hero');
+        if (!wrapper || !hero || wrapper.dataset.ready === 'true') return;
+        wrapper.dataset.ready = 'true';
+        requestAnimationFrame(() => requestAnimationFrame(() => wrapper.classList.add('in')));
+
+        if (reducedMotion() || !window.matchMedia('(pointer: fine)').matches) return;
+        let frame = 0;
+        /** @param {PointerEvent} event */
+        const onMove = (event) => {
+            if (frame) return;
+            frame = requestAnimationFrame(() => {
+                frame = 0;
+                const rect = hero.getBoundingClientRect();
+                const shiftX = ((event.clientX - rect.left) / rect.width - 0.5) * -2 * maxShiftPx;
+                const shiftY = ((event.clientY - rect.top) / rect.height - 0.5) * -2 * maxShiftPx;
+                wrapper.style.setProperty('--shift-x', `${shiftX.toFixed(1)}px`);
+                wrapper.style.setProperty('--shift-y', `${shiftY.toFixed(1)}px`);
+            });
+        };
+        const onLeave = () => {
+            wrapper.style.setProperty('--shift-x', '0px');
+            wrapper.style.setProperty('--shift-y', '0px');
+        };
+        hero.addEventListener('pointermove', /** @type {EventListener} */ (onMove));
+        hero.addEventListener('pointerleave', onLeave);
+        stopParallax = () => {
+            cancelAnimationFrame(frame);
+            hero.removeEventListener('pointermove', /** @type {EventListener} */ (onMove));
+            hero.removeEventListener('pointerleave', onLeave);
+        };
+    }
+
+    document.addEventListener('astro:page-load', setUpNet);
+    document.addEventListener('astro:before-swap', () => {
+        stopParallax?.();
+        stopParallax = null;
+    });
+    setUpNet();
+</script>

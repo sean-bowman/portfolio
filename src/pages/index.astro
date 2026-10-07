@@ -7,6 +7,7 @@
 
 import { Picture } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import HeroNet from '../components/HeroNet.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import Experience from '../components/Experience.astro';
 import Tools from '../components/Tools.astro';
@@ -22,8 +23,9 @@ const featuredRepos = await getFeaturedRepos();
     description="Portfolio of Sean Bowman: propulsion design and computational engineer building computational tools across simulation, 3D geometry, web visualization, and automation."
     current="home"
 >
-    <!-- Hero Section -->
+    <!-- Hero Section: NOVA's characteristic net behind the content -->
     <section class="hero">
+        <HeroNet />
         <div class="container">
             <div class="hero-content">
                 <h1 class="hero-title">
