@@ -62,7 +62,7 @@ Colors come from the Surfy Pastels palette in `src/styles/tokens.css`: light on 
 
 ## Site map
 
-The top of the footer is a Three.js launch complex on the Florida coast that builds out while the visitor stays: road, tracking dish, test stand, propellant farm, hangar, two pads, a landing zone, and a droneship, then routine launches with booster returns. Five facilities are the site's pages; their labels link to them. Build progress follows a visit clock (`src/scripts/siteMap/clock.js`) that counts seconds on site, pauses in hidden tabs, and starts over on a full reload. The container carries `transition:persist`, so one scene and one clock last the whole visit across client-side navigation.
+The top of the footer is a Three.js launch complex on the Florida coast that builds out while the visitor stays: road, tracking dish, test stand, propellant farm, hangar, two pads, a landing zone, and a landing vessel, then routine launches with booster returns. Five facilities are the site's pages; their labels link to them. Build progress follows a visit clock (`src/scripts/siteMap/clock.js`) that counts seconds on site, pauses in hidden tabs, and starts over on a full reload. The container carries `transition:persist`, so one scene and one clock last the whole visit across client-side navigation.
 
 - Preview a later state with `?t=<seconds>`; the full build completes at 301 s.
 - Layout and build order: `src/scripts/siteMap/plan.js`. Colors: the `--scene-*` tokens in `tokens.css`.

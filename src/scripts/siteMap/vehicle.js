@@ -73,7 +73,7 @@ function buildVehicle() {
 
 /**
  * @typedef {Object} LandingSite
- * @property {() => Vector3} base - World position of the landing surface (the ship bobs)
+ * @property {() => Vector3} base - World position of the landing surface (the landing vessel bobs)
  * @property {() => boolean} ready
  */
 

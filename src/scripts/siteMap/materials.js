@@ -25,6 +25,8 @@ const tokenNames = [
 // the tokens and re-colors these few shared instances
 const materials = {
     fill: new MeshLambertMaterial({ flatShading: true }),
+    // Open surfaces seen from inside (dish reflector, nozzle bell) need both faces drawn
+    fillDouble: new MeshLambertMaterial({ flatShading: true, side: DoubleSide }),
     land: new MeshLambertMaterial({ flatShading: true }),
     scrub: new MeshLambertMaterial({ flatShading: true }),
     ocean: new MeshLambertMaterial({ flatShading: true }),
@@ -44,6 +46,7 @@ const materials = {
 /** @type {Record<keyof typeof materials, string>} */
 const tokenOf = {
     fill: 'scene-structure',
+    fillDouble: 'scene-structure',
     land: 'scene-land',
     scrub: 'scene-scrub',
     ocean: 'scene-ocean',

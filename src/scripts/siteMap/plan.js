@@ -29,7 +29,9 @@ export const sites = {
     padA: { x: 15, z: -2, page: 'home', detail: 'Launch pad', labelHeight: 19 },
     padB: { x: 28, z: -2 },
     surfBreak: { x: 44, z: -18, page: 'beyond', detail: 'Surf break', labelHeight: 4 },
-    droneship: { x: 22, z: -64 }
+    // Offshore behind the low hangar and propellant farm, so no tower hides it from any
+    // page's camera position
+    landingVessel: { x: -8, z: -60 }
 };
 
 /** Road along the front of the complex, and the spurs to each pad */
@@ -52,7 +54,7 @@ export const buildQueue = [
     { id: 'padA', label: 'launch pad', seconds: 40 },
     { id: 'landingZone', label: 'landing zone', seconds: 20 },
     { id: 'padB', label: 'second pad', seconds: 30 },
-    { id: 'droneship', label: 'droneship', seconds: 15 }
+    { id: 'landingVessel', label: 'landing vessel', seconds: 15 }
 ];
 
 /** First structure breaks ground this many seconds into the visit */

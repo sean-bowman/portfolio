@@ -199,10 +199,10 @@ export async function initSiteMap(container) {
     await yieldToMain();
     const padB = build.buildPad(sites.padB, 'padB', false);
     const landingZone = build.buildLandingZone(sites.landingZone);
-    const ship = build.buildDroneship(sites.droneship);
+    const vessel = build.buildLandingVessel(sites.landingVessel);
     await yieldToMain();
     const structures = [road, dish.structure, testStand.structure, farm.structure, hangar.structure,
-        padA.structure, padB.structure, landingZone.structure, ship.structure];
+        padA.structure, padB.structure, landingZone.structure, vessel.structure];
     structures.forEach(structure => scene.add(structure.group));
 
     const marker = build.hereMarker();
@@ -220,8 +220,8 @@ export async function initSiteMap(container) {
         landingSites: [
             { base: () => landingZone.base, ready: () => done('landingZone') },
             {
-                base: () => new Vector3(sites.droneship.x, ship.deckY + ship.bob.position.y, sites.droneship.z),
-                ready: () => done('droneship')
+                base: () => new Vector3(sites.landingVessel.x, vessel.deckY + vessel.bob.position.y, sites.landingVessel.z),
+                ready: () => done('landingVessel')
             }
         ]
     });
@@ -423,8 +423,8 @@ export async function initSiteMap(container) {
         surfer.position.set(surfSite.x - 6 + 12 * surfPhase, 0.35 + 0.5 * Math.sin(surfPhase * Math.PI), surfSite.z - 22 * (1 - surfPhase) + 2.8);
         surfer.visible = surfPhase > 0.15 && surfPhase < 0.9;
 
-        ship.bob.position.y = 0.25 * Math.sin(time * 0.9);
-        ship.bob.rotation.z = 0.025 * Math.sin(time * 0.7);
+        vessel.bob.position.y = 0.25 * Math.sin(time * 0.9);
+        vessel.bob.rotation.z = 0.025 * Math.sin(time * 0.7);
 
         const pulse = 0.5 + 0.5 * Math.sin(time * 2.4);
         marker.scale.setScalar(0.9 + 0.15 * pulse);

@@ -66,7 +66,7 @@ export class Structure {
      * @param {Object} [options]
      * @param {[number, number, number]} [options.at] - Position in the parent's frame
      * @param {[number, number, number]} [options.rotation]
-     * @param {'fill' | 'land' | 'shadow' | 'accent'} [options.fill]
+     * @param {'fill' | 'fillDouble' | 'land' | 'shadow' | 'accent'} [options.fill]
      * @param {boolean} [options.outline] - Draw ink edges
      * @param {Group} [options.parent] - Animated sub-group (dish head, hangar door)
      * @returns {Group} The part's pivot
@@ -208,15 +208,34 @@ export function buildDish(site) {
     // Paraboloid y = r^2 / (4f) with focal length f = 1.9, rim radius 3.2
     const profile = [];
     for (let r = 0; r <= 3.2001; r += 0.4) profile.push(new Vector2(r, (r * r) / (4 * 1.9)));
-    structure.addPart(new LatheGeometry(profile, 14), { parent: tilt });
+    structure.addPart(new LatheGeometry(profile, 14), { parent: tilt, fill: 'fillDouble' });
     structure.addPart(cylinder(0.06, 0.06, 1.9, 5), { parent: tilt });
     structure.addPart(new ConeGeometry(0.25, 0.5, 6).rotateX(Math.PI).translate(0, 2.1, 0), { parent: tilt });
     return { structure, head, tilt };
 }
 
 /**
- * Vertical engine test stand: base slab, four-post tower, engine with its nozzle pointing
- * down into a flame deflector, and a run tank.
+ * Bell nozzle as a lathe surface, base at the exit plane (y = 0) and the throat on top.
+ * The radius grows steeply just below the throat and flattens toward the exit:
+ * r = rThroat + (rExit - rThroat) * (x / length)^0.6, with x measured down from the throat.
+ * @param {number} throatRadius
+ * @param {number} exitRadius
+ * @param {number} length
+ */
+function bellNozzle(throatRadius, exitRadius, length) {
+    const profile = [];
+    for (let i = 0; i <= 9; i++) {
+        const fromThroat = (i / 9) * length;
+        const radius = throatRadius + (exitRadius - throatRadius) * Math.pow(fromThroat / length, 0.6);
+        profile.push(new Vector2(radius, length - fromThroat));
+    }
+    return new LatheGeometry(profile, 16);
+}
+
+/**
+ * Vertical engine test stand: base slab, four-post tower, an engine firing down
+ * (chamber, converging section, throat, bell) into a flame deflector, and a run tank on
+ * the ground beside the slab with its feed line into the chamber.
  * @param {{ x: number, z: number }} site
  */
 export function buildTestStand(site) {
@@ -231,16 +250,21 @@ export function buildTestStand(site) {
         structure.addPart(box(2 * half + 0.35, 0.22, 0.22), { at: [0, y, -half] });
     });
     structure.addPart(box(4.2, 0.4, 4.2), { at: [0, 11.8, 0] });
-    structure.addPart(cylinder(0.7, 0.7, 2.6, 12), { at: [0, 6.2, 0] });
-    structure.addPart(new ConeGeometry(1.05, 1.7, 12).translate(0, -0.85, 0).rotateX(Math.PI).translate(0, 1.7, 0), { at: [0, 4.5, 0] });
+    // Engine, top down: chamber 6.6 to 8.8, converging section to the throat at 6.1, bell
+    // to the exit plane at 4.3
+    structure.addPart(cylinder(0.7, 0.7, 2.2, 12), { at: [0, 6.6, 0] });
+    structure.addPart(cylinder(0.7, 0.32, 0.5, 12), { at: [0, 6.1, 0] });
+    structure.addPart(bellNozzle(0.32, 1.05, 1.8), { at: [0, 4.3, 0], fill: 'fillDouble' });
     structure.addPart(box(3.2, 1.6, 2.4), { at: [0, 0.8, 0], rotation: [0, 0, 0.35] });
-    structure.addPart(cylinder(1.1, 1.1, 6.5, 12), { at: [4.4, 0.8, -0.4] });
+    // Run tank on the ground, clear of the slab (which ends at x = 3.25), and its feed line
+    structure.addPart(cylinder(1.1, 1.1, 6.5, 12), { at: [4.9, 0, 0] });
+    structure.addPart(box(3.1, 0.18, 0.18), { at: [2.25, 7.9, 0] });
     structure.addCrane(-6, 15);
 
     // Hot-fire plume (from the nozzle exit down into the deflector) and the steam that
     // the deflector turns sideways
-    const plume = flamePlume(0.95, 3.6);
-    plume.position.set(0, 4.5, 0);
+    const plume = flamePlume(0.95, 3.5);
+    plume.position.set(0, 4.3, 0);
     plume.visible = false;
     structure.group.add(plume);
     const steam = puffCloud(5, 0.8);
@@ -334,11 +358,11 @@ export function buildLandingZone(site) {
 }
 
 /**
- * Landing droneship offshore; the whole hull bobs on the swell.
+ * Landing vessel offshore; the whole hull bobs on the swell.
  * @param {{ x: number, z: number }} site
  */
-export function buildDroneship(site) {
-    const structure = new Structure('droneship', site.x, site.z);
+export function buildLandingVessel(site) {
+    const structure = new Structure('landingVessel', site.x, site.z);
     const bob = new Group();
     structure.group.add(bob);
     structure.addPart(box(11, 1.2, 6), { at: [0, -0.7, 0], parent: bob });
