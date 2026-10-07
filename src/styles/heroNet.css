@@ -71,14 +71,14 @@
 
    Timeline: a characteristic starts drawing at --t x --net-sweep (its upstream end's
    position along the nozzle) and takes --net-draw. The last starts at t = 0.90, so the
-   net is complete at about 0.90 x 12 + 3.5 = 14.3 s. The wall draws at a steady rate over
+   net is complete at about 0.90 x 6.2 + 1.75 = 7.3 s. The wall draws at a steady rate over
    the same span, keeping pace with the front, and the drift begins once it is done.
    ======================================== */
 
 .hero-net {
-    --net-sweep: 12s;
-    --net-draw: 3.5s;
-    --net-total: 14.5s;
+    --net-sweep: 6.2s;
+    --net-draw: 1.75s;
+    --net-total: 7.5s;
 }
 
 html.anim .hero-net path {
