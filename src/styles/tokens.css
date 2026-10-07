@@ -15,7 +15,8 @@
                     on sand (about 2.0:1), so light mode uses a deepened teal.
      --on-accent    text placed on an --accent fill (buttons, badges).
      --flame-*      exhaust fills in the role illustrations (decorative, never text).
-     --scene-*      colors of the footer site-map scene (decorative, never text).
+     --scene-*      colors of the 3D scenes: the footer site map and the Showcase models
+                    (decorative, never text).
      --shadow-*     elevation shadows, softer on the light ground.
    Light --text-muted is deepened from the palette's #6B7280 so it clears 4.5:1 on
    --surface-2. Every text/background pair used on the site measures 4.58:1 or higher in

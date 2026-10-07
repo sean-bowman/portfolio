@@ -33,14 +33,27 @@ export function isLite() {
  * @param {HTMLCanvasElement} canvas - Target canvas
  * @param {Object} [options]
  * @param {number} [options.maxPixelRatio=2] - Upper bound on devicePixelRatio
+ * @param {number} [options.litePixelRatio=1] - Upper bound in LITE mode; a scene that is
+ *   the page's content rather than decoration can keep sharp edges on a phone
  * @returns {WebGLRenderer}
  */
-export function createRenderer(canvas, { maxPixelRatio = 2 } = {}) {
+export function createRenderer(canvas, { maxPixelRatio = 2, litePixelRatio = 1 } = {}) {
     const lite = isLite();
     const renderer = new WebGLRenderer({ canvas, antialias: !lite, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lite ? 1 : maxPixelRatio));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lite ? litePixelRatio : maxPixelRatio));
     renderer.setClearColor(0x000000, 0);
     return renderer;
+}
+
+/**
+ * Let the browser handle input and paint before the next slice of setup, so building
+ * a scene never blocks the main thread for long.
+ * @returns {Promise<void>}
+ */
+export function yieldToMain() {
+    const scheduler = /** @type {any} */ (globalThis).scheduler;
+    if (scheduler?.yield) return scheduler.yield();
+    return new Promise(resolve => setTimeout(resolve, 0));
 }
 
 /**

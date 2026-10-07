@@ -34,7 +34,7 @@ import {
     Vector2,
     Vector3
 } from 'three';
-import { createRenderer, isLite, onThemeChange, RenderLoop } from '../three/index.js';
+import { createRenderer, isLite, onThemeChange, RenderLoop, yieldToMain } from '../three/index.js';
 import { reducedMotion } from '../motion.js';
 import { siteSeconds, onTick, missionTime } from './clock.js';
 import { sites, roadZ, progressOf, buildingAt, schedule } from './plan.js';
@@ -52,17 +52,6 @@ const slowTimeScale = 0.2;
 const reducedMotionRenderMs = 5000;
 
 let initialized = false;
-
-/**
- * Let the browser handle input and paint before the next slice of setup, so building
- * the scene never blocks the main thread for long.
- * @returns {Promise<void>}
- */
-function yieldToMain() {
-    const scheduler = /** @type {any} */ (globalThis).scheduler;
-    if (scheduler?.yield) return scheduler.yield();
-    return new Promise(resolve => setTimeout(resolve, 0));
-}
 
 /**
  * Small seeded PRNG (mulberry32) so every visitor sees the same scrub and dunes.

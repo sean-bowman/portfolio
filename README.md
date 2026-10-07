@@ -8,6 +8,7 @@ Source for [sean-bowman.github.io/portfolio](https://sean-bowman.github.io/portf
 - [Develop](#develop)
 - [Project layout](#project-layout)
 - [Theme](#theme)
+- [Showcase](#showcase)
 - [Site map](#site-map)
 - [Deploy](#deploy)
 - [Adding content](#adding-content)
@@ -16,7 +17,7 @@ Source for [sean-bowman.github.io/portfolio](https://sean-bowman.github.io/portf
 ## Stack
 
 - [Astro](https://astro.build/) 7, static output. Pages are `.astro` files that compile to plain HTML; JavaScript ships only where a page has a client script.
-- [Three.js](https://threejs.org/) from npm for the Showcase viewers, bundled into its own chunk that loads only on pages with a 3D element.
+- [Three.js](https://threejs.org/) from npm for the Showcase models and the footer site map, bundled into one shared chunk that loads only when a 3D element nears the viewport.
 - `astro:assets` for images: every photo is resized and re-encoded to AVIF and WebP at build time.
 - `@astrojs/sitemap` for `sitemap-index.xml`.
 - Node 22.12 or later.
@@ -41,14 +42,16 @@ src/
   components/           Header, Footer, SiteMap, ThemeToggle, Experience, Tools, ProjectCard
   components/glyphs/    one animated SVG illustration per role
   pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
-  data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js (showcase models), reposFallback.json
+  data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js and novaNozzleFacts.json (Showcase), reposFallback.json
   lib/                  github.js (build-time repository fetch), paths.js (base-path URLs)
-  scripts/              client scripts: motion.js, theme.js, nav.js, site.js, showcase.js
+  scripts/              client scripts: motion.js, theme.js, nav.js, site.js
   scripts/three/        Three.js toolkit: renderer defaults, theme colors, visibility-gated render loop
+  scripts/showcase/     Showcase: shared stage, per-card model view, page entry
   scripts/siteMap/      footer launch-complex scene: clock, plan, materials, structures, launches
   styles/               tokens.css (Surfy Pastels light/dark) first, then the global CSS in cascade order
   assets/images/        photos processed by astro:assets
 public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/video/, assets/models/
+tools/                  build-time exporters run by hand: exportNovaNozzle.py
 .github/workflows/      deploy.yml
 ```
 
@@ -59,6 +62,16 @@ Navigation between pages goes through Astro's client router (`<ClientRouter />` 
 ## Theme
 
 Colors come from the Surfy Pastels palette in `src/styles/tokens.css`: light on bare `:root`, dark under `html[data-theme="dark"]` and under the OS dark preference when no theme attribute is set. An inline script in the `<head>` of `BaseLayout.astro` sets `data-theme` before first paint (a stored choice in `localStorage['site-theme']` wins; otherwise the OS setting) and re-applies it after every client-side navigation. The toggle (`ThemeToggle.astro`, `src/scripts/theme.js`) reveals the new theme as a circle growing from the button through the View Transitions API and dispatches a `themechange` event that the Three.js scenes use to recolor.
+
+## Showcase
+
+The Showcase page draws every model card with one WebGL renderer. A transparent canvas, one viewport tall, sits over the card grid with pointer events off; each frame it moves to the visible part of the grid and draws each card's scene into that card's rectangle with a scissor test (`src/scripts/showcase/stage.js`). One context serves any number of cards, and the loop runs only while the grid is on screen.
+
+- Each card has its own scene, camera, and orbit controls bound to the card's view region (`modelView.js`). Drag orbits, Ctrl or Cmd with the wheel zooms (a plain wheel scrolls the page), right-drag pans, and on touch screens horizontal drags orbit, pinch zooms, and vertical swipes scroll. The model turns slowly until the pointer is over it; under reduced motion it holds still and redraws only on input.
+- Render modes: solid (shaded, with rims and creases in ink), cooling jacket (translucent walls, coolant passages in the accent color), and lines (a hidden-line drawing from line primitives stored in the model file). Colors are the `--scene-*` tokens and `--accent`, re-read on `themechange`.
+- The NOVA nozzle comes from `tools/exportNovaNozzle.py`, which runs NOVA's worked example, writes every surface through NOVA's STL writer, assembles a GLB with the line drawing and 60 instanced channels, compresses it with gltf-transform (meshopt), and writes the card numbers to `src/data/novaNozzleFacts.json`. It needs the NOVA repository checked out beside this one and Node on the path.
+- `window.__showcaseInfo()` in the console reports draw calls, frames drawn, and each card's mode, camera azimuth and distance.
+- Without WebGL the canvas hides and each card says so above its text.
 
 ## Site map
 
@@ -86,7 +99,7 @@ Repository setting required once: Settings, Pages, Source: GitHub Actions.
 ## Adding content
 
 - **A page.** Add `src/pages/<name>.astro` wrapped in `<BaseLayout title description current>`, and an entry in `sitePages` in `src/data/pages.js` so it appears in the nav.
-- **A showcase model.** Export a mesh to `public/assets/models/` and add an entry to `showcaseModels` in `src/data/models.js` with `filePath: 'assets/models/<name>.stl'`.
+- **A showcase model.** Put a GLB (compressed with `npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --join false`) or an STL in `public/assets/models/`, and add an entry to `showcaseModels` in `src/data/models.js`: name, description, file path, source repository, spec rows, render modes, and optionally a rotation, a home view direction, and `partRoles` naming the glTF nodes that are coolant passages. Line primitives in a GLB become the lines mode drawing. Personal or public geometry only.
 - **A role.** Add it to `companies` in `src/data/roles.js` (keep it in step with the resume) and give it a `glyph` key. A new illustration goes in `src/components/glyphs/` as an inline SVG with `data-draw` and `data-loops`, registered in the `glyphs` map in `Experience.astro`, with its loops in `src/styles/glyphs.css`.
 - **A skill or tool.** Named commercial software goes in `industrySoftware` in `src/data/tools.js`; methods, languages, and practices go on a card as a `core` or `other` chip. A card's `shownIn` entries take a role id, a page id, or an external `href` with a `label`; unknown ids fail the build.
 - **A photo.** Put it in `src/assets/images/`, import it in the page's frontmatter, and render it with `<Picture>` (see `beyond-engineering.astro` for the widths and sizes used by the feature blocks).

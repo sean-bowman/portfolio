@@ -1,0 +1,245 @@
+/* ========================================
+   3D SHOWCASE
+   ======================================== */
+
+.showcase-section {
+    padding: var(--spacing-md) 0 var(--spacing-lg);
+}
+
+/* The positioned box the shared canvas covers */
+.showcase-layout {
+    position: relative;
+}
+
+.showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(380px, 100%), 1fr));
+    gap: var(--spacing-md);
+}
+
+.showcase-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.showcase-card.is-wide {
+    grid-column: 1 / -1;
+}
+
+/* ========================================
+   VIEW REGION
+   Orbit input and the rectangle the shared canvas draws into
+   ======================================== */
+
+.showcase-view {
+    position: relative;
+    height: 340px;
+    background-color: var(--surface-2);
+    cursor: grab;
+}
+
+.showcase-view:active {
+    cursor: grabbing;
+}
+
+.showcase-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.showcase-card.is-loaded .showcase-loading {
+    display: none;
+}
+
+.showcase-error {
+    color: var(--text);
+}
+
+/* Over the grid, under the sticky header, and never the target of pointer input. The
+   canvas is a viewport tall; the stage clips it to the grid. */
+.showcase-stage {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.showcase-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100vh;
+}
+
+.showcase-layout.is-unsupported .showcase-stage {
+    display: none;
+}
+
+/* ========================================
+   CARD TEXT
+   ======================================== */
+
+.showcase-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+}
+
+.showcase-title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    color: var(--text);
+}
+
+.showcase-description {
+    margin: 0;
+    color: var(--text-muted);
+}
+
+/* Label and value columns with hairline rows, the mono register of the Tools section */
+.showcase-specs {
+    display: grid;
+    grid-template-columns: max-content minmax(0, 1fr);
+    margin: 0;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    line-height: 1.4;
+}
+
+.showcase-spec {
+    display: contents;
+}
+
+.showcase-spec dt,
+.showcase-spec dd {
+    margin: 0;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.showcase-spec dt {
+    padding-right: var(--spacing-sm);
+    color: var(--text-muted);
+}
+
+.showcase-spec dd {
+    color: var(--text);
+}
+
+.showcase-note {
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.showcase-note a,
+.showcase-source {
+    color: var(--accent-text);
+}
+
+.showcase-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--spacing-xs);
+}
+
+.showcase-modes {
+    display: inline-flex;
+    flex-wrap: wrap;
+    border: 1px solid var(--border);
+}
+
+.showcase-mode {
+    padding: 6px 10px;
+    border: 0;
+    background: transparent;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    letter-spacing: 0.02em;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.showcase-modes .showcase-mode + .showcase-mode {
+    border-left: 1px solid var(--border);
+}
+
+.showcase-mode:hover {
+    color: var(--text);
+}
+
+.showcase-mode[aria-pressed='true'] {
+    background-color: var(--accent-muted);
+    color: var(--text);
+}
+
+.showcase-mode:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+}
+
+.showcase-reset {
+    border: 1px solid var(--border);
+}
+
+.showcase-source {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+}
+
+/* ========================================
+   WIDE CARD
+   Viewer beside the text once there is room for both
+   ======================================== */
+
+@media (min-width: 960px) {
+    .showcase-card.is-wide {
+        display: grid;
+        grid-template-columns: minmax(0, 1.8fr) minmax(320px, 1fr);
+    }
+
+    .showcase-card.is-wide .showcase-view {
+        height: auto;
+        min-height: 520px;
+    }
+}
+
+@media (max-width: 767px) {
+    .showcase-view {
+        height: 280px;
+    }
+
+    .showcase-content {
+        padding: var(--spacing-sm);
+    }
+}
+
+@media print {
+    .showcase-view,
+    .showcase-stage,
+    .showcase-controls {
+        display: none;
+    }
+}
