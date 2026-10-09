@@ -186,7 +186,7 @@ export async function initSiteMap(container) {
     await yieldToMain();
     const padA = build.buildPad(sites.padA, 'padA', true);
     await yieldToMain();
-    const padB = build.buildPad(sites.padB, 'padB', false);
+    const padB = build.buildPad(sites.padB, 'padB', false, 1);
     const landingZone = build.buildLandingZone(sites.landingZone);
     const vessel = build.buildLandingVessel(sites.landingVessel);
     await yieldToMain();
@@ -245,6 +245,19 @@ export async function initSiteMap(container) {
        BUILD STATE (1 Hz)
        ======================================== */
 
+    // Hot fires this visit, counted as each one lights (animateHotFire)
+    let hotFireCount = 0;
+    let wasBurning = false;
+
+    /**
+     * @param {number} count
+     * @param {string} one
+     * @param {string} many
+     */
+    function counted(count, one, many) {
+        return `${count} ${count === 1 ? one : many}`;
+    }
+
     function updateBuild() {
         const seconds = siteSeconds();
         const animate = !reducedMotion();
@@ -254,17 +267,21 @@ export async function initSiteMap(container) {
             label.classList.toggle('is-hidden', !built);
         });
 
+        // Phase, then the running tallies: hot fires once the test stand stands, launches
+        // once the first pad does
         const building = buildingAt(seconds);
-        const time = missionTime(seconds);
+        const parts = [missionTime(seconds)];
         if (seconds < schedule[0].start) {
-            status.textContent = `${time} · surveying the site`;
+            parts.push('surveying the site');
         } else if (building) {
             const percent = Math.floor(100 * (seconds - building.start) / (building.end - building.start));
-            status.textContent = `${time} · building ${building.label} ${percent}%`;
+            parts.push(`building ${building.label} ${percent}%`);
         } else {
-            const count = launches.launchCount;
-            status.textContent = `${time} · routine operations · ${count} ${count === 1 ? 'launch' : 'launches'}`;
+            parts.push('routine operations');
         }
+        if (done('testStand')) parts.push(counted(hotFireCount, 'hot fire', 'hot fires'));
+        if (done('padA')) parts.push(counted(launches.launchCount, 'launch', 'launches'));
+        status.textContent = parts.join(' · ');
         if (reducedMotion()) launches.showParked();
     }
 
@@ -284,7 +301,7 @@ export async function initSiteMap(container) {
         marker.visible = Boolean(site);
         if (site) {
             marker.position.set(site.x, 0.04, site.z);
-            cameraTargetX = MathUtils.clamp(site.x * panFactor, -45, 45);
+            cameraTargetX = MathUtils.clamp(site.x * panFactor, -60, 60);
             if (reducedMotion()) cameraX = cameraTargetX;
         }
         labels.forEach((label, page) => {
@@ -358,7 +375,7 @@ export async function initSiteMap(container) {
             const dx = event.clientX - dragStartX;
             if (Math.abs(dx) > 5) dragMoved = true;
             if (dragMoved) {
-                cameraX = MathUtils.clamp(dragStartCamera - dx * unitsPerPixel, -60, 60);
+                cameraX = MathUtils.clamp(dragStartCamera - dx * unitsPerPixel, -75, 75);
                 cameraTargetX = cameraX;
                 loop.renderOnce();
             }
@@ -421,12 +438,15 @@ export async function initSiteMap(container) {
     }
 
     /**
+     * Run the test stand's hot-fire cycle and count each firing as it lights.
      * @param {number} time
      */
     function animateHotFire(time) {
         const ready = done('testStand');
         const cycle = time % 11;
         const burning = ready && cycle < 3.2;
+        if (burning && !wasBurning) hotFireCount += 1;
+        wasBurning = burning;
         testStand.plume.visible = burning;
         if (burning) {
             testStand.plume.scale.set(1, Math.min(1, cycle / 0.4) * (0.9 + 0.12 * Math.abs(Math.sin(time * 33))), 1);
@@ -547,6 +567,8 @@ export async function initSiteMap(container) {
         seconds: siteSeconds(),
         sceneTime: Number(sceneTime.toFixed(2)),
         launches: launches.launchCount,
+        hotFires: hotFireCount,
+        sequenceTime: Number(launches.sequenceTime(sceneTime).toFixed(2)),
         cameraX: Number(cameraX.toFixed(2)),
         page: currentPage,
         lite

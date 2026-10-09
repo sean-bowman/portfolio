@@ -180,7 +180,9 @@ function cylinder(radiusTop, radiusBottom, height, segments = 10) {
  */
 export function buildRoad(padXs) {
     const structure = new Structure('road', 0, 0);
-    for (let x = -57; x <= 33; x += 6) {
+    // From the landing zone to just past the farthest pad spur
+    const roadEnd = Math.max(...padXs) + 3;
+    for (let x = -57; x <= roadEnd; x += 6) {
         structure.addPart(box(6, 0.06, 2.4), { at: [x, 0, roadZ] });
     }
     padXs.forEach(padX => {
@@ -312,8 +314,11 @@ export function buildHangar(site) {
  * @param {{ x: number, z: number }} site
  * @param {string} id
  * @param {boolean} withMasts
+ * @param {number} [craneSide=-1] - Which side of the deck the build crane stands on: -1 west,
+ *   +1 east. A pad built while launches run from its western neighbor puts it east, out of
+ *   the path of the vehicle lying on its side for rollout.
  */
-export function buildPad(site, id, withMasts) {
+export function buildPad(site, id, withMasts, craneSide = -1) {
     const structure = new Structure(id, site.x, site.z);
     structure.addPart(box(9, 0.6, 9));
     structure.addPart(new BoxGeometry(2.2, 0.02, 9.2).translate(0, 0.61, 0), { fill: 'shadow', outline: false });
@@ -336,7 +341,9 @@ export function buildPad(site, id, withMasts) {
             new Vector3(-11.2, 22, 11.2), new Vector3(-5.6, 19.5, 5.6), new Vector3(0, 22, 0)
         ]), material('inkSoft')));
     }
-    structure.addCrane(-9.5, 22);
+    structure.addCrane(9.5 * craneSide, 22);
+    // The jib is built pointing east; turned around on the east side so it reaches over the deck
+    if (craneSide > 0 && structure.crane) structure.crane.rotation.y = Math.PI;
     return { structure, base: new Vector3(site.x, 0.6, site.z) };
 }
 

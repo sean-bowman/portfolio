@@ -26,6 +26,16 @@ import { roadZ } from './plan.js';
 const trailCapacity = 90;
 const halfPi = Math.PI / 2;
 
+// Booster return, as a fraction s of the descent (y = 34 (1 - s)^2 above the landing
+// surface, so the booster slows all the way down): the engine relights for the slowdown
+// at landingBurnStart, about 17 units up, and kicks up a cloud from landingCloudStart,
+// under 5 units up, which spreads and thins until the sequence ends.
+const landingBurnStart = 0.3;
+const landingCloudStart = 0.62;
+const descentStart = 22;
+const descentDuration = 10;
+const landedSequenceEnd = 34;
+
 /**
  * Smoothstep ease between 0 and 1.
  * @param {number} t
@@ -106,6 +116,8 @@ export class LaunchSystem {
 
         this.groundCloud = puffCloud(7, 1.6);
         this.groundCloud.visible = false;
+        this.landingCloud = puffCloud(6, 1.2);
+        this.landingCloud.visible = false;
 
         this.trailPositions = new Float32Array(trailCapacity * 3);
         this.trailGeometry = new BufferGeometry();
@@ -115,7 +127,7 @@ export class LaunchSystem {
         this.trail = new Line(this.trailGeometry, this.trailMaterial);
         this.trail.frustumCulled = false;
 
-        scene.add(vehicle, this.groundCloud, this.trail);
+        scene.add(vehicle, this.groundCloud, this.landingCloud, this.trail);
 
         this.launchCount = 0;
         this.startTime = -1;      // scene time the current sequence began; -1 when idle
@@ -141,6 +153,7 @@ export class LaunchSystem {
         this.plume.visible = false;
         this.vehicle.rotation.set(0, 0, 0);
         this.vehicle.position.copy(pad.base);
+        this.landingCloud.visible = false;
     }
 
     /**
@@ -175,6 +188,16 @@ export class LaunchSystem {
         this.upper.visible = true;
         this.plume.visible = false;
         this.groundCloud.visible = false;
+        this.landingCloud.visible = false;
+    }
+
+    /**
+     * Seconds into the current sequence, or -1 between launches.
+     * @param {number} time - Scene seconds
+     * @returns {number}
+     */
+    sequenceTime(time) {
+        return this.startTime < 0 ? -1 : time - this.startTime;
     }
 
     /**
@@ -242,16 +265,28 @@ export class LaunchSystem {
             this.groundCloud.visible = t < 26;
             if (this.groundCloud.visible) setCloud(this.groundCloud, Math.min(1, (t - 9) / 6), 6);
 
-            if (this.landing && t >= 22) {
-                // Booster return: decelerating descent with a landing burn near the end
-                const s = Math.min(1, (t - 22) / 10);
+            if (this.landing && t >= descentStart) {
+                // Booster return: a descent that slows all the way down on its engine, with
+                // the plume lengthening as the booster nears the surface
+                const s = Math.min(1, (t - descentStart) / descentDuration);
                 const base = this.landing.base();
                 vehicle.visible = true;
                 vehicle.rotation.set(0, 0, 0);
                 vehicle.position.set(base.x, base.y + 34 * Math.pow(1 - s, 2), base.z);
-                this.plume.visible = s > 0.68 && s < 1;
+                this.plume.visible = s >= landingBurnStart && s < 1;
                 if (this.plume.visible) {
-                    this.plume.scale.set(0.8, 0.55 + 0.1 * Math.abs(Math.sin(time * 41)), 0.8);
+                    const burn = (s - landingBurnStart) / (1 - landingBurnStart);
+                    const flicker = 0.1 * Math.abs(Math.sin(time * 41));
+                    this.plume.scale.set(0.8, 0.45 + 0.3 * burn + flicker, 0.8);
+                }
+
+                // The exhaust reaching the pad or the deck raises a cloud that spreads and
+                // thins out by the end of the sequence
+                const cloudStartTime = descentStart + landingCloudStart * descentDuration;
+                this.landingCloud.visible = t >= cloudStartTime;
+                if (this.landingCloud.visible) {
+                    this.landingCloud.position.copy(base);
+                    setCloud(this.landingCloud, Math.min(1, (t - cloudStartTime) / (landedSequenceEnd - cloudStartTime)), 3.5);
                 }
                 tracked = s < 1 ? vehicle.position : null;
             } else {
@@ -259,12 +294,13 @@ export class LaunchSystem {
                 this.plume.visible = false;
             }
 
-            const end = this.landing ? 34 : 26;
+            const end = this.landing ? landedSequenceEnd : 26;
             if (t >= end) {
                 // Sequence over; a landed booster stays put until the next rollout
                 this.startTime = -1;
                 this.plume.visible = false;
                 this.groundCloud.visible = false;
+                this.landingCloud.visible = false;
                 const readyPads = this.pads.filter(candidate => candidate.ready()).length;
                 this.nextStart = time + (readyPads > 1 ? 10 : 20);
                 if (!this.landing) vehicle.visible = false;
