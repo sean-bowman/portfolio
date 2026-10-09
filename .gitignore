@@ -80,3 +80,5 @@ assets/images/personal/*.mp4
 
 # Keep this file
 !.gitignore
+
+objectives.md
