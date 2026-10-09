@@ -201,7 +201,7 @@
 }
 
 .rn-plume path {
-    opacity: 0.55;
+    opacity: 0.85;
     transform-box: fill-box;
     transform-origin: 50% 0%;
     animation: flame-flicker 0.12s steps(2) infinite alternate;
