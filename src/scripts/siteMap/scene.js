@@ -452,7 +452,8 @@ export async function initSiteMap(container) {
             testStand.plume.scale.set(1, Math.min(1, cycle / 0.4) * (0.9 + 0.12 * Math.abs(Math.sin(time * 33))), 1);
         }
         testStand.steam.visible = ready && cycle < 7;
-        if (testStand.steam.visible) build.setCloud(testStand.steam, Math.min(1, cycle / 6), 4);
+        // Smaller puffs than a launch's ground cloud: the stand is a fraction of a pad's size
+        if (testStand.steam.visible) build.setCloud(testStand.steam, Math.min(1, cycle / 6), 4, 1.4);
     }
 
     /**
