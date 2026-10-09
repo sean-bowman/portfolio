@@ -10,6 +10,7 @@ import { getImage } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { withBase } from '../lib/paths.js';
+import { faviconVersion } from '../lib/favicon.js';
 import heroImage from '../assets/images/El_Salvador_K59.JPG';
 
 // Global stylesheets: color tokens first, then the cascade order the site was built around
@@ -102,7 +103,9 @@ const previewImageUrl = new URL(previewImage.src, Astro.site);
     <meta property="og:image" content={previewImageUrl}>
     <meta name="twitter:card" content="summary_large_image">
 
-    <link rel="icon" type="image/svg+xml" href={withBase('favicon.svg')}>
+    <!-- Versioned by a hash of the icon, so a changed icon gets a new URL and replaces the one
+         browsers keep in their separate favicon cache -->
+    <link rel="icon" type="image/svg+xml" href={withBase(`favicon.svg?v=${faviconVersion}`)}>
     <link rel="sitemap" href={withBase('sitemap-index.xml')}>
 
     <ClientRouter />
