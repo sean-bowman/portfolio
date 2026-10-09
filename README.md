@@ -85,12 +85,12 @@ The Showcase page draws every model card with one WebGL renderer. A transparent 
 
 ## Site map
 
-The top of the footer is a Three.js launch complex on the Florida coast that builds out while the visitor stays: road, tracking dish, test stand, propellant farm, hangar, two pads, a landing zone, and a landing vessel, then routine launches with booster returns. Five facilities are the site's pages; their labels link to them. Build progress follows a visit clock (`src/scripts/siteMap/clock.js`) that counts seconds on site, pauses in hidden tabs, and starts over on a full reload. The container carries `transition:persist`, so one scene and one clock last the whole visit across client-side navigation.
+The top of the footer is a Three.js launch complex on the Florida coast that builds out while the visitor stays: road, tracking dish, test stand, propellant farm, hangar, two pads, a landing zone, and a landing vessel, then routine launches with booster returns that relight on the way down and raise a cloud on landing. Five facilities are the site's pages; their labels link to them. A status chip in the scene shows the mission clock, the current build, and running counts of test-stand hot fires and launches, and a line above the scene says what it shows, when, and how to move around it; its times are computed from the build queue. Build progress follows a visit clock (`src/scripts/siteMap/clock.js`) that counts seconds on site, pauses in hidden tabs, and starts over on a full reload. The container carries `transition:persist`, so one scene and one clock last the whole visit across client-side navigation.
 
 - Preview a later state with `?t=<seconds>`; the full build completes at 301 s.
 - Layout and build order: `src/scripts/siteMap/plan.js`. Colors: the `--scene-*` tokens in `tokens.css`.
-- `window.__siteMapInfo()` in the console reports draw calls, triangles, visit and scene time, launches, and camera position.
-- Without WebGL the scene hides and the plain HTML site map below it remains.
+- `window.__siteMapInfo()` in the console reports draw calls, triangles, visit and scene time, launches, hot fires, time into the current launch sequence, and camera position.
+- Without WebGL the scene and its hint hide, and the plain HTML site map below them remains.
 
 ## Deploy
 
