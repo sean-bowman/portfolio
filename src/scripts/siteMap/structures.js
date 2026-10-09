@@ -263,14 +263,16 @@ export function buildTestStand(site) {
     structure.addPart(box(3.1, 0.18, 0.18), { at: [2.25, 7.9, 0] });
     structure.addCrane(-6, 15);
 
-    // Hot-fire plume (from the nozzle exit down into the deflector) and the steam that
-    // the deflector turns sideways
+    // Hot-fire plume (from the nozzle exit at 4.3 down into the deflector on the slab, which
+    // it reaches at 0.8) and the steam it raises there: centered on the engine axis, so the
+    // puffs start at the foot of the plume (setCloud lifts them 0.6 to 2.0 above this
+    // origin) and spread out from under the nozzle
     const plume = flamePlume(0.95, 3.5);
     plume.position.set(0, 4.3, 0);
     plume.visible = false;
     structure.group.add(plume);
     const steam = puffCloud(5, 0.8);
-    steam.position.set(1.8, 1.2, 0);
+    steam.position.set(0, 0.2, 0);
     steam.visible = false;
     structure.group.add(steam);
     return { structure, plume, steam };
@@ -427,11 +429,12 @@ export function puffCloud(count, spread) {
  * @param {Group} cloud
  * @param {number} progress
  * @param {number} reach - Distance each puff travels outward at progress 1
+ * @param {number} [growth=2.2] - How much each puff's radius grows by progress 1
  */
-export function setCloud(cloud, progress, reach) {
+export function setCloud(cloud, progress, reach, growth = 2.2) {
     const eased = 1 - Math.pow(1 - progress, 2);
     cloud.children.forEach(puff => {
-        puff.scale.setScalar(0.4 + 2.2 * eased);
+        puff.scale.setScalar(0.4 + growth * eased);
         puff.position.copy(puff.userData.direction).multiplyScalar(0.8 + reach * eased).setY(0.6 + 1.4 * eased);
     });
     cloud.userData.material.opacity = 0.9 * (1 - Math.pow(progress, 1.6));
