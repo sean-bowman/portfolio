@@ -85,12 +85,12 @@ The Showcase page draws every model card with one WebGL renderer. A transparent 
 
 ## Site map
 
-The top of the footer is a Three.js launch complex on the Florida coast that builds out while the visitor stays: road, tracking dish, test stand, propellant farm, hangar, two pads, a landing zone, and a landing vessel, then routine launches with booster returns. Five facilities are the site's pages; their labels link to them. Build progress follows a visit clock (`src/scripts/siteMap/clock.js`) that counts seconds on site, pauses in hidden tabs, and starts over on a full reload. The container carries `transition:persist`, so one scene and one clock last the whole visit across client-side navigation.
+The top of the footer is a Three.js launch complex on the Florida coast that builds out while the visitor stays: road, tracking dish, test stand, propellant farm, hangar, two pads, a landing zone, and a landing vessel, then routine launches with booster returns that relight on the way down and raise a cloud on landing. Five facilities are the site's pages; their labels link to them. A status chip in the scene shows the mission clock, the current build, and running counts of test-stand hot fires and launches, and a line above the scene says what it shows, when, and how to move around it; its times are computed from the build queue. Build progress follows a visit clock (`src/scripts/siteMap/clock.js`) that counts seconds on site, pauses in hidden tabs, and starts over on a full reload. The container carries `transition:persist`, so one scene and one clock last the whole visit across client-side navigation.
 
 - Preview a later state with `?t=<seconds>`; the full build completes at 301 s.
 - Layout and build order: `src/scripts/siteMap/plan.js`. Colors: the `--scene-*` tokens in `tokens.css`.
-- `window.__siteMapInfo()` in the console reports draw calls, triangles, visit and scene time, launches, and camera position.
-- Without WebGL the scene hides and the plain HTML site map below it remains.
+- `window.__siteMapInfo()` in the console reports draw calls, triangles, visit and scene time, launches, hot fires, time into the current launch sequence, and camera position.
+- Without WebGL the scene and its hint hide, and the plain HTML site map below them remains.
 
 ## Deploy
 
@@ -111,7 +111,7 @@ Repository setting required once: Settings, Pages, Source: GitHub Actions.
 - **A page.** Add `src/pages/<name>.astro` wrapped in `<BaseLayout title description current>`, and an entry in `sitePages` in `src/data/pages.js` so it appears in the nav.
 - **A showcase model.** Put a GLB (compressed with `npx @gltf-transform/cli optimize in.glb out.glb --compress meshopt --join false`) or an STL in `public/assets/models/`, and add an entry to `showcaseModels` in `src/data/models.js`: name, description, file path, source repository, spec rows, render modes, and optionally a rotation, a home view direction, and `partRoles` naming the glTF nodes that are coolant passages. Line primitives in a GLB become the lines mode drawing. Personal or public geometry only.
 - **A role.** Add it to `companies` in `src/data/roles.js` (keep it in step with the resume) and give it a `glyph` key. A new illustration goes in `src/components/glyphs/` as an inline SVG with `data-draw` and `data-loops`, registered in the `glyphs` map in `Experience.astro`, with its loops in `src/styles/glyphs.css`.
-- **A skill or tool.** Named commercial software goes in `industrySoftware` in `src/data/tools.js`; methods, languages, and practices go on a card as a `core` or `other` chip. A card's `shownIn` entries take a role id, a page id, or an external `href` with a `label`; unknown ids fail the build.
+- **A skill or tool.** Named commercial software goes in `industrySoftware` in `src/data/tools.js`; methods, languages, and practices go on a card as a `core` or `other` chip.
 - **A photo.** Put it in `src/assets/images/`, import it in the page's frontmatter, and render it with `<Picture>` (see `beyond-engineering.astro` for the widths and sizes used by the feature blocks).
 - **The resume.** Replace `public/assets/resume.pdf`. The source is `Documents/Resume/Resume_Sean_Bowman_LinkedIn.tex`, the variant with the phone number redacted.
 

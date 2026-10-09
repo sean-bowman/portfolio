@@ -14,6 +14,33 @@
     background: linear-gradient(180deg, var(--scene-sky-top) 0%, var(--scene-sky-low) 42%);
 }
 
+/* Hint above the scene */
+.site-map-hint {
+    margin: 0 0 var(--spacing-xs);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+.site-map-hint-still {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .site-map-hint-motion {
+        display: none;
+    }
+
+    .site-map-hint-still {
+        display: inline;
+    }
+}
+
+.site-map-hint:has(+ .site-map.is-unsupported) {
+    display: none;
+}
+
 .site-map.is-unsupported {
     display: none;
 }
@@ -79,6 +106,9 @@
     letter-spacing: 0.04em;
     color: var(--text-muted);
     pointer-events: none;
+    /* Phase plus two tallies can outgrow a phone's width; wrap inside the scene */
+    max-width: calc(100% - 1.5rem);
+    line-height: 1.5;
 }
 
 .site-map-labels {

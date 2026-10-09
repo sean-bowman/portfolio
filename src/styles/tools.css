@@ -99,7 +99,7 @@
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    padding: var(--spacing-md) 1.5rem 1.25rem;
+    padding: var(--spacing-md) 1.5rem;
     background-color: var(--bg);
 }
 
@@ -139,45 +139,6 @@
 
 .chip:hover {
     border-color: var(--accent);
-}
-
-/* Pinned to the card bottom so the links line up across a row */
-.tool-proof {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 14px;
-    margin: auto 0 0;
-    padding-top: 0.75rem;
-    border-top: 1px dashed var(--border);
-    font-family: var(--font-mono);
-    font-size: var(--font-size-xs);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-
-.tool-proof-label {
-    color: var(--text-muted);
-}
-
-.tool-proof a {
-    position: relative;
-    color: var(--accent-text);
-}
-
-.tool-proof a::after {
-    content: ' \2192';
-}
-
-/* Enlarged tap target without changing the layout */
-.tool-proof a::before {
-    content: '';
-    position: absolute;
-    inset: -6px -4px;
-}
-
-.tool-proof a:hover {
-    text-decoration: underline;
 }
 
 @media (max-width: 1023px) {

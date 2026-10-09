@@ -14,8 +14,42 @@
 
 import { sitePages } from '../data/pages.js';
 import { withBase } from '../lib/paths.js';
+import { schedule } from '../scripts/siteMap/plan.js';
 import '../styles/siteMap.css';
+
+// The hint's times come from the build queue, so they follow any change to it. Rounded to
+// the nearest half minute.
+/**
+ * @param {string} id - Build queue entry
+ * @returns {string}
+ */
+function readyAt(id) {
+    const entry = schedule.find(item => item.id === id);
+    if (!entry) throw new Error(`SiteMap: no build queue entry '${id}'`);
+    const minutes = Math.round(entry.end / 30) / 2;
+    return `${minutes} ${minutes === 1 ? 'minute' : 'minutes'}`;
+}
+const testStandReady = readyAt('testStand');
+const firstPadReady = readyAt('padA');
+const siteReady = readyAt(schedule[schedule.length - 1].id);
 ---
+
+<!-- Above the scene: what it shows, when, and how to use it. Pointer-only instructions for a
+     decorative scene, so hidden from assistive technology like the scene itself; hidden with
+     the scene when WebGL is unavailable. -->
+<p class="site-map-hint" aria-hidden="true">
+    <span class="site-map-hint-motion">
+        A launch complex builds along the coast while you browse: the engine test stand fires from
+        about {testStandReady} in, the first launch pad is ready about {firstPadReady} in, and the whole
+        site about {siteReady} in, after which rockets launch and boosters land.
+    </span>
+    <span class="site-map-hint-still">
+        A launch complex builds along the coast while you browse, shown as still frames: the engine
+        test stand is up about {testStandReady} in, the first launch pad about {firstPadReady} in, and
+        the whole site about {siteReady} in.
+    </span>
+    Drag to look along the coast, hover a facility to slow time, and click it to open its page.
+</p>
 
 <div class="site-map" transition:persist="site-map" aria-hidden="true">
     <canvas class="site-map-canvas"></canvas>

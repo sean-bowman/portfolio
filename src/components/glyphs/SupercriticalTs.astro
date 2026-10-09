@@ -1,18 +1,15 @@
 ---
 /* ========================================
    GLYPH: SUPERCRITICAL T-s DIAGRAM
-   Aerospace Engineer I role: a state point rides an isobar above the critical point
+   Aerospace Engineer I role: a state point rides a supercritical isobar
    Sean Bowman [10/06/2026]
    ======================================== */
 
-// Temperature-entropy axes, the saturation dome with its critical point, a faint
-// subcritical isobar (flat across the two-phase region, ending on the dome at y = 33.0),
-// and a supercritical isobar that clears the dome. The supercritical isobar is S-shaped:
-// its slope dT/ds = T/cp is steep in the liquid-like region, flattens near the
-// pseudo-critical point where cp peaks, and steepens again in the gas-like region.
-// The state point is a round-capped near-zero dash on a pathLength="1" copy of the
-// supercritical isobar, so a stroke-dashoffset animation moves it along the curve.
-// 48-unit viewBox.
+// Temperature-entropy axes and one supercritical isobar. The isobar is S-shaped: its slope
+// dT/ds = T/cp is steep in the liquid-like region, flattens near the pseudo-critical point
+// where cp peaks, and steepens again in the gas-like region. The state point is a
+// round-capped near-zero dash on a pathLength="1" copy of the isobar, so a
+// stroke-dashoffset animation moves it along the curve. 48-unit viewBox.
 const supercriticalIsobar = 'M8.6 41 C10.4 32 14.6 18.5 20.5 13 C24 10 28.5 9.5 32.5 8.6 C37 7.4 40.5 5 43.5 1.8';
 ---
 
@@ -22,13 +19,6 @@ const supercriticalIsobar = 'M8.6 41 C10.4 32 14.6 18.5 20.5 13 C24 10 28.5 9.5 
     <path d="M4.8 4 L6 2 L7.2 4 M42 40.8 L44 42 L42 43.2" stroke-width="0.7" />
     <text class="glyph-label" x="1.4" y="10">T</text>
     <text class="glyph-label" x="39.6" y="47.4">s</text>
-
-    <!-- Saturation dome and critical point -->
-    <path d="M10 41 C11.5 29 16.5 15 23.5 14 C30.5 15 35.5 29 37 41" stroke-width="1" />
-    <circle cx="23.5" cy="14" r="1" fill="currentColor" stroke="none" />
-
-    <!-- Subcritical isobar: liquid branch, two-phase plateau, vapor branch -->
-    <path d="M9.6 41 C10.3 38 10.9 35.5 11.47 33 H35.53 C38 27 40.5 20 43.5 14" stroke-width="0.5" stroke-opacity="0.45" />
 
     <!-- Supercritical isobar -->
     <path d={supercriticalIsobar} stroke-width="0.9" />

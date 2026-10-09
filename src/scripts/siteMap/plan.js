@@ -25,10 +25,12 @@ export const sites = {
     dish: { x: -38, z: 6, page: 'contact', detail: 'Tracking dish', labelHeight: 9 },
     testStand: { x: -24, z: 3, page: 'projects', detail: 'Engine test stand', labelHeight: 13 },
     propellantFarm: { x: -11, z: 7 },
-    hangar: { x: 2, z: 7, page: 'showcase', detail: 'Integration hangar', labelHeight: 9 },
-    padA: { x: 15, z: -2, page: 'home', detail: 'Launch pad', labelHeight: 19 },
-    padB: { x: 28, z: -2 },
-    surfBreak: { x: 44, z: -18, page: 'beyond', detail: 'Surf break', labelHeight: 4 },
+    hangar: { x: 2, z: 7, page: 'home', detail: 'Integration hangar', labelHeight: 9 },
+    padA: { x: 15, z: -2, page: 'showcase', detail: 'Launch pad', labelHeight: 19 },
+    // A vehicle lying on its side for rollout and erection at pad A reaches x = 27 (11.4
+    // long, nose east), so pad B's deck starts clear of it at x = 29.5
+    padB: { x: 34, z: -2 },
+    surfBreak: { x: 56, z: -18, page: 'beyond', detail: 'Surf break', labelHeight: 4 },
     // Offshore behind the low hangar and propellant farm, so no tower hides it from any
     // page's camera position
     landingVessel: { x: -8, z: -60 }

@@ -1,42 +1,12 @@
 ---
 /* ========================================
    TOOLS AND METHODS
-   Credentials strip and six workflow cards with links to where each skill shows up
+   Credentials strip and six workflow cards
    Sean Bowman [10/06/2026]
    ======================================== */
 
 import { education, industrySoftware, toolCards } from '../data/tools.js';
-import { companies } from '../data/roles.js';
-import { sitePages } from '../data/pages.js';
-import { withBase } from '../lib/paths.js';
 import '../styles/tools.css';
-
-const roles = companies.flatMap(company => company.roles);
-
-/**
- * Resolve a "Shown in" entry to a link. Unknown role or page ids fail the build, so a
- * card can never point at a missing anchor.
- * @param {import('../data/tools.js').ShownIn} entry
- * @returns {{ href: string, label: string, external: boolean }}
- */
-function resolveShownIn(entry) {
-    if (entry.role) {
-        const role = roles.find(candidate => candidate.id === entry.role);
-        if (!role) throw new Error(`Tools: unknown role id '${entry.role}'`);
-        return { href: `#${role.id}`, label: role.short, external: false };
-    }
-    if (entry.page) {
-        const page = sitePages.find(candidate => candidate.id === entry.page);
-        if (!page) throw new Error(`Tools: unknown page id '${entry.page}'`);
-        return { href: withBase(page.path), label: page.label, external: false };
-    }
-    if (entry.href && entry.label) {
-        return { href: entry.href, label: entry.label, external: true };
-    }
-    throw new Error('Tools: a shownIn entry needs a role, a page, or an href with a label');
-}
-
-const cards = toolCards.map(card => ({ ...card, links: card.shownIn.map(resolveShownIn) }));
 ---
 
 <section class="tools" id="tools">
@@ -80,7 +50,7 @@ const cards = toolCards.map(card => ({ ...card, links: card.shownIn.map(resolveS
         </div>
 
         <div class="tool-grid">
-            {cards.map(card => (
+            {toolCards.map(card => (
                 <article class="tool-card" data-reveal>
                     <h3 class="tool-title">{card.title}</h3>
                     <p class="tool-summary">{card.summary}</p>
@@ -88,17 +58,6 @@ const cards = toolCards.map(card => ({ ...card, links: card.shownIn.map(resolveS
                         {card.core.map(chip => <li class="chip core">{chip}</li>)}
                         {card.other.map(chip => <li class="chip">{chip}</li>)}
                     </ul>
-                    <p class="tool-proof">
-                        <span class="tool-proof-label">Shown in</span>
-                        {card.links.map(link => (
-                            <a
-                                href={link.href}
-                                {...(link.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                            >
-                                {link.label}
-                            </a>
-                        ))}
-                    </p>
                 </article>
             ))}
         </div>

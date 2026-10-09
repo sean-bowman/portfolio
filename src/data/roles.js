@@ -7,14 +7,12 @@
 // @ts-check
 
 // Source: Documents/Resume/Resume_Sean_Bowman_LinkedIn.tex. Keep the two in step: the
-// resume is the reference for titles, dates, and claims. Anchor ids are referenced by
-// the Tools section's "Shown in" links.
+// resume is the reference for titles, dates, and claims.
 
 /**
  * @typedef {Object} Role
  * @property {string} id - Anchor id on the home page
  * @property {string} title
- * @property {string} short - Link label used by the Tools section's "Shown in" links
  * @property {string} [team] - Group or discipline shown under the title
  * @property {string} start - e.g. 'Aug 2026'
  * @property {string} end - e.g. 'Present'
@@ -37,7 +35,6 @@ export const companies = [
         roles: [
             {
                 id: 'role-blue-origin',
-                short: 'Blue Origin',
                 title: 'Fluid System Engineer III',
                 team: 'New Glenn Stage 2 Fluids, Hydrazine',
                 start: 'Aug 2026',
@@ -56,7 +53,6 @@ export const companies = [
         roles: [
             {
                 id: 'role-director',
-                short: 'Vaya, Director',
                 title: 'Director of Propulsion',
                 start: 'Jan 2026',
                 end: 'Jun 2026',
@@ -69,7 +65,6 @@ export const companies = [
             },
             {
                 id: 'role-ae2',
-                short: 'Vaya, Engineer II',
                 title: 'Aerospace Engineer II',
                 team: 'Fluid Thermal Control',
                 start: 'Apr 2024',
@@ -82,7 +77,6 @@ export const companies = [
             },
             {
                 id: 'role-ae1',
-                short: 'Vaya, Engineer I',
                 title: 'Aerospace Engineer I',
                 team: 'Fluid Thermal Control',
                 start: 'Apr 2022',
@@ -101,7 +95,6 @@ export const companies = [
         roles: [
             {
                 id: 'role-gra',
-                short: 'Florida Tech, research',
                 title: 'Graduate Research Assistant',
                 start: 'Spring 2021',
                 end: 'Fall 2021',
@@ -113,7 +106,6 @@ export const companies = [
             },
             {
                 id: 'role-gta',
-                short: 'Florida Tech, teaching',
                 title: 'Graduate Teaching Assistant Lead',
                 team: 'AEE 3064 Fluid Mechanics Laboratory',
                 start: 'Jan 2019',
