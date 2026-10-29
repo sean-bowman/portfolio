@@ -40,10 +40,10 @@ The site is served under `/portfolio` (the `base` in `astro.config.mjs`), so loc
 astro.config.mjs        site, base path, build format, integrations
 src/
   layouts/              BaseLayout.astro: <head>, header, footer, shared scripts
-  components/           Header, Footer, HeroNet, SiteMap, ThemeToggle, Experience, Tools, ProjectCard
+  components/           Header, Footer, HeroNet, SiteMap, ThemeToggle, Experience, Tools, ProjectCard, OverturnDrawing, SplashVideo
   components/glyphs/    one animated SVG illustration per role
   pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
-  data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js and novaNozzleFacts.json (Showcase), heroNet.json (hero), reposFallback.json
+  data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js, waves.js and the exporters' JSON (Showcase), heroNet.json (hero), reposFallback.json
   lib/                  github.js (build-time repository fetch), paths.js (base-path URLs)
   scripts/              client scripts: motion.js, theme.js, nav.js, site.js
   scripts/three/        Three.js toolkit: renderer defaults, theme colors, visibility-gated render loop
@@ -52,7 +52,7 @@ src/
   styles/               tokens.css (Surfy Pastels light/dark) first, then the global CSS in cascade order
   assets/images/        photos processed by astro:assets
 public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/video/, assets/models/
-tools/                  exporters run by hand: exportNovaNozzle.py, exportNovaNet.py (novaCase.py runs the NOVA case they share)
+tools/                  exporters run by hand: exportNovaNozzle.py, exportNovaNet.py (novaCase.py runs the NOVA case they share); exportPySurfBoard.py, exportPySurfOverturn.py, exportPySurfSplash.py (pySurfCase.py runs the pySurf cases)
 .github/workflows/      deploy.yml
 ```
 
@@ -80,8 +80,17 @@ The Showcase page draws every model card with one WebGL renderer. A transparent 
 - Each card has its own scene, camera, and orbit controls bound to the card's view region (`modelView.js`). Drag orbits, Ctrl or Cmd with the wheel zooms (a plain wheel scrolls the page), right-drag pans, and on touch screens horizontal drags orbit, pinch zooms, and vertical swipes scroll. The model turns slowly until the pointer is over it; under reduced motion it holds still and redraws only on input.
 - Render modes: solid (shaded, with rims and creases in ink), cooling jacket (translucent walls, coolant passages in the accent color), and lines (a hidden-line drawing from line primitives stored in the model file). Colors are the `--scene-*` tokens and `--accent`, re-read on `themechange`.
 - The NOVA nozzle comes from `tools/exportNovaNozzle.py`, which runs NOVA's worked example, writes every surface through NOVA's STL writer, assembles a GLB with the line drawing and 60 instanced channels, compresses it with gltf-transform (meshopt), and writes the card numbers to `src/data/novaNozzleFacts.json`. It needs the NOVA repository checked out beside this one and Node on the path.
+- The surfboard comes from `tools/exportPySurfBoard.py`, which builds pySurf's default thruster, writes its surface through pySurf's own STL writer, adds a line drawing of its rails, both rockers and 13 cross sections from the same section data, compresses the GLB, and writes the card numbers to `src/data/pySurfBoardFacts.json`. Its walls take `--scene-foam` (the model's `wallToken`), since a smooth board has too few creases for ink lines to carry its shape on the default `--scene-structure`.
 - `window.__showcaseInfo()` in the console reports draw calls, frames drawn, and each card's mode, camera azimuth and distance.
 - Without WebGL the canvas hides and each card says so above its text.
+
+### Breaking waves
+
+Below the 3D grid, outside the shared canvas's layout, two cards follow one plunging breaker from pySurf: the Surf Ranch soliton of Feddersen et al. (2024). Both need pySurf checked out beside this repository; `tools/pySurfCase.py` sets the case up exactly as pySurf's validation test does and caches the 20-minute boundary element run in the system temp folder.
+
+- **The overturn** (`OverturnDrawing.astro`) is inline SVG from `src/data/pySurfOverturn.json`, written by `tools/exportPySurfOverturn.py`: 40 recorded free surfaces, from the crest crossing the reef face to the jet's impact, simplified (Douglas-Peucker) and stored as relative path data in 1/200 of the depth. Every surface is drawn faint once; `<use>` copies step through them in the accent on a 47-slot CSS loop, one slot per frame and eight held on the impact. Stroke styles sit on the groups and copies, never on the frame paths, so each copy takes its own. Under reduced motion the still is the full set of surfaces with the impact highlighted. The card's comparison with the DNS is computed by the exporter from the run, the failing aspect ratio included.
+- **The splash-up** (`SplashVideo.astro`) is an MP4 written by `tools/exportPySurfSplash.py`: the same overturn handed to pySurf's SPH at 64 particles per depth, drawn at true scale in a window that travels with the breaker, encoded with ffmpeg through `imageio-ffmpeg`. The SPH run takes about an hour and is cached; a second run only redraws. The video loads its metadata and poster only, plays while on screen, and under reduced motion shows the poster (the splash-up at its peak) with player controls instead of starting.
+- `src/data/waves.js` builds both cards' text from the exporters' JSON, so the numbers on the page are the numbers of the drawing and video beside them.
 
 ## Site map
 

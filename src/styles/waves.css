@@ -1,0 +1,135 @@
+/* ========================================
+   BREAKING WAVES
+   pySurf's overturn drawing and splash-up video on the Showcase page
+   Sean Bowman [10/29/2026]
+   ======================================== */
+
+.wave-grid {
+    display: grid;
+    gap: var(--spacing-md);
+}
+
+/* The media fills the card's top, on the same ground as the 3D views */
+.wave-media {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--surface-2);
+}
+
+/* Two text columns once the card is wide enough: the account, then its checks */
+@media (min-width: 960px) {
+    .wave-card .showcase-content {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        align-items: start;
+        column-gap: var(--spacing-lg);
+    }
+
+    .wave-card .showcase-title,
+    .wave-card .showcase-description {
+        grid-column: 1;
+    }
+
+    .wave-card .showcase-specs {
+        grid-column: 2;
+        grid-row: 1 / span 3;
+    }
+}
+
+/* ========================================
+   OVERTURN DRAWING
+   Stroke weights are in pixels (non-scaling), so the lines read alike at any width. Strokes
+   are set on groups and on the <use> copies, never on the frame paths, so each copy takes
+   its own color and weight.
+   ======================================== */
+
+.overturn-svg {
+    display: block;
+    width: 100%;
+    height: clamp(180px, 22vw, 280px);
+    color: var(--text-muted);
+    /* One frame for every slot of the loop: 39 frames, then the impact held for 8 */
+    --overturn-slot: 0.15s;
+    --overturn-cycle: calc(var(--overturn-slot) * 47);
+}
+
+.overturn-svg path,
+.overturn-svg line {
+    vector-effect: non-scaling-stroke;
+}
+
+.overturn-sand {
+    fill: currentColor;
+    fill-opacity: 0.08;
+    stroke: none;
+}
+
+.overturn-bed {
+    stroke-width: 1.5px;
+    stroke-opacity: 0.7;
+}
+
+.overturn-level {
+    stroke-width: 1px;
+    stroke-opacity: 0.45;
+    stroke-dasharray: 2 5;
+}
+
+/* The chronophotograph: every recorded surface, faint */
+.overturn-ghosts {
+    stroke-width: 1px;
+    stroke-opacity: 0.22;
+}
+
+/* The playhead: one surface at a time in the accent; still, only the impact shows */
+.overturn-frame {
+    stroke: var(--accent);
+    stroke-width: 2.4px;
+    opacity: 0;
+    animation: overturn-flip var(--overturn-cycle) step-end infinite;
+    animation-delay: calc(var(--i) * var(--overturn-slot) - var(--overturn-cycle));
+}
+
+.overturn-frame.is-last {
+    opacity: 1;
+    animation-name: overturn-hold;
+}
+
+/* Visible for one slot of the 47 */
+@keyframes overturn-flip {
+    0% { opacity: 1; }
+    2.128% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+/* The impact, visible for the last 8 slots */
+@keyframes overturn-hold {
+    0% { opacity: 1; }
+    17.021% { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .overturn-svg,
+    .overturn-svg * {
+        animation: none !important;
+    }
+}
+
+/* ========================================
+   SPLASH VIDEO
+   ======================================== */
+
+.splash-video {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 960 / 400;
+    background-color: #16232A;
+}
+
+@media print {
+    .wave-media {
+        display: none;
+    }
+}

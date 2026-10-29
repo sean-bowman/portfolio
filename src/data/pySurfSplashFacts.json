@@ -1,0 +1,15 @@
+{
+  "particlesPerDepth": 64,
+  "fluidParticles": 20389,
+  "durationOverScale": 3.0,
+  "slowMotion": 5.3,
+  "peakHeightOverWaveHeight": 1.32,
+  "peakTimeOverScale": 1.6,
+  "mostert": {
+    "shareLostModel": 0.277,
+    "shareLostDns": 0.31,
+    "rateError": -0.07,
+    "criterion": 0.3
+  },
+  "stopReason": "end time reached"
+}

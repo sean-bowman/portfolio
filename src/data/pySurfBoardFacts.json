@@ -1,0 +1,20 @@
+{
+  "lengthFtIn": "6'0\"",
+  "widthIn": 20.0,
+  "thicknessIn": 2.5,
+  "noseShape": "point",
+  "tailShape": "round",
+  "rockerProfile": "aggressive",
+  "noseRockerIn": 5.2,
+  "tailRockerIn": 2.7,
+  "volumeLiters": 36.0,
+  "volumeCubicInches": 2198,
+  "stations": 240,
+  "pointsPerContour": 33,
+  "drawnStations": 160,
+  "drawnPointsPerContour": 21,
+  "faces": 25520,
+  "sectionCount": 13,
+  "maxThicknessIn": 2.68,
+  "overallLengthMm": 1829
+}
