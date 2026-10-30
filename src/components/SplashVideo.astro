@@ -1,0 +1,58 @@
+---
+/* ========================================
+   SPLASH VIDEO
+   pySurf's SPH splash-up as a looping video that plays only in view
+   Sean Bowman [10/29/2026]
+   ======================================== */
+
+// The video (written by tools/exportPySurfSplash.py) loads its metadata and poster only. It
+// plays while on screen and pauses off it. Under reduced motion it never starts on its own: the
+// poster, the splash-up at its highest, is the still frame, and the player's controls appear so
+// it can be played on purpose.
+
+import { withBase } from '../lib/paths.js';
+import '../styles/waves.css';
+
+interface Props {
+    label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<video class="splash-video" src={withBase('assets/video/pySurfSplashUp.mp4')}
+       poster={withBase('assets/video/pySurfSplashUp.webp')} muted loop playsinline preload="metadata"
+       width="960" height="400" aria-label={label} data-splash-video></video>
+
+<script>
+    import { reducedMotion } from '../scripts/motion.js';
+
+    /** @type {IntersectionObserver | null} */
+    let observer = null;
+
+    function setUpSplashVideos() {
+        observer?.disconnect();
+        const videos = /** @type {HTMLVideoElement[]} */ ([...document.querySelectorAll('[data-splash-video]')]);
+        if (!videos.length) return;
+        if (reducedMotion()) {
+            videos.forEach(video => { video.controls = true; });
+            return;
+        }
+        observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const video = /** @type {HTMLVideoElement} */ (entry.target);
+                if (entry.isIntersecting) {
+                    // Autoplay can still be refused (data saver, some mobile settings); the
+                    // controls then let the visitor start it
+                    video.play().catch(() => { video.controls = true; });
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.25 });
+        videos.forEach(video => observer?.observe(video));
+    }
+
+    document.addEventListener('astro:page-load', setUpSplashVideos);
+    document.addEventListener('astro:before-swap', () => observer?.disconnect());
+</script>

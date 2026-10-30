@@ -32,7 +32,7 @@ import { reducedMotion } from '../motion.js';
 import { yieldToMain } from '../three/index.js';
 
 /** Colors the view reads from the site tokens; decorative, never text */
-export const viewTokens = ['scene-structure', 'scene-ink', 'accent'];
+export const viewTokens = ['scene-structure', 'scene-foam', 'scene-ink', 'accent'];
 
 /** Fraction of the card the model fills when the view is reset */
 const frameFill = 0.86;
@@ -351,7 +351,7 @@ export class ModelView {
      * @param {Record<string, string>} colors - Output of themeColors(viewTokens)
      */
     applyTheme(colors) {
-        this._wallMaterial.color.set(colors['scene-structure']);
+        this._wallMaterial.color.set(colors[this._model.wallToken ?? 'scene-structure']);
         this._coolantMaterial.color.set(colors.accent);
         this._edgeMaterial.color.set(colors['scene-ink']);
         this._drawingMaterial.color.set(colors['scene-ink']);

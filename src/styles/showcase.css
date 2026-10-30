@@ -156,6 +156,12 @@
     color: var(--accent-text);
 }
 
+/* A link inside a sentence needs more than color to stand out from the text around it */
+.showcase-note a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
 .showcase-controls {
     display: flex;
     flex-wrap: wrap;

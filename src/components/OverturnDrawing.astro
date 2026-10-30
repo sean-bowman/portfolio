@@ -1,0 +1,36 @@
+---
+/* ========================================
+   OVERTURN DRAWING
+   pySurf's Surf Ranch soliton overturning onto its reef, frame by frame
+   Sean Bowman [10/29/2026]
+   ======================================== */
+
+// Inline SVG built from src/data/pySurfOverturn.json (written by tools/exportPySurfOverturn.py):
+// forty free surfaces from pySurf's boundary element run, from the crest crossing the reef face to
+// the jet's impact, over the bed and still water level. Coordinates are in units of 1/200 of the
+// depth, z flipped to SVG's downward y. Every surface is drawn once, faint, as a chronophotograph;
+// <use> copies of them step through the frames in the accent color and hold on the impact. The
+// copies carry the stroke styles, so the originals keep none of their own.
+
+import overturn from '../data/pySurfOverturn.json';
+import '../styles/waves.css';
+
+const [, , width, height] = overturn.viewBox;
+const last = overturn.frames.length - 1;
+---
+
+<svg class="overturn-svg" viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="xMaxYMid slice" data-loops
+     fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path class="overturn-sand" d={`${overturn.bed}V${height}H0Z`} />
+    <path class="overturn-bed" d={overturn.bed} />
+    <line class="overturn-level" x1="0" y1={overturn.stillWaterY} x2={width} y2={overturn.stillWaterY} />
+    <g class="overturn-ghosts">
+        {overturn.frames.map((frame, index) => <path id={`overturn-f${index}`} d={frame} />)}
+    </g>
+    <g class="overturn-flip">
+        {overturn.frames.map((_, index) => (
+            <use href={`#overturn-f${index}`} class:list={['overturn-frame', { 'is-last': index === last }]}
+                 style={`--i:${index}`} />
+        ))}
+    </g>
+</svg>

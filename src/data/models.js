@@ -12,6 +12,7 @@
 // nothing derived from employer hardware.
 
 import novaFacts from './novaNozzleFacts.json';
+import boardFacts from './pySurfBoardFacts.json';
 
 /**
  * NOVA's channelType values as card text
@@ -38,6 +39,7 @@ const channelShapes = { circle: 'circular', rectangular: 'rectangular', helical:
  * @property {boolean} [wide] - Span the full grid width
  * @property {string[]} modes - Render modes offered, first is the default (solid, jacket, lines)
  * @property {Record<string, string>} [partRoles] - Material role ('wall' or 'coolant') per glTF node name; unlisted parts are walls
+ * @property {string} [wallToken] - Site token the walls take their color from; --scene-structure by default
  * @property {[number, number, number]} [rotation] - Euler rotation [rad] that orients the model
  * @property {[number, number, number]} [viewDirection] - Home camera direction from the model center
  */
@@ -69,5 +71,29 @@ export const showcaseModels = [
         // axis horizontal with the exit to the right
         rotation: [0, -Math.PI / 2, 0],
         viewDirection: [0.42, 0.32, 1]
+    },
+    {
+        name: 'Parametric Surfboard',
+        description: `pySurf's default thruster, built from the three views a shaper draws: the planform and the deck and bottom rockers are C1-continuous cubic Bezier sections, and each cross section's deck and bottom contours meet at the rail, flatter toward the stringer by exponents that change along the board. pySurf's own STL writer made the surface; the line drawing is its rails, both rockers and ${boardFacts.sectionCount} of its cross sections.`,
+        filePath: 'assets/models/pySurfThruster.glb',
+        sourceUrl: 'https://github.com/sean-bowman/pySurf',
+        sourceLabel: 'sean-bowman/pySurf',
+        specs: [
+            { label: 'Dimensions', value: `${boardFacts.lengthFtIn} x ${boardFacts.widthIn} in x ${boardFacts.maxThicknessIn} in` },
+            { label: 'Volume', value: `${boardFacts.volumeLiters.toFixed(1)} L (${boardFacts.volumeCubicInches.toLocaleString('en-US')} cubic in)` },
+            { label: 'Nose / tail', value: `${boardFacts.noseShape === 'point' ? 'Pointed' : boardFacts.noseShape} / ${boardFacts.tailShape}` },
+            { label: 'Bottom rocker', value: `${boardFacts.noseRockerIn} in nose, ${boardFacts.tailRockerIn} in tail` },
+            { label: 'Surface', value: `${boardFacts.stations} stations, ${boardFacts.pointsPerContour} points per deck and bottom contour; drawn here at ${boardFacts.drawnStations} and ${boardFacts.drawnPointsPerContour}` }
+        ],
+        note: 'Not validated: the planform and rocker are matched by eye to photographs of a reference thruster, and the cross sections are calibrated to that board\'s own STL, within 0.9% of the local thickness (rms) over the middle of the board.',
+        noteUrl: 'https://github.com/sean-bowman/pySurf#surfboard',
+        wide: true,
+        modes: ['solid', 'lines'],
+        // A smooth part has few creases to ink, so it needs a body color that stands off the
+        // view's ground in both themes: foam white, or pale sea green at night
+        wallToken: 'scene-foam',
+        // pySurf's frame has the thickness along z; this turns it to three.js's y-up
+        rotation: [-Math.PI / 2, 0, 0],
+        viewDirection: [0.5, 1.5, 0.7]
     }
 ];
