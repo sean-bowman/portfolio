@@ -12,7 +12,7 @@
 // the version is a hash of the SVG, so any change to the icon changes its URL.
 //
 // The wall comes from NOVA's worked example (src/lib/novaOutline.js) with its true radial
-// proportions: chamber 1.79 and exit 6.325 times the throat. The bell is shortened along
+// proportions: chamber 1.78 and exit 6.325 times the throat. The bell is shortened along
 // the axis to fit the square.
 
 import { createHash } from 'node:crypto';

@@ -209,7 +209,7 @@ def main() -> None:
         'channelType': str(nozzle.channelType),
         'coolant': readOption(config, 'coolant'),
         # The throat radius that sizes the nozzle (from the choked throat area). The resampled
-        # wall has no point exactly at the throat, so its minimum radius reads about 0.5% high.
+        # wall has no point exactly at the throat, so its minimum radius reads about 0.6% high.
         'throatRadiusMm': round(float(nozzle.nozzleScalingFactor) * 1e3, 1),
         'exitRadiusMm': round(float(nozzle.rNozzleWall[-1]) * 1e3, 1),
         'overallLengthMm': round(float(extents[2]) * 1e3),

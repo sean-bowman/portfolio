@@ -8,12 +8,12 @@
 
 // Used by the favicon endpoint and the role illustrations. The wall in heroNet.json is the
 // NOVA worked example in throat radii (tools/exportNovaNet.py): the chamber runs to
-// x = -2.14 at r = 1.79, the throat sits at x = 0, r = 1, and the bell ends at x = 15.9,
+// x = -2.15 at r = 1.78, the throat sits at x = 0, r = 1, and the bell ends at x = 15.9,
 // r = 6.325. The wall is split at the throat and each section is normalized to unit length
 // and unit change in radius, which keeps its true shape. A drawing then places the chamber,
 // throat, and exit where it needs them; each section maps linearly in each direction, so a
 // small drawing can choose a legible throat width while the bell keeps NOVA's curvature.
-// Half-widths in NOVA's own ratios (chamber 1.79, exit 6.325 times the throat) keep the
+// Half-widths in NOVA's own ratios (chamber 1.78, exit 6.325 times the throat) keep the
 // radial proportions exact.
 
 import net from '../data/heroNet.json';
