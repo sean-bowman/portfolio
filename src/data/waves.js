@@ -1,17 +1,19 @@
 /* ========================================
    SHOWCASE WAVES
-   The breaking-wave cards: pySurf's overturn drawing and splash-up video
+   The breaking-wave cards: pySurf's overturn drawing, splash-up video and peeling-breaker video
    Sean Bowman [10/29/2026]
    ======================================== */
 
 // @ts-check
 
-// The numbers come from the exporters' output (tools/exportPySurfOverturn.py and
-// tools/exportPySurfSplash.py), so the cards always describe the drawing and video they sit
-// beside. Validation lines report the checks pySurf's own tests make, failures included.
+// The numbers come from the exporters' output (tools/exportPySurfOverturn.py,
+// tools/exportPySurfSplash.py and tools/exportPySurfPeeling.py), so the cards always describe the
+// drawing and videos they sit beside. Validation lines report the checks pySurf's own tests make,
+// failures included.
 
 import overturn from './pySurfOverturn.json';
 import splash from './pySurfSplashFacts.json';
+import peel from './pySurfPeelingFacts.json';
 
 /**
  * @typedef {Object} WaveSpec
@@ -21,7 +23,8 @@ import splash from './pySurfSplashFacts.json';
 
 /**
  * @typedef {Object} WaveCard
- * @property {'overturn' | 'splash'} media - Which component fills the card's top
+ * @property {'overturn' | 'video'} media - Which component fills the card's top
+ * @property {string} [video] - For media 'video', the asset name in public/assets/video
  * @property {string} name - Card title
  * @property {string} description - Card paragraph
  * @property {string} mediaLabel - Accessible description of the drawing or video
@@ -73,7 +76,8 @@ export const waveCards = [
         sourceLabel: 'sean-bowman/pySurf'
     },
     {
-        media: 'splash',
+        media: 'video',
+        video: 'pySurfSplashUp',
         name: 'Plunging Breaker: the Splash-Up',
         description: `The same wave carried through the jet's impact. pySurf hands the boundary element flow, at the instant the jet lands, to weakly compressible SPH: ${splash.fluidParticles.toLocaleString('en-US')} particles, each starting with the potential flow's velocity and pressure. The jet lands, a splash-up rises to ${splash.peakHeightOverWaveHeight} times the incident wave height and curls into a second plunge. Particles are colored by speed; the video runs ${splash.slowMotion} times slower than the flow.`,
         mediaLabel: 'Particle simulation of a plunging jet landing and throwing up a splash, colored by speed.',
@@ -85,6 +89,24 @@ export const waveCards = [
         ],
         note: `The energy lost in active breaking is checked against the DNS of Mostert and Deike (2020), a separate case on a 3 degree beach, inside the ${Math.round(100 * splash.mostert.criterion)}% criterion. The splash-up's shape is not validated, and the water is single-phase: the air in the tube neither cushions its collapse nor escapes.`,
         noteUrl: `${pySurfUrl}#splash-up-potential-flow-handed-to-sph`,
+        sourceUrl: pySurfUrl,
+        sourceLabel: 'sean-bowman/pySurf'
+    },
+    {
+        media: 'video',
+        video: 'pySurfPeeling',
+        name: 'Plunging Breaker: the Peel',
+        description: `The same wave on a reef whose depth contours run at ${peel.obliqueAngle} degrees to its crest, so the jet lands first at one end and the break peels along the crest at ${peel.peelSpeedOverRootGh} sqrt(gh). Each cross-section of that reef sees the 2D overturn delayed by its distance along the crest, so pySurf stacks the boundary element run in planes one particle spacing apart and hands each plane to 3D SPH as its own jet lands: ${peel.planes} planes and ${peel.fluidParticles.toLocaleString('en-US')} particles by the end. The lines are every second plane still in potential flow; particles are colored by speed, deep blue at rest to white at twice the wave speed. The view is at true scale, looking back along the crest into the tube, and runs ${peel.slowMotion} times slower than the flow.`,
+        mediaLabel: 'Three-dimensional particle simulation of a breaking wave peeling along a reef toward the viewer, the unbroken part of the wave drawn as lines ahead of the peel.',
+        specs: [
+            { label: 'Resolution', value: `${peel.particlesPerDepth} particles per depth, ${peel.planes} planes` },
+            { label: 'Peel speed', value: `${peel.peelSpeedOverRootGh} sqrt(gh), the wave speed over tan ${peel.obliqueAngle} deg` },
+            { label: 'Incident wave speed', value: `${(100 * peel.incidentSpeedError).toFixed(2)}% against the exact solitary wave` },
+            { label: 'Steady peel', value: `Plane energies within ${(100 * Math.max(...peel.checks.steadySpread)).toFixed(1)}% of each other to ${peel.checks.steadyAges.at(-1)} sqrt(h/g) after impact` },
+            { label: 'Against the 2D splash-up', value: `Within ${(100 * peel.checks.twoDimensionalTo08).toFixed(1)}% to ${peel.checks.steadyAges[2]} sqrt(h/g), +${(100 * peel.checks.twoDimensionalAt12).toFixed(1)}% at ${peel.checks.steadyAges[3]}` }
+        ],
+        note: `Not validated: no measurement or 3D simulation of a solitary wave peeling along an oblique reef was found, so these checks test the construction, not the flow. Its least certain input is strip theory's spanwise velocity, ${Math.round(100 * peel.checks.spanwiseRidgeError)}% high on Guyenne and Grilli's (2006) 3D ridge; at ${peel.obliqueAngle} degrees it changes the plane energies by about 1%. The water is single-phase.`,
+        noteUrl: `${pySurfUrl}#peeling-breaker-on-an-oblique-reef-3d-potential-flow-slices-handed-to-sph-plane-by-plane`,
         sourceUrl: pySurfUrl,
         sourceLabel: 'sean-bowman/pySurf'
     }

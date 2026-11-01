@@ -7,7 +7,7 @@
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import OverturnDrawing from '../components/OverturnDrawing.astro';
-import SplashVideo from '../components/SplashVideo.astro';
+import WaveVideo from '../components/WaveVideo.astro';
 import { showcaseModels } from '../data/models.js';
 import { waveCards } from '../data/waves.js';
 import '../styles/showcase.css';
@@ -18,7 +18,7 @@ const modeLabels = { solid: 'Solid', jacket: 'Cooling jacket', lines: 'Lines' };
 
 <BaseLayout
     title="Showcase"
-    description="Output of my engineering code, rendered in the browser: a regeneratively cooled rocket nozzle from NOVA and a parametric surfboard from pySurf in 3D, and a plunging breaker from pySurf's wave solvers."
+    description="Output of my engineering code, rendered in the browser: a regeneratively cooled rocket nozzle from NOVA and a parametric surfboard from pySurf in 3D, and a plunging breaker in 2D and 3D from pySurf's wave solvers."
     current="showcase"
 >
     <!-- Page Header -->
@@ -92,12 +92,12 @@ const modeLabels = { solid: 'Solid', jacket: 'Cooling jacket', lines: 'Lines' };
     <section class="showcase-section">
         <div class="container">
             <h2 class="section-title">Breaking Waves</h2>
-            <p class="section-description">One plunging breaker through two models: potential flow up to the instant its jet lands, then particles through the splash.</p>
+            <p class="section-description">One plunging breaker through two models: potential flow up to the instant its jet lands, then particles through the splash, first in 2D and then peeling along an oblique reef in 3D.</p>
             <div class="wave-grid">
                 {waveCards.map(card => (
                     <article class="showcase-card wave-card">
                         <figure class="wave-media" role={card.media === 'overturn' ? 'img' : undefined} aria-label={card.media === 'overturn' ? card.mediaLabel : undefined}>
-                            {card.media === 'overturn' ? <OverturnDrawing /> : <SplashVideo label={card.mediaLabel} />}
+                            {card.media === 'overturn' ? <OverturnDrawing /> : <WaveVideo asset={card.video ?? ''} label={card.mediaLabel} />}
                         </figure>
                         <div class="showcase-content">
                             <h3 class="showcase-title">{card.name}</h3>

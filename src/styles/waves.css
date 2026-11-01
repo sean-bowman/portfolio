@@ -1,6 +1,6 @@
 /* ========================================
    BREAKING WAVES
-   pySurf's overturn drawing and splash-up video on the Showcase page
+   pySurf's overturn drawing, splash-up video and peeling-breaker video on the Showcase page
    Sean Bowman [10/29/2026]
    ======================================== */
 
@@ -117,10 +117,11 @@
 }
 
 /* ========================================
-   SPLASH VIDEO
+   WAVE VIDEOS
+   Both exporters write 960 x 400 on the night-ocean ground
    ======================================== */
 
-.splash-video {
+.wave-video {
     display: block;
     width: 100%;
     height: auto;

@@ -40,7 +40,7 @@ The site is served under `/portfolio` (the `base` in `astro.config.mjs`), so loc
 astro.config.mjs        site, base path, build format, integrations
 src/
   layouts/              BaseLayout.astro: <head>, header, footer, shared scripts
-  components/           Header, Footer, HeroNet, SiteMap, ThemeToggle, Experience, Tools, ProjectCard, OverturnDrawing, SplashVideo
+  components/           Header, Footer, HeroNet, SiteMap, ThemeToggle, Experience, Tools, ProjectCard, OverturnDrawing, WaveVideo
   components/glyphs/    one animated SVG illustration per role
   pages/                one .astro file per route: index, projects, showcase, beyond-engineering, contact, 404
   data/                 pages.js (nav and footer links), roles.js (Experience), tools.js (Tools and Methods), models.js, waves.js and the exporters' JSON (Showcase), heroNet.json (hero), reposFallback.json
@@ -52,7 +52,7 @@ src/
   styles/               tokens.css (Surfy Pastels light/dark) first, then the global CSS in cascade order
   assets/images/        photos processed by astro:assets
 public/                 copied as-is: favicon.svg, assets/resume.pdf, assets/video/, assets/models/
-tools/                  exporters run by hand: exportNovaNozzle.py, exportNovaNet.py (novaCase.py runs the NOVA case they share); exportPySurfBoard.py, exportPySurfOverturn.py, exportPySurfSplash.py (pySurfCase.py runs the pySurf cases)
+tools/                  exporters run by hand: exportNovaNozzle.py, exportNovaNet.py (novaCase.py runs the NOVA case they share); exportPySurfBoard.py, exportPySurfOverturn.py, exportPySurfSplash.py, exportPySurfPeeling.py (pySurfCase.py runs the pySurf cases)
 .github/workflows/      deploy.yml
 ```
 
@@ -86,11 +86,13 @@ The Showcase page draws every model card with one WebGL renderer. A transparent 
 
 ### Breaking waves
 
-Below the 3D grid, outside the shared canvas's layout, two cards follow one plunging breaker from pySurf: the Surf Ranch soliton of Feddersen et al. (2024). Both need pySurf checked out beside this repository; `tools/pySurfCase.py` sets the case up exactly as pySurf's validation test does and caches the 20-minute boundary element run in the system temp folder.
+Below the 3D grid, outside the shared canvas's layout, three cards follow one plunging breaker from pySurf: the Surf Ranch soliton of Feddersen et al. (2024). All need pySurf checked out beside this repository; `tools/pySurfCase.py` sets the case up exactly as pySurf's validation test does and caches each 20-minute boundary element run in the system temp folder, one from pySurf's default Green-Naghdi solitary wave and one from the exact potential-flow solitary wave.
 
 - **The overturn** (`OverturnDrawing.astro`) is inline SVG from `src/data/pySurfOverturn.json`, written by `tools/exportPySurfOverturn.py`: 40 recorded free surfaces, from the crest crossing the reef face to the jet's impact, simplified (Douglas-Peucker) and stored as relative path data in 1/200 of the depth. Every surface is drawn faint once; `<use>` copies step through them in the accent on a 47-slot CSS loop, one slot per frame and eight held on the impact. Stroke styles sit on the groups and copies, never on the frame paths, so each copy takes its own. Under reduced motion the still is the full set of surfaces with the impact highlighted. The card's comparison with the DNS is computed by the exporter from the run, the failing aspect ratio included.
-- **The splash-up** (`SplashVideo.astro`) is an MP4 written by `tools/exportPySurfSplash.py`: the same overturn handed to pySurf's SPH at 64 particles per depth, drawn at true scale in a window that travels with the breaker, encoded with ffmpeg through `imageio-ffmpeg`. The SPH run takes about an hour and is cached; a second run only redraws. The video loads its metadata and poster only, plays while on screen, and under reduced motion shows the poster (the splash-up at its peak) with player controls instead of starting.
-- `src/data/waves.js` builds both cards' text from the exporters' JSON, so the numbers on the page are the numbers of the drawing and video beside them.
+- **The splash-up** is an MP4 written by `tools/exportPySurfSplash.py`: the same overturn handed to pySurf's SPH at 64 particles per depth, drawn at true scale in a window that travels with the breaker, encoded with ffmpeg through `imageio-ffmpeg`. The SPH run takes about an hour and is cached; a second run only redraws. Its poster is the splash-up at its peak.
+- **The peel** is an MP4 written by `tools/exportPySurfPeeling.py`: pySurf's `PeelingWave` on the same reef with its depth contours at 30 degrees to the crest, from the exact solitary wave at 32 particles per depth. Each cross-section is the 2D overturn delayed by its distance along the crest, handed to 3D SPH as its own jet lands; the planes still in potential flow are drawn as lines from a restart of the overturn that records each plane's phase. It is drawn at true scale from low on the shoreward side, ahead of the peel, looking back along the crest into the tube, with matplotlib's 3D axes. The SPH run takes about 70 minutes on four threads with pySurf's compiled backend (numba) and is cached with the restart; a second run only redraws. Its poster is 1.0 sqrt(h/g) after the first impact, the tube still open ahead of the splash.
+- Both videos go through `WaveVideo.astro`, which takes the asset name: each loads its metadata and poster only, plays while on screen, and under reduced motion shows the poster with player controls instead of starting.
+- `src/data/waves.js` builds the cards' text from the exporters' JSON, so the numbers on the page are the numbers of the drawing and videos beside them. The peel's card says it is not validated and quotes pySurf's consistency checks of the construction.
 
 ## Site map
 
