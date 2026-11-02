@@ -1,6 +1,6 @@
 /* ========================================
    SHOWCASE WAVES
-   The breaking-wave cards: pySurf's overturn drawing, splash-up video and peeling-breaker video
+   The breaking-wave cards: pySurf's overturn drawing, splash-up video and peeling-breaker videos
    Sean Bowman [10/29/2026]
    ======================================== */
 
@@ -96,8 +96,8 @@ export const waveCards = [
         media: 'video',
         video: 'pySurfPeeling',
         name: 'Plunging Breaker: the Peel',
-        description: `The same wave on a reef whose depth contours run at ${peel.obliqueAngle} degrees to its crest, so the jet lands first at one end and the break peels along the crest at ${peel.peelSpeedOverRootGh} sqrt(gh). Each cross-section of that reef sees the 2D overturn delayed by its distance along the crest, so pySurf stacks the boundary element run in planes one particle spacing apart and hands each plane to 3D SPH as its own jet lands: ${peel.planes} planes and ${peel.fluidParticles.toLocaleString('en-US')} particles by the end. The lines are every second plane still in potential flow; particles are colored by speed, deep blue at rest to white at twice the wave speed. The view is at true scale, looking back along the crest into the tube, and runs ${peel.slowMotion} times slower than the flow.`,
-        mediaLabel: 'Three-dimensional particle simulation of a breaking wave peeling along a reef toward the viewer, the unbroken part of the wave drawn as lines ahead of the peel.',
+        description: `The same wave on a reef whose depth contours run at ${peel.obliqueAngle} degrees to its crest, so the jet lands first at one end and the break peels along the crest at ${peel.peelSpeedOverRootGh} sqrt(gh). Each cross-section of that reef sees the 2D overturn delayed by its distance along the crest, so pySurf stacks the boundary element run in planes one particle spacing apart and hands each plane to 3D SPH as its own jet lands: ${peel.planes} planes and ${peel.fluidParticles.toLocaleString('en-US')} particles by the end. The planes still in potential flow are drawn as one shaded sheet; sheet and particles are colored by speed, deep blue at rest to white at twice the wave speed. The view is at true scale, looking back along the crest into the tube, and runs ${peel.slowMotion} times slower than the flow.`,
+        mediaLabel: 'Three-dimensional particle simulation of a breaking wave peeling along a reef toward the viewer, the unbroken part of the wave drawn as a smooth surface ahead of the peel.',
         specs: [
             { label: 'Resolution', value: `${peel.particlesPerDepth} particles per depth, ${peel.planes} planes` },
             { label: 'Peel speed', value: `${peel.peelSpeedOverRootGh} sqrt(gh), the wave speed over tan ${peel.obliqueAngle} deg` },
@@ -107,6 +107,22 @@ export const waveCards = [
         ],
         note: `Not validated: no measurement or 3D simulation of a solitary wave peeling along an oblique reef was found, so these checks test the construction, not the flow. Its least certain input is strip theory's spanwise velocity, ${Math.round(100 * peel.checks.spanwiseRidgeError)}% high on Guyenne and Grilli's (2006) 3D ridge; at ${peel.obliqueAngle} degrees it changes the plane energies by about 1%. The water is single-phase.`,
         noteUrl: `${pySurfUrl}#peeling-breaker-on-an-oblique-reef-3d-potential-flow-slices-handed-to-sph-plane-by-plane`,
+        sourceUrl: pySurfUrl,
+        sourceLabel: 'sean-bowman/pySurf'
+    },
+    {
+        media: 'video',
+        video: 'pySurfAFrame',
+        name: 'Plunging Breaker: the A-Frame',
+        description: `Two such reefs joined at an apex that points offshore make a triangular reef, and the wave breaks first at the apex and peels both ways. The run above stopped its water at y = 0 with a free-slip wall, which is exactly that reef's plane of symmetry, so for flow that stays symmetric the same run is the A-frame's half and its mirror image the other. Seen head on from the shore at true scale, in the same colors, the break spreads out from the apex at ${peel.peelSpeedOverRootGh} sqrt(gh) each way.`,
+        mediaLabel: 'Three-dimensional particle simulation of a wave breaking first at the apex of a triangular reef and peeling both ways, seen head on from the shore.',
+        specs: [
+            { label: 'Reef', value: `Contours at ${peel.obliqueAngle} deg to the crest on each side, an apex of ${180 - 2 * peel.obliqueAngle} deg` },
+            { label: 'Peel speed', value: `${peel.peelSpeedOverRootGh} sqrt(gh) each way` },
+            { label: 'Apex planes\' energy', value: `Up to +${(100 * peel.checks.apexGainWithSpanwise).toFixed(1)}% with strip theory's spanwise velocity, at most -${(100 * peel.checks.apexLossWithout).toFixed(1)}% without` }
+        ],
+        note: `Not validated, as the peel above, and two more limits sit at the apex: the symmetry plane rules out any breaking that is not symmetric, and the reef's contours turn there, so strip theory hands the water beside the apex a spanwise velocity the three-dimensional flow would bring to zero. With it the apex planes gain up to ${(100 * peel.checks.apexGainWithSpanwise).toFixed(1)}% of their energy; without it the oldest loses at most ${(100 * peel.checks.apexLossWithout).toFixed(1)}%.`,
+        noteUrl: `${pySurfUrl}#triangular-reef-peeling-both-ways`,
         sourceUrl: pySurfUrl,
         sourceLabel: 'sean-bowman/pySurf'
     }

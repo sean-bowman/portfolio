@@ -25,6 +25,8 @@
     "twoDimensionalTo08": 0.001,
     "twoDimensionalAt12": 0.012,
     "criterion": 0.05,
-    "spanwiseRidgeError": 0.7
+    "spanwiseRidgeError": 0.7,
+    "apexGainWithSpanwise": 0.095,
+    "apexLossWithout": 0.011
   }
 }
