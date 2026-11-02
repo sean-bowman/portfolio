@@ -1,0 +1,30 @@
+{
+  "particlesPerDepth": 32,
+  "obliqueAngle": 30.0,
+  "planes": 111,
+  "fluidParticles": 469419,
+  "spanOverDepth": 3.59,
+  "durationOverScale": 1.6,
+  "slowMotion": 8.9,
+  "incidentSpeedError": -0.00049,
+  "peelSpeedOverRootGh": 2.16,
+  "posterTimeOverScale": 1.0,
+  "checks": {
+    "steadyAges": [
+      0.25,
+      0.5,
+      0.8,
+      1.2
+    ],
+    "steadySpread": [
+      0.006,
+      0.008,
+      0.012,
+      0.017
+    ],
+    "twoDimensionalTo08": 0.001,
+    "twoDimensionalAt12": 0.012,
+    "criterion": 0.05,
+    "spanwiseRidgeError": 0.7
+  }
+}
