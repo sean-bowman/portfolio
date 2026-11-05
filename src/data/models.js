@@ -48,7 +48,7 @@ const channelShapes = { circle: 'circular', rectangular: 'rectangular', helical:
 export const showcaseModels = [
     {
         name: 'Regeneratively Cooled Nozzle',
-        description: `NOVA's worked example: a ${novaFacts.thrustKn} kN ${novaFacts.propellants} upper-stage nozzle. The method of characteristics sets the contour. A thermal solve sizes ${novaFacts.channelCount} ${novaFacts.coolant.toLowerCase()} cooling channels from the chamber to an area ratio of ${novaFacts.regenEndAreaRatio}, fed and collected by the two volutes; a radiation-cooled extension carries the bell from there to the exit. Every surface comes from NOVA's own STL export.`,
+        description: `NOVA's worked example: a ${novaFacts.thrustKn} kN ${novaFacts.propellants} upper-stage nozzle. The method of characteristics sets the contour. The ${novaFacts.coolant.toLowerCase()} enters a ring manifold at an area ratio of ${novaFacts.inletAreaRatio}, runs down ${novaFacts.downChannelCount} channels to a turnaround ring at the exit, and returns up ${novaFacts.channelCount} channels alternating with them to the outlet volute at the injector, so it is warmed in the bell before it reaches the throat. A thermal solve sizes every channel against the wall limit. Every surface comes from NOVA's own STL export.`,
         filePath: 'assets/models/novaNozzle.glb',
         sourceUrl: 'https://github.com/sean-bowman/NOVA',
         sourceLabel: 'sean-bowman/NOVA',
@@ -60,13 +60,13 @@ export const showcaseModels = [
             { label: 'Area ratio', value: `${novaFacts.expansionRatio}` },
             { label: 'Throat / exit radius', value: `${novaFacts.throatRadiusMm} / ${novaFacts.exitRadiusMm} mm` },
             { label: 'Envelope', value: `${novaFacts.overallLengthMm} mm long, ${novaFacts.overallDiameterMm} mm diameter` },
-            { label: 'Cooling', value: `${novaFacts.channelCount} ${channelShapes[novaFacts.channelType] ?? novaFacts.channelType} channels to area ratio ${novaFacts.regenEndAreaRatio}` }
+            { label: 'Cooling', value: `One and a half passes to the exit, ${novaFacts.downChannelCount} down and ${novaFacts.channelCount} up ${channelShapes[novaFacts.channelType] ?? novaFacts.channelType} channels` }
         ],
         note: "Throat sizing matches CEA's characteristic velocity to 0.02%, and the contour is checked against independent references. The flowfield itself is not validated point by point.",
         noteUrl: 'https://github.com/sean-bowman/NOVA/blob/main/docs/NozzleContourValidation.md',
         wide: true,
         modes: ['solid', 'jacket', 'lines'],
-        partRoles: { channel: 'coolant' },
+        partRoles: { channel: 'coolant', channelDown: 'coolant', turnaround: 'coolant' },
         // NOVA's exports run the nozzle axis along -Z (chamber at +Z); this turns the
         // axis horizontal with the exit to the right
         rotation: [0, -Math.PI / 2, 0],

@@ -5,12 +5,16 @@
   "mixtureRatio": 5.5,
   "expansionRatio": 40.0,
   "lengthFraction": 0.8,
-  "regenEndAreaRatio": 3.0,
+  "regenEndAreaRatio": 40.0,
+  "coolantCircuit": "oneAndHalfPass",
+  "inletAreaRatio": 3.0,
   "channelCount": 60,
+  "downChannelCount": 60,
+  "turnaroundSectionMm": 12.0,
   "channelType": "circle",
   "coolant": "Hydrogen",
   "throatRadiusMm": 50.5,
-  "exitRadiusMm": 319.2,
-  "overallLengthMm": 1168,
-  "overallDiameterMm": 638
+  "exitRadiusMm": 319.3,
+  "overallLengthMm": 1180,
+  "overallDiameterMm": 723
 }

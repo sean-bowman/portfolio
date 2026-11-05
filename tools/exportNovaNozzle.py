@@ -3,7 +3,8 @@ Export the NOVA worked-example nozzle for the portfolio Showcase.
 
 Runs NOVA's shipped example configuration (src/NOVA/assets/NOVANozzle.json: 100 kN LOX/LH2
 upper stage, expansion ratio 40, truncated ideal contour by method of characteristics, regen
-jacket) with figures off and export on, so NOVA writes its own channel and volute STLs. The hot
+jacket to the exit on a one-and-a-half-pass circuit) with figures off and export on, so NOVA
+writes its own channel and volute STLs. The hot
 wall and closeout shell exist on the nozzle only as contours; they are revolved here into
 surface grids and written with NOVA's own STL writer (exports.py2cad), so every part comes out
 of NOVA's code path. The parts are then assembled into one glTF binary with named nodes,
@@ -135,6 +136,17 @@ def main() -> None:
     channelPath = workDir / 'channel.stl'
     py2cad(str(channelPath), *(np.asarray(values)[channelRows] for values in (nozzle.zChannel, nozzle.yChannel, -np.asarray(nozzle.xChannel))))
 
+    # A multi-pass jacket adds its down family, one slot round from the up family, and the
+    # ring the coolant turns in at the aft end; both are written the same way as the channel
+    circuit = getattr(nozzle, 'coolantCircuitSolution', None)
+    coolantParts = []
+    if circuit is not None:
+        downPath = workDir / 'channelDown.stl'
+        py2cad(str(downPath), *(np.asarray(values)[channelRows] for values in (nozzle.zChannelDown, nozzle.yChannelDown, -np.asarray(nozzle.xChannelDown))))
+        turnaroundPath = workDir / 'turnaround.stl'
+        py2cad(str(turnaroundPath), *(np.asarray(values) for values in (nozzle.zTurnaround, nozzle.yTurnaround, -np.asarray(nozzle.xTurnaround))))
+        coolantParts = [('channelDown', downPath, None), ('turnaround', turnaroundPath, None)]
+
     # Line drawing for the viewer's lines mode: rings and meridians on the revolved walls,
     # cross-section loops and a few lengthwise lines on the volutes. The volute grids are
     # NOVA's, moved into the channel frame.
@@ -143,7 +155,12 @@ def main() -> None:
         'hotWallLines': gridLines(*hotWallGrid, ringStations(hotWallAxial, hotWallRadius, 16), meridians),
         'shellLines': gridLines(*shellGrid, ringStations(shellAxial, shellRadius, 6), meridians),
     }
-    for prefix, name in (('InletVolute', 'inletVoluteLines'), ('OutletVolute', 'outletVoluteLines')):
+    # Only the volutes the configuration builds: a multi-pass jacket takes its coolant in
+    # through a ring manifold and has no inlet scroll
+    volutes = [(prefix, name) for prefix, name in (('InletVolute', 'inletVolute'), ('OutletVolute', 'outletVolute'))
+               if getattr(nozzle, f'x{prefix}', None) is not None]
+    for prefix, name in volutes:
+        name = f'{name}Lines'
         grid = [np.asarray(getattr(nozzle, f'{axis}{prefix}')) for axis in ('z', 'y', 'x')]
         grid[2] = -grid[2]
         rowCount, columnCount = grid[0].shape
@@ -157,8 +174,8 @@ def main() -> None:
         ('hotWall', hotWallPath, None),
         ('shell', shellPath, None),
         ('channel', channelPath, None),
-        ('inletVolute', outputDir / 'portfolioShowcaseInletVolute.stl', toChannelFrame),
-        ('outletVolute', outputDir / 'portfolioShowcaseOutletVolute.stl', toChannelFrame),
+        *coolantParts,
+        *((name, outputDir / f'portfolioShowcase{prefix}.stl', toChannelFrame) for prefix, name in volutes),
     ]
 
     scene = trimesh.Scene()
@@ -177,10 +194,14 @@ def main() -> None:
     # NOVA exports one channel for the CAD tool to pattern. The rest of the jacket is the
     # same mesh rotated about the axis at the channel pitch: extra nodes that reference the
     # one mesh, which the compression step turns into GPU instances.
-    pitch = 2.0 * np.pi / int(nozzle.nChannel)
-    for index in range(1, int(nozzle.nChannel)):
-        rotation = trimesh.transformations.rotation_matrix(index * pitch, [0, 0, 1])
-        scene.graph.update(frame_to=f'channel{index}', frame_from=scene.graph.base_frame, matrix=rotation, geometry='channel')
+    families = [('channel', int(nozzle.nChannel))]
+    if circuit is not None:
+        families.append(('channelDown', int(circuit.down.channelCount)))
+    for family, count in families:
+        pitch = 2.0 * np.pi / count
+        for index in range(1, count):
+            rotation = trimesh.transformations.rotation_matrix(index * pitch, [0, 0, 1])
+            scene.graph.update(frame_to=f'{family}{index}', frame_from=scene.graph.base_frame, matrix=rotation, geometry=family)
 
     rawGlbPath = workDir / 'novaNozzle.glb'
     scene.export(str(rawGlbPath))
@@ -204,8 +225,14 @@ def main() -> None:
         'mixtureRatio': readOption(config, 'OFRatio'),
         'expansionRatio': readOption(config, 'expansionRatio'),
         'lengthFraction': readOption(config, 'lengthFraction'),
-        'regenEndAreaRatio': readOption(config, 'regenTruncationValue'),
+        # A jacket left untruncated runs to the exit
+        'regenEndAreaRatio': (readOption(config, 'expansionRatio') if readOption(config, 'regenTruncationType') == 'none'
+                              else readOption(config, 'regenTruncationValue')),
+        'coolantCircuit': readOption(config, 'coolantCircuit') or 'singlePass',
+        'inletAreaRatio': readOption(config, 'coolantInletAreaRatio'),
         'channelCount': int(nozzle.nChannel),
+        'downChannelCount': int(circuit.down.channelCount) if circuit is not None else None,
+        'turnaroundSectionMm': round(float(circuit.turnaround.sectionRadius) * 1e3, 1) if circuit is not None else None,
         'channelType': str(nozzle.channelType),
         'coolant': readOption(config, 'coolant'),
         # The throat radius that sizes the nozzle (from the choked throat area). The resampled
