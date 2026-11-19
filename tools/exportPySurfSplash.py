@@ -52,8 +52,8 @@ ground, sand, stillWater = '#16232A', '#F2CE82', '#9FB3AE'
 waterStops = ('#47AFA3', '#5FD4C7', '#7EDDD0', '#E8F0EC')
 
 # pySurf's active-breaking validation, tests/testValidationSplashUp.py (Mostert and Deike 2020,
-# H0/h0 = 0.3 on 3 degrees, 48 particles per depth; 64 within 1 percent)
-mostert = {'shareLostModel': 0.277, 'shareLostDns': 0.31, 'rateError': -0.07, 'criterion': 0.30}
+# H0/h0 = 0.3 on 3 degrees, 48 particles per depth; 64 moves the share by 1 percent and the rate by 3)
+mostert = {'shareLostModel': 0.282, 'shareLostDns': 0.31, 'rateError': -0.05, 'criterion': 0.30}
 
 def runSplash() -> dict:
     '''
