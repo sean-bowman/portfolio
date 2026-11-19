@@ -1,19 +1,21 @@
 /* ========================================
    SHOWCASE WAVES
-   The breaking-wave cards: pySurf's overturn drawing, splash-up video and peeling-breaker videos
+   The breaking-wave cards: pySurf's overturn drawing, splash-up video, peeling-breaker videos and
+   3D breaker over a turned reef
    Sean Bowman [10/29/2026]
    ======================================== */
 
 // @ts-check
 
 // The numbers come from the exporters' output (tools/exportPySurfOverturn.py,
-// tools/exportPySurfSplash.py and tools/exportPySurfPeeling.py), so the cards always describe the
-// drawing and videos they sit beside. Validation lines report the checks pySurf's own tests make,
-// failures included.
+// tools/exportPySurfSplash.py, tools/exportPySurfPeeling.py and tools/exportPySurfShoal.py), so the
+// cards always describe the drawing and videos they sit beside. Validation lines report the checks
+// pySurf's own tests and validation runs make, failures included.
 
 import overturn from './pySurfOverturn.json';
 import splash from './pySurfSplashFacts.json';
 import peel from './pySurfPeelingFacts.json';
+import shoal from './pySurfShoalFacts.json';
 
 /**
  * @typedef {Object} WaveSpec
@@ -123,6 +125,23 @@ export const waveCards = [
         ],
         note: `Not validated, as the peel above, and two more limits sit at the apex: the symmetry plane rules out any breaking that is not symmetric, and the reef's contours turn there, so strip theory hands the water beside the apex a spanwise velocity the three-dimensional flow would bring to zero. With it the apex planes gain up to ${(100 * peel.checks.apexGainWithSpanwise).toFixed(1)}% of their energy; without it the oldest loses at most ${(100 * peel.checks.apexLossWithout).toFixed(1)}%.`,
         noteUrl: `${pySurfUrl}#triangular-reef-peeling-both-ways`,
+        sourceUrl: pySurfUrl,
+        sourceLabel: 'sean-bowman/pySurf'
+    },
+    {
+        media: 'video',
+        video: 'pySurfShoalReef',
+        name: 'Plunging Breaker: Full 3D on the GPU',
+        description: `The same reef turned ${shoal.reefAngle} degrees across a tank ${shoal.spanDepths} depths wide, with the whole wave in 3D SPH from start to finish: no potential flow and no strip theory. pySurf's δ-SPH scheme runs on the GPU at ${shoal.particlesPerDepth} particles per depth and splits the water near the crest once as the wave shoals, ${(shoal.fluidParticlesAtEnd / 1e6).toFixed(1)} million particles by the end. The reef's contours meet the crest at an angle, so each section reaches the reef a little after the one before, and the break runs across the tank. The ${shoal.sections} sections, each two particle rows wide, are drawn in 3D with the vertical scale doubled and colored by speed; the inset plots the crest and each section's breaking point in plan. The video covers ${(shoal.videoEndTime - shoal.videoStartTime).toFixed(1)} sqrt(h/g) of flow.`,
+        mediaLabel: 'Three-dimensional particle simulation of a solitary wave breaking over a reef turned across the tank, drawn as sections across the tank, with a plan-view inset of each section\'s breaking point.',
+        specs: [
+            { label: 'Resolution', value: `${shoal.particlesPerDepth} particles per depth, the crest's water split once` },
+            { label: 'Run', value: `${(shoal.fluidParticlesAtEnd / 1e6).toFixed(1)} million particles by the end, ${Math.round(shoal.gpuHours)} GPU hours` },
+            { label: 'Against DualSPHysics', value: `Breaks within ${shoal.dualSphysics.breakingTimeWithin} s, ${shoal.dualSphysics.breakingHeightHigher[0]} to ${shoal.dualSphysics.breakingHeightHigher[1]}% higher; break crosses at ${shoal.dualSphysics.breakSpeed} m/s against ${shoal.dualSphysics.breakSpeedReference.toFixed(2)}` },
+            { label: '3D breaking point, ridge', value: `Time +${shoal.ridge.timeError}%, crest +${shoal.ridge.crestPositionError} h, height ${shoal.ridge.crestHeightError}% (Guyenne and Grilli 2006)` }
+        ],
+        note: `The breaking point is validated in 3D on Guyenne and Grilli's (2006) sloping ridge, where this setup passes all five criteria. No measurement exists for this reef, so DualSPHysics's run of the same tank is a cross-check, not a validation. After breaking the scheme dissipates too little: it fails Mostert and Deike's energy loss, and over the Oregon State reef flat its bore stands ${Math.round(shoal.reefFlat.wg12Error[0])} to ${Math.round(shoal.reefFlat.wg12Error[1])}% above the flume's. The bore and splash in the video are unvalidated.`,
+        noteUrl: `${pySurfUrl}#breaking-over-a-3d-bed-gpu-sph`,
         sourceUrl: pySurfUrl,
         sourceLabel: 'sean-bowman/pySurf'
     }

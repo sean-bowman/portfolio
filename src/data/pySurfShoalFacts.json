@@ -1,0 +1,35 @@
+{
+  "particlesPerDepth": 32,
+  "fluidParticlesAtEnd": 6599740,
+  "gpuHours": 32.1,
+  "reefAngle": 25,
+  "spanDepths": 4,
+  "sections": 9,
+  "innerSections": 7,
+  "videoStartTime": 18.95,
+  "videoEndTime": 23.23,
+  "dualSphysics": {
+    "breakingTimeWithin": 0.04,
+    "breakingHeightHigher": [
+      8,
+      11
+    ],
+    "landingLater": [
+      0.03,
+      0.13
+    ],
+    "breakSpeed": 10.31,
+    "breakSpeedReference": 9.9
+  },
+  "ridge": {
+    "timeError": 2.9,
+    "crestPositionError": 0.39,
+    "crestHeightError": -0.2
+  },
+  "reefFlat": {
+    "wg12Error": [
+      24.5,
+      29.3
+    ]
+  }
+}
